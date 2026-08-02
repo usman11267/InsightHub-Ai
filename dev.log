@@ -477,3 +477,21 @@ Import trace:
  GET /dashboard/settings 200 in 1104ms (next.js: 72ms, proxy.ts: 200ms, application-code: 832ms)
  GET /dashboard/settings 200 in 999ms (next.js: 69ms, proxy.ts: 165ms, application-code: 766ms)
  GET /dashboard/settings 200 in 929ms (next.js: 84ms, proxy.ts: 212ms, application-code: 634ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477:13)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477:13)
+ GET /dashboard/settings 200 in 3.0s (next.js: 68ms, proxy.ts: 858ms, application-code: 2.0s)
+ GET /dashboard 200 in 1847ms (next.js: 337ms, proxy.ts: 177ms, application-code: 1333ms)
+ GET /dashboard/projects?new=1 200 in 1141ms (next.js: 265ms, proxy.ts: 165ms, application-code: 711ms)
+⨯ Error: Jest worker encountered 2 child process exceptions, exceeding retry limit
+    at ignore-listed frames {
+  type: 'WorkerError',
+  page: '/dashboard/projects/cmsb70wkt00056cfhaxxabr1z'
+}
+ GET /dashboard/projects/cmsb70wkt00056cfhaxxabr1z 500 in 870ms (next.js: 618ms, proxy.ts: 147ms, application-code: 106ms)
+⨯ Error: Jest worker encountered 2 child process exceptions, exceeding retry limit
+    at ignore-listed frames {
+  type: 'WorkerError',
+  page: '/dashboard/projects/cmsb70wkt00056cfhaxxabr1z'
+}
+ GET /dashboard/projects/cmsb70wkt00056cfhaxxabr1z 500 in 813ms (next.js: 476ms, proxy.ts: 227ms, application-code: 110ms)
+[browser] Uncaught Error: Jest worker encountered 2 child process exceptions, exceeding retry limit
