@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { ChevronsLeft, Plus, Sparkles } from "lucide-react";
+import { ChevronsLeft, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { NAV_ITEMS, isNavItemActive } from "@/lib/navigation";
 import { Button } from "@/components/ui/button";

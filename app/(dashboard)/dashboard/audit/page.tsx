@@ -103,7 +103,14 @@ export default async function AuditLogPage({ searchParams }: PageProps) {
         </Card>
       ) : (
         <div className="space-y-1">
-          {logs.map((log: any) => {
+          {logs.map((log: {
+            id: string;
+            action: string;
+            metadata: unknown;
+            createdAt: Date;
+            actor: { firstName: string | null; lastName: string | null; email: string } | null;
+            project: { id: string; name: string; color: string } | null;
+          }) => {
             const meta = log.metadata as Record<string, unknown>;
             const actionConfig = ACTION_LABELS[log.action] ?? { label: log.action, color: "text-muted-foreground" };
             const displayName = log.actor?.firstName

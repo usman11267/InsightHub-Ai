@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { UserButton } from "@clerk/nextjs";
 import Image from "next/image";
-import { Bell, Menu, Search, Sparkles } from "lucide-react";
+import { Bell, Menu, Search } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { NAV_ITEMS, isNavItemActive } from "@/lib/navigation";
 import { Button } from "@/components/ui/button";

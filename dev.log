@@ -583,3 +583,6 @@ Error: write EPIPE
   code: 'EPIPE',
   syscall: 'write'
 }
+✓ Compiled in 141ms
+✓ Compiled in 147ms
+✓ Compiled in 121ms

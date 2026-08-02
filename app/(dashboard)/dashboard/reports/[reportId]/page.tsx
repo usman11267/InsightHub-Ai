@@ -2,9 +2,7 @@ import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import { getCurrentDbUser } from "@/lib/auth";
 import { getReportDetail } from "@/features/reports/queries";
-import { PageHeader } from "@/components/shared/page-header";
 import { Card, CardContent } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
 import {
   FileText, Loader2, AlertCircle, CheckCircle2, Calendar, Sparkles, Database, LayoutDashboard
 } from "lucide-react";
@@ -95,7 +93,7 @@ export default async function ReportDetailPage({ params }: { params: Promise<{ r
             </div>
             <h3 className="text-xl font-semibold tracking-tight text-foreground">AI is crafting your report</h3>
             <p className="mt-2 max-w-sm text-sm text-muted-foreground">
-              We're analyzing the data and generating insights. This usually takes 10–30 seconds. Refresh to see the result.
+              We&apos;re analyzing the data and generating insights. This usually takes 10–30 seconds. Refresh to see the result.
             </p>
           </CardContent>
         </Card>
