@@ -198,7 +198,13 @@ export async function POST(req: NextRequest) {
   }
 
   // ── Checksum & duplicate detection ───────────────────────────────────
-  const checksum = createHash("sha256").update(buffer).digest("hex");
+  // Scoped by sheet: every sheet of a workbook shares one file buffer, so an
+  // unscoped digest would flag sheets 2..n as duplicates of sheet 1. Mixing
+  // the sheet name in keeps re-uploads of the *same* sheet detectable.
+  const checksum = createHash("sha256")
+    .update(buffer)
+    .update(sheetName ? ` sheet:${sheetName}` : "")
+    .digest("hex");
   const duplicate = await findDuplicateByChecksum(projectId, checksum);
   if (duplicate) {
     return NextResponse.json(

@@ -32,7 +32,7 @@ type UploadState =
   | { status: "selected"; file: File; fileType: AcceptedFileType }
   | { status: "sheets_selection"; file: File; sheets: string[] }
   | { status: "uploading"; file: File; progress: number; currentSheet?: string; totalSheets?: number; uploadedCount?: number }
-  | { status: "success"; datasetId: string; name: string; rowCount: number; multiple?: boolean; uploadedCount?: number }
+  | { status: "success"; datasetId: string; name: string; rowCount: number; multiple?: boolean; uploadedCount?: number; skipped?: string[] }
   | { status: "error"; message: string; duplicateId?: string };
 
 const FILE_ICONS: Record<AcceptedFileType, React.ElementType> = {
@@ -42,9 +42,9 @@ const FILE_ICONS: Record<AcceptedFileType, React.ElementType> = {
 };
 
 const FILE_COLORS: Record<AcceptedFileType, string> = {
-  CSV: "text-success",
-  XLSX: "text-info",
-  JSON: "text-warning",
+  CSV: "text-success-on-surface",
+  XLSX: "text-info-on-surface",
+  JSON: "text-warning-on-surface",
 };
 
 interface UploadDropzoneProps {
@@ -153,6 +153,7 @@ export function UploadDropzone({ projectId, onSuccess, className }: UploadDropzo
 
     let successCount = 0;
     let lastDatasetId = "";
+    const failures: string[] = [];
 
     for (let i = 0; i < selectedSheets.length; i++) {
       const sheetName = selectedSheets[i];
@@ -167,20 +168,35 @@ export function UploadDropzone({ projectId, onSuccess, className }: UploadDropzo
 
       try {
         const res = await fetch("/api/upload", { method: "POST", body: formData });
+        const data = await res.json().catch(() => ({}));
         if (res.ok) {
-          const data = await res.json();
           successCount++;
           lastDatasetId = data.id;
+        } else {
+          failures.push(`${sheetName}: ${data.error ?? `HTTP ${res.status}`}`);
         }
-      } catch (err) {
-        console.error(`Failed to upload sheet ${sheetName}`, err);
+      } catch {
+        failures.push(`${sheetName}: network error`);
       }
     }
 
     if (successCount === 0) {
-      setState({ status: "error", message: "Failed to upload any sheets. Please try again." });
+      setState({
+        status: "error",
+        message: failures.length
+          ? `No sheets imported. ${failures[0]}`
+          : "Failed to upload any sheets. Please try again.",
+      });
     } else {
-      setState({ status: "success", datasetId: lastDatasetId, name: `${name} (${successCount} sheets)`, rowCount: 0, multiple: true, uploadedCount: successCount });
+      setState({
+        status: "success",
+        datasetId: lastDatasetId,
+        name: `${name} (${successCount} sheet${successCount === 1 ? "" : "s"})`,
+        rowCount: 0,
+        multiple: true,
+        uploadedCount: successCount,
+        skipped: failures,
+      });
       onSuccess?.(lastDatasetId);
     }
   }
@@ -242,7 +258,7 @@ export function UploadDropzone({ projectId, onSuccess, className }: UploadDropzo
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="mt-3 flex items-start gap-2 rounded-lg bg-destructive/10 p-3 text-sm text-destructive"
+                className="mt-3 flex items-start gap-2 rounded-lg bg-destructive/10 p-3 text-sm text-destructive-on-surface"
               >
                 <AlertCircle className="mt-0.5 size-4 shrink-0" />
                 <div>
@@ -335,7 +351,7 @@ export function UploadDropzone({ projectId, onSuccess, className }: UploadDropzo
             className="space-y-4"
           >
             <div className="flex items-center gap-3 rounded-xl border border-border bg-card p-4">
-              <FileSpreadsheet className="size-8 shrink-0 text-info" />
+              <FileSpreadsheet className="size-8 shrink-0 text-info-on-surface" />
               <div className="min-w-0 flex-1">
                 <p className="truncate text-sm font-medium">Multiple Sheets Found</p>
                 <p className="text-xs text-muted-foreground">Select which sheets to import</p>
@@ -412,7 +428,7 @@ export function UploadDropzone({ projectId, onSuccess, className }: UploadDropzo
             animate={{ opacity: 1, scale: 1 }}
             className="flex flex-col items-center gap-3 rounded-xl border border-success/30 bg-success/5 p-8 text-center"
           >
-            <CheckCircle2 className="size-10 text-success" />
+            <CheckCircle2 className="size-10 text-success-on-surface" />
             <div>
               <p className="text-base font-semibold">{state.name}</p>
               <p className="text-sm text-muted-foreground">
@@ -421,6 +437,18 @@ export function UploadDropzone({ projectId, onSuccess, className }: UploadDropzo
                   : `${state.rowCount.toLocaleString()} rows imported successfully`}
               </p>
             </div>
+            {state.skipped && state.skipped.length > 0 && (
+              <div className="w-full rounded-lg bg-warning/10 p-3 text-left text-xs text-warning-on-surface">
+                <p className="font-medium">
+                  {state.skipped.length} sheet{state.skipped.length === 1 ? "" : "s"} skipped
+                </p>
+                <ul className="mt-1 space-y-0.5">
+                  {state.skipped.map((s) => (
+                    <li key={s}>{s}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
             <div className="flex gap-2">
               {!state.multiple && (
                 <Button asChild variant="gradient" size="sm">
