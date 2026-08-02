@@ -82,7 +82,7 @@ export default async function AssistantPage({ searchParams }: PageProps) {
             No context
           </Link>
 
-          {recentDatasets.map((ds: any) => (
+          {recentDatasets.map((ds: { id: string; name: string; fileType: string; rowCount: number }) => (
             <Link
               key={ds.id}
               href={`/dashboard/assistant?datasetId=${ds.id}`}

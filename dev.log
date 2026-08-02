@@ -495,3 +495,21 @@ Import trace:
 }
  GET /dashboard/projects/cmsb70wkt00056cfhaxxabr1z 500 in 813ms (next.js: 476ms, proxy.ts: 227ms, application-code: 110ms)
 [browser] Uncaught Error: Jest worker encountered 2 child process exceptions, exceeding retry limit
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
