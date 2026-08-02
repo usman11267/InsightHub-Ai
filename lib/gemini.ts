@@ -270,18 +270,27 @@ export function buildCleaningPrompt(opts: {
   datasetName: string;
   schema: Array<{ name: string; inferredType: string; missingCount: number; uniqueCount: number }>;
   previewRows: Record<string, unknown>[];
+  duplicateCount?: number;
 }): string {
   const schemaText = opts.schema
     .map((c) => `  ${c.name} (${c.inferredType}): ${c.missingCount} missing, ${c.uniqueCount} unique`)
     .join("\n");
 
+  const dupCount = opts.duplicateCount ?? 0;
+
   return `Analyze this dataset and suggest data cleaning operations.
 
 Dataset: "${opts.datasetName}"
+Verified Exact Duplicate Rows Count: ${dupCount}
 Schema:
 ${schemaText}
 
 Sample: ${JSON.stringify(opts.previewRows.slice(0, 5), null, 2)}
+
+STRICT RULES:
+1. If Verified Exact Duplicate Rows Count is 0, do NOT suggest "remove_duplicates".
+2. If a column has 0 missing values, do NOT suggest "fill_missing" for that column.
+3. Only suggest operations for actual detected issues.
 
 Respond with a JSON array of cleaning suggestions in this exact format:
 [

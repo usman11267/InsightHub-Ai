@@ -22,7 +22,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         <Link href="/" className="relative flex items-center gap-2 text-white">
           <div className="flex size-8 items-center justify-center overflow-hidden rounded-lg bg-white/20 backdrop-blur">
             <Image
-              src="/logo-mark.png"
+              src="/logo-icon.png"
               alt="InsightHub AI logo"
               width={24}
               height={24}
@@ -63,7 +63,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         <Link href="/" className="mb-8 flex items-center gap-2 lg:hidden">
           <div className="flex size-8 items-center justify-center overflow-hidden rounded-lg gradient-brand">
             <Image
-              src="/logo-mark.png"
+              src="/logo-icon.png"
               alt="InsightHub AI logo"
               width={24}
               height={24}

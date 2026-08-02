@@ -194,9 +194,28 @@ export async function runCleaningOperation(
 
       case "ai_suggestions": {
         const schema = (dataset.schemaJson as { name: string; inferredType: string; missingCount: number; uniqueCount: number }[]) ?? [];
-        const prompt = buildCleaningPrompt({ datasetName: dataset.name, schema, previewRows: rows });
+
+        const seen = new Set<string>();
+        let duplicateCount = 0;
+        for (const row of rows) {
+          const key = JSON.stringify(row);
+          if (seen.has(key)) duplicateCount++;
+          else seen.add(key);
+        }
+
+        const prompt = buildCleaningPrompt({ datasetName: dataset.name, schema, previewRows: rows, duplicateCount });
         const raw = await ask(prompt, undefined, undefined, 2048);
-        const suggestions = parseCleaningSuggestions(raw);
+        let suggestions = parseCleaningSuggestions(raw);
+
+        suggestions = suggestions.filter((s) => {
+          if (s.operation === "remove_duplicates" && duplicateCount === 0) return false;
+          if (s.operation === "fill_missing" && s.column) {
+            const colSchema = schema.find((c) => c.name === s.column);
+            if (colSchema && colSchema.missingCount === 0) return false;
+          }
+          return true;
+        });
+
         return {
           success: true,
           data: {

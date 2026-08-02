@@ -39,7 +39,7 @@ export default async function SharedReportPage({ params }: SharePageProps) {
           <Link href="/" className="flex items-center gap-2 text-sm font-semibold">
             <span className="flex size-7 items-center justify-center rounded-lg gradient-brand">
               <Image
-                src="/logo-mark.png"
+                src="/logo-icon.png"
                 alt="InsightHub AI"
                 width={20}
                 height={20}

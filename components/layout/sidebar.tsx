@@ -29,7 +29,7 @@ export function Sidebar() {
           className="flex items-center gap-2.5 overflow-hidden rounded-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
         >
           <div className="flex size-8 shrink-0 items-center justify-center rounded-lg overflow-hidden bg-sidebar-hover">
-            <Image src="/logo-mark.png" alt="InsightHub AI Logo" width={32} height={32} className="size-7 object-contain" />
+            <Image src="/logo-icon.png" alt="InsightHub AI Logo" width={32} height={32} className="size-7 object-contain" />
           </div>
           {!collapsed && (
             <span className="truncate text-[15px] font-semibold tracking-tight text-sidebar-title">

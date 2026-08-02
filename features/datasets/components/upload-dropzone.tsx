@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useCallback, useState } from "react";
 import { useDropzone, type FileRejection } from "react-dropzone";
 import { motion, AnimatePresence } from "framer-motion";
+import * as XLSX from "xlsx";
 import {
   FileSpreadsheet,
   FileJson,
@@ -118,114 +119,159 @@ export function UploadDropzone({ projectId, onSuccess, className }: UploadDropzo
     });
   }
 
-  function handleProgressEvent(event: Record<string, unknown>) {
-    switch (event.type) {
-      case "reading":
-        setState((prev) =>
-          prev.status === "uploading"
-            ? { ...prev, phase: "Reading workbook…" }
-            : prev
-        );
-        break;
-      case "sheets": {
-        const sheets = Array.isArray(event.sheets)
-          ? (event.sheets as string[]).map((s) => String(s))
-          : [];
-        setState((prev) =>
-          prev.status === "uploading"
-            ? {
-                ...prev,
-                phase: `Found ${sheets.length} worksheets`,
-                sheetStatuses: sheets.map((s) => ({ name: s, state: "pending" })),
-              }
-            : prev
-        );
-        break;
-      }
-      case "sheet": {
-        const sheet = String(event.name ?? "");
-        patchSheet(sheet, { state: "importing" });
-        setState((prev) =>
-          prev.status === "uploading" ? { ...prev, phase: `Importing ${sheet}…` } : prev
-        );
-        break;
-      }
-      case "sheet-done": {
-        const sheet = String(event.name ?? "");
-        patchSheet(sheet, { state: "done" });
-        break;
-      }
-      case "sheet-skipped": {
-        const sheet = String(event.name ?? "");
-        patchSheet(sheet, { state: "skipped", detail: String(event.reason ?? "") });
-        break;
-      }
-      case "done": {
-        const datasets = Array.isArray(event.datasets)
-          ? (event.datasets as CreatedDataset[])
-          : [];
-        const skipped = Array.isArray(event.skipped)
-          ? (event.skipped as string[]).map(String)
-          : [];
-        setState({ status: "success", datasets, skipped });
-        onSuccess?.(datasets[0]?.id);
-        break;
-      }
-      case "error":
-        setState({ status: "error", message: String(event.message ?? "Upload failed.") });
-        break;
+  async function uploadSingleFilePayload(
+    fileToUpload: File,
+    displayName: string,
+    targetSheetName?: string
+  ): Promise<{ created: CreatedDataset[]; skipped: string[]; error?: string }> {
+    const formData = new FormData();
+    formData.append("file", fileToUpload);
+    formData.append("projectId", projectId);
+    formData.append("name", displayName);
+    formData.append("description", description.trim());
+    if (targetSheetName) formData.append("sheetName", targetSheetName);
+
+    const res = await fetch("/api/upload", { method: "POST", body: formData });
+
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}));
+      const message = body.error ?? `Upload failed (HTTP ${res.status} ${res.statusText}).`;
+      return { created: [], skipped: [], error: message };
     }
+
+    if (!res.body || !(res.headers.get("content-type") ?? "").includes("ndjson")) {
+      return { created: [], skipped: [], error: "Upload failed: unexpected server response." };
+    }
+
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = "";
+    const created: CreatedDataset[] = [];
+    const skipped: string[] = [];
+    let errMessage: string | undefined;
+
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+
+      const lines = buffer.split("\n");
+      buffer = lines.pop() ?? "";
+      for (const line of lines) {
+        const trimmed = line.trim();
+        if (!trimmed) continue;
+        try {
+          const event = JSON.parse(trimmed) as Record<string, unknown>;
+          if (event.type === "done" && Array.isArray(event.datasets)) {
+            created.push(...(event.datasets as CreatedDataset[]));
+          }
+          if (event.type === "done" && Array.isArray(event.skipped)) {
+            skipped.push(...(event.skipped as string[]));
+          }
+          if (event.type === "error") {
+            errMessage = String(event.message ?? "Upload failed.");
+          }
+        } catch {
+          // Ignore malformed lines
+        }
+      }
+    }
+
+    return { created, skipped, error: errMessage };
   }
 
   async function handleUpload() {
     if (state.status !== "selected") return;
-    const { file } = state;
+    const { file, fileType } = state;
+    const baseName = name.trim() || file.name.replace(/\.[^.]+$/, "");
 
-    setState({ status: "uploading", file, phase: "Uploading workbook…", sheetStatuses: [] });
+    if (fileType === "XLSX") {
+      setState({ status: "uploading", file, phase: "Reading workbook sheets…", sheetStatuses: [] });
+      try {
+        const buffer = await file.arrayBuffer();
+        const wb = XLSX.read(buffer, { type: "array", cellDates: true });
+        const sheetNames = wb.SheetNames ?? [];
 
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("projectId", projectId);
-    formData.append("name", name.trim() || file.name);
-    formData.append("description", description.trim());
+        if (sheetNames.length === 0) {
+          setState({ status: "error", message: "Could not read workbook. No sheets found." });
+          return;
+        }
 
-    try {
-      const res = await fetch("/api/upload", { method: "POST", body: formData });
+        setState({
+          status: "uploading",
+          file,
+          phase: `Found ${sheetNames.length} sheet${sheetNames.length === 1 ? "" : "s"}`,
+          sheetStatuses: sheetNames.map((s) => ({ name: s, state: "pending" })),
+        });
 
-      if (!res.ok) {
-        const body = await res.json().catch(() => ({}));
-        const message =
-          body.error ?? `Upload failed (HTTP ${res.status} ${res.statusText}).`;
-        setState({ status: "error", message });
-        return;
-      }
+        const allCreated: CreatedDataset[] = [];
+        const allSkipped: string[] = [];
 
-      // NDJSON progress stream: parse line by line as it arrives.
-      if (!res.body || !(res.headers.get("content-type") ?? "").includes("ndjson")) {
-        setState({ status: "error", message: "Upload failed: unexpected server response." });
-        return;
-      }
+        for (const sheetName of sheetNames) {
+          patchSheet(sheetName, { state: "importing" });
+          setState((prev) =>
+            prev.status === "uploading" ? { ...prev, phase: `Importing ${sheetName}…` } : prev
+          );
 
-      const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-      let buffer = "";
+          const worksheet = wb.Sheets[sheetName];
+          if (!worksheet) {
+            patchSheet(sheetName, { state: "skipped", detail: "Sheet not found" });
+            allSkipped.push(`${sheetName}: Sheet not found`);
+            continue;
+          }
 
-      for (;;) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        buffer += decoder.decode(value, { stream: true });
+          const csvText = XLSX.utils.sheet_to_csv(worksheet);
+          if (!csvText || !csvText.trim()) {
+            patchSheet(sheetName, { state: "skipped", detail: "Sheet is empty" });
+            allSkipped.push(`${sheetName}: Sheet is empty`);
+            continue;
+          }
 
-        const lines = buffer.split("\n");
-        buffer = lines.pop() ?? "";
-        for (const line of lines) {
-          const trimmed = line.trim();
-          if (!trimmed) continue;
-          try {
-            handleProgressEvent(JSON.parse(trimmed) as Record<string, unknown>);
-          } catch {
-            // Ignore malformed lines; the next valid event still applies.
+          const sheetFileName = `${file.name.replace(/\.[^.]+$/, "")}_${sheetName}.csv`;
+          const sheetFile = new File([csvText], sheetFileName, { type: "text/csv" });
+          const sheetDisplayName = sheetNames.length > 1 ? `${baseName} - ${sheetName}` : baseName;
+
+          const res = await uploadSingleFilePayload(sheetFile, sheetDisplayName, sheetName);
+          if (res.error) {
+            patchSheet(sheetName, { state: "skipped", detail: res.error });
+            allSkipped.push(`${sheetName}: ${res.error}`);
+          } else if (res.created.length > 0) {
+            patchSheet(sheetName, { state: "done" });
+            allCreated.push(...res.created);
+          } else {
+            const reason = res.skipped[0] || "Sheet could not be imported";
+            patchSheet(sheetName, { state: "skipped", detail: reason });
+            allSkipped.push(`${sheetName}: ${reason}`);
           }
         }
+
+        if (allCreated.length === 0) {
+          setState({
+            status: "error",
+            message: `Could not parse workbook. ${allSkipped[0]?.split(": ")[1] ?? "Sheets appear empty."}`,
+          });
+        } else {
+          setState({ status: "success", datasets: allCreated, skipped: allSkipped });
+          onSuccess?.(allCreated[0]?.id);
+        }
+      } catch (err) {
+        console.error("[upload-dropzone] XLSX parse error:", err);
+        setState({ status: "error", message: "Failed to process Excel workbook." });
+      }
+      return;
+    }
+
+    // CSV / JSON direct upload
+    setState({ status: "uploading", file, phase: "Uploading file…", sheetStatuses: [] });
+    try {
+      const res = await uploadSingleFilePayload(file, baseName);
+      if (res.error) {
+        setState({ status: "error", message: res.error });
+      } else if (res.created.length > 0) {
+        setState({ status: "success", datasets: res.created, skipped: res.skipped });
+        onSuccess?.(res.created[0]?.id);
+      } else {
+        setState({ status: "error", message: res.skipped[0] ?? "Upload failed." });
       }
     } catch {
       setState({ status: "error", message: "Network error. Please try again." });
@@ -261,7 +307,7 @@ export function UploadDropzone({ projectId, onSuccess, className }: UploadDropzo
               <input {...getInputProps()} />
               <div className="flex size-14 items-center justify-center rounded-xl gradient-brand shadow-lg">
                 <Image
-                  src="/logo-mark.png"
+                  src="/logo-icon.png"
                   alt="Logo"
                   width={40}
                   height={40}
