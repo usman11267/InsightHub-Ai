@@ -58,22 +58,40 @@ export async function POST(req: Request) {
           break;
         }
 
-        const user = await prisma.user.upsert({
-          where: { clerkId: id },
-          update: {
-            email,
-            firstName: first_name,
-            lastName: last_name,
-            imageUrl: image_url,
-          },
-          create: {
-            clerkId: id,
-            email,
-            firstName: first_name,
-            lastName: last_name,
-            imageUrl: image_url,
-          },
-        });
+        let user;
+        try {
+          user = await prisma.user.upsert({
+            where: { clerkId: id },
+            update: {
+              email,
+              firstName: first_name,
+              lastName: last_name,
+              imageUrl: image_url,
+            },
+            create: {
+              clerkId: id,
+              email,
+              firstName: first_name,
+              lastName: last_name,
+              imageUrl: image_url,
+            },
+          });
+        } catch {
+          const existingByEmail = await prisma.user.findUnique({ where: { email } });
+          if (existingByEmail) {
+            user = await prisma.user.update({
+              where: { id: existingByEmail.id },
+              data: {
+                clerkId: id,
+                firstName: first_name ?? undefined,
+                lastName: last_name ?? undefined,
+                imageUrl: image_url ?? undefined,
+              },
+            });
+          } else {
+            throw new Error("Failed to sync user via webhook");
+          }
+        }
 
         if (event.type === "user.created") {
           await Promise.all([

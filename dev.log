@@ -834,3 +834,4 @@ Error: write EPIPE
   code: 'EPIPE',
   syscall: 'write'
 }
+  Reload env: .env
