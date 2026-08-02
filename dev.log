@@ -1030,3 +1030,1236 @@ Error: write EPIPE
 }
   Reload env: .env
 ✓ Compiled in 140ms
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+✓ Compiled in 963ms
+✓ Compiled in 711ms
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+✓ Compiled in 689ms
+✓ Compiled in 520ms
+✓ Compiled in 185ms
+✓ Compiled in 310ms
+✓ Compiled in 342ms
+✓ Compiled in 321ms
+✓ Compiled in 147ms
+✓ Compiled in 227ms
+✓ Compiled in 300ms
+✓ Compiled in 296ms
+✓ Compiled in 344ms
+✓ Compiled in 356ms
+✓ Compiled in 323ms
+✓ Compiled in 231ms
+ GET / 200 in 2.2s (next.js: 437ms, proxy.ts: 579ms, application-code: 1198ms)
+ GET / 200 in 4.9s (next.js: 186ms, proxy.ts: 407ms, application-code: 4.3s)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477:13)
+✓ Compiled in 345ms
+ GET / 200 in 5.4s (next.js: 470ms, proxy.ts: 709ms, application-code: 4.2s)
+ GET / 200 in 5.1s (next.js: 218ms, proxy.ts: 549ms, application-code: 4.4s)
+ GET / 200 in 4.2s (next.js: 371ms, proxy.ts: 526ms, application-code: 3.3s)
+ GET / 200 in 5.0s (next.js: 234ms, proxy.ts: 1549ms, application-code: 3.2s)
+✓ Compiled in 279ms
+ GET / 200 in 4.2s (next.js: 411ms, proxy.ts: 559ms, application-code: 3.3s)
+ GET / 200 in 4.8s (next.js: 194ms, proxy.ts: 1318ms, application-code: 3.3s)
+ GET / 200 in 4.5s (next.js: 351ms, proxy.ts: 568ms, application-code: 3.5s)
+ GET / 200 in 5.3s (next.js: 202ms, proxy.ts: 1278ms, application-code: 3.9s)
+ GET / 200 in 4.5s (next.js: 416ms, proxy.ts: 597ms, application-code: 3.5s)
+ GET / 200 in 4.9s (next.js: 223ms, proxy.ts: 1295ms, application-code: 3.4s)
+ GET / 200 in 4.3s (next.js: 368ms, proxy.ts: 545ms, application-code: 3.4s)
+ GET / 200 in 4.8s (next.js: 199ms, proxy.ts: 1373ms, application-code: 3.3s)
+✓ Compiled in 282ms
+(node:20964) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 unpipe listeners added to [SyncWriteStream]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:20964) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 error listeners added to [SyncWriteStream]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+(node:20964) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 close listeners added to [SyncWriteStream]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+(node:20964) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 finish listeners added to [SyncWriteStream]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+(node:20964) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 unpipe listeners added to [SyncWriteStream]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+(node:20964) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 error listeners added to [SyncWriteStream]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+(node:20964) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 close listeners added to [SyncWriteStream]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+(node:20964) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 finish listeners added to [SyncWriteStream]. MaxListeners is 10. Use emitter.setMaxListeners() to increase limit
+⨯ Error: Jest worker encountered 2 child process exceptions, exceeding retry limit
+    at ignore-listed frames {
+  type: 'WorkerError',
+  page: '/sign-up'
+}
+ GET /sign-up 500 in 1954ms (next.js: 1265ms, proxy.ts: 533ms, application-code: 156ms)
+⨯ Error: Jest worker encountered 2 child process exceptions, exceeding retry limit
+    at ignore-listed frames {
+  type: 'WorkerError',
+  page: '/sign-up'
+}
+ GET / 200 in 5.8s (next.js: 474ms, proxy.ts: 681ms, application-code: 4.6s)
+ GET /sign-up 500 in 1595ms (next.js: 1003ms, proxy.ts: 424ms, application-code: 168ms)
+ GET / 200 in 4.6s (next.js: 254ms, proxy.ts: 831ms, application-code: 3.5s)
+ GET / 200 in 6.4s (next.js: 488ms, proxy.ts: 1631ms, application-code: 4.3s)
+ GET / 200 in 5.4s (next.js: 294ms, proxy.ts: 845ms, application-code: 4.2s)
+[browser] Uncaught Error: Jest worker encountered 2 child process exceptions, exceeding retry limit
+ GET / 200 in 5.6s (next.js: 384ms, proxy.ts: 1505ms, application-code: 3.7s)
+ GET / 200 in 5.1s (next.js: 356ms, proxy.ts: 1158ms, application-code: 3.6s)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477:13)
+✓ Compiled in 907ms
+ GET / 200 in 6.8s (next.js: 491ms, proxy.ts: 1622ms, application-code: 4.7s)
+ GET / 200 in 5.3s (next.js: 312ms, proxy.ts: 703ms, application-code: 4.3s)
+ GET / 200 in 5.3s (next.js: 257ms, proxy.ts: 616ms, application-code: 4.4s)
+ GET / 200 in 5.3s (next.js: 456ms, proxy.ts: 618ms, application-code: 4.2s)
+ GET / 200 in 5.3s (next.js: 381ms, proxy.ts: 618ms, application-code: 4.3s)
+ GET / 200 in 5.3s (next.js: 328ms, proxy.ts: 617ms, application-code: 4.3s)
+ GET / 200 in 5.5s (next.js: 308ms, proxy.ts: 522ms, application-code: 4.7s)
+ GET / 200 in 5.3s (next.js: 253ms, proxy.ts: 618ms, application-code: 4.5s)
+ GET / 200 in 5.8s (next.js: 412ms, proxy.ts: 637ms, application-code: 4.7s)
+ GET / 200 in 5.8s (next.js: 348ms, proxy.ts: 638ms, application-code: 4.8s)
+ GET / 200 in 5.8s (next.js: 278ms, proxy.ts: 638ms, application-code: 4.9s)
+ GET / 200 in 5.9s (next.js: 489ms, proxy.ts: 630ms, application-code: 4.7s)
+✓ Compiled in 1933ms
+ GET / 200 in 7.8s (next.js: 279ms, proxy.ts: 540ms, application-code: 7.0s)
+ GET / 200 in 8.4s (next.js: 1661ms, proxy.ts: 917ms, application-code: 5.9s)
+ GET / 200 in 7.6s (next.js: 979ms, proxy.ts: 1468ms, application-code: 5.1s)
+ GET / 200 in 7.6s (next.js: 1102ms, proxy.ts: 1466ms, application-code: 5.0s)
+ GET / 200 in 7.2s (next.js: 271ms, proxy.ts: 1824ms, application-code: 5.1s)
+ GET / 200 in 9.5s (next.js: 283ms, proxy.ts: 4.3s, application-code: 5.0s)
+ GET / 200 in 6.1s (next.js: 406ms, proxy.ts: 845ms, application-code: 4.9s)
+ GET / 200 in 5.6s (next.js: 247ms, proxy.ts: 702ms, application-code: 4.7s)
+ GET / 200 in 5.6s (next.js: 367ms, proxy.ts: 701ms, application-code: 4.6s)
+ GET / 200 in 5.6s (next.js: 310ms, proxy.ts: 702ms, application-code: 4.6s)
+ GET / 200 in 5.7s (next.js: 254ms, proxy.ts: 543ms, application-code: 4.9s)
+ GET / 200 in 5.8s (next.js: 350ms, proxy.ts: 697ms, application-code: 4.7s)
+ GET / 200 in 5.6s (next.js: 281ms, proxy.ts: 595ms, application-code: 4.7s)
+ GET / 200 in 5.7s (next.js: 259ms, proxy.ts: 670ms, application-code: 4.7s)
+ GET / 200 in 5.7s (next.js: 339ms, proxy.ts: 670ms, application-code: 4.7s)
+ GET / 200 in 5.7s (next.js: 412ms, proxy.ts: 639ms, application-code: 4.6s)
+ GET / 200 in 5.8s (next.js: 239ms, proxy.ts: 591ms, application-code: 5.0s)
+ GET / 200 in 5.9s (next.js: 277ms, proxy.ts: 668ms, application-code: 4.9s)
+ GET / 200 in 4.9s (next.js: 304ms, proxy.ts: 737ms, application-code: 3.8s)
+ GET / 200 in 9.8s (next.js: 279ms, proxy.ts: 682ms, application-code: 8.8s)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477:13)
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+[browser] Encountered a script tag while rendering React component. Scripts inside React components are never executed when rendering on the client. Consider using template tag instead (https://developer.mozilla.org/en-US/docs/Web/HTML/Element/template). 
+    at completeWork (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:6945:102)
+    at runWithFiberInDEV (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:965:74)
+    at completeUnitOfWork (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9622:23)
+    at performUnitOfWork (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9557:28)
+    at workLoopSync (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9449:40)
+    at renderRootSync (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9433:13)
+    at performWorkOnRoot (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9098:47)
+    at performWorkOnRootViaSchedulerTask (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:10255:9)
+    at MessagePort.performWorkUntilDeadline (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_compiled_1amofcm._.js:2647:64) (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:6945:102)
+[browser] Uncaught Error: Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <SegmentViewNode type="layout" pagePath="(dashboard...">
+      <SegmentTrieNode>
+      <script>
+      <script>
+      <script>
+      <DashboardLayout>
+        <SidebarProvider>
+          <div className="flex min-h...">
+            <Sidebar>
+            <div className="flex min-w...">
+              <Topbar unreadCount={0}>
+                <header className="sticky top...">
+                  <Dialog>
+                  <button>
+                  <div className="ml-auto fl...">
+                    <_c>
+                    <ThemeToggle>
+                    <div className="ml-1">
+                      <withClerk(UserButton) appearance={{elements:{...}}} userProfileMode="navigation" ...>
+                        <UserButton getContainer={function} appearance={{elements:{...}}} userProfileMode="navigation" ...>
+                          <ClerkHostRenderer component="UserButton" mount={function} unmount={function} ...>
++                           <div ref={{current:null}} data-clerk-component="UserButton">
+                            ...
+              ...
+          ...
+
+    at <unknown> (https://react.dev/link/hydration-mismatch)
+    at throwOnHydrationMismatch (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:3318:56)
+    at beginWork (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:6758:918)
+    at runWithFiberInDEV (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:965:74)
+    at performUnitOfWork (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9555:97)
+    at workLoopConcurrentByScheduler (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9551:58)
+    at renderRootConcurrent (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9534:71)
+    at performWorkOnRoot (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9061:150)
+    at performWorkOnRootViaSchedulerTask (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:10255:9)
+    at MessagePort.performWorkUntilDeadline (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_compiled_1amofcm._.js:2647:64)
+    at div (<anonymous>)
+    at DashboardLayout (app\(dashboard)\layout.tsx:37:11)
+  35 |         <Sidebar />
+  36 |         <div className="flex min-w-0 flex-1 flex-col">
+> 37 |           <Topbar unreadCount={unreadCount} />
+     |           ^
+  38 |           <main className="flex-1 px-4 py-6 lg:px-8 lg:py-8">
+  39 |             <div className="mx-auto w-full max-w-7xl page-enter">{children}</div>
+  40 |           </main>
+[browser] Uncaught TypeError: Cannot read properties of null (reading 'parentNode')
+    at $RS (http://localhost:3000/dashboard:25:113300)
+    at <unknown> (http://localhost:3000/dashboard:25:113369)
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+ GET /dashboard 200 in 11.4s (next.js: 735ms, proxy.ts: 807ms, application-code: 9.9s)
+ GET /dashboard/datasets 200 in 4.6s (next.js: 603ms, proxy.ts: 829ms, application-code: 3.2s)
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ Error: Jest worker encountered 2 child process exceptions, exceeding retry limit
+    at ignore-listed frames {
+  type: 'WorkerError',
+  page: '/dashboard/datasets/cmsb72qlw00076cfh7r6204c6'
+}
+ GET /dashboard/datasets/cmsb72qlw00076cfh7r6204c6 500 in 2.1s (next.js: 1270ms, proxy.ts: 667ms, application-code: 209ms)
+⨯ Error: Jest worker encountered 2 child process exceptions, exceeding retry limit
+    at ignore-listed frames {
+  type: 'WorkerError',
+  page: '/dashboard/datasets/cmsb72qlw00076cfh7r6204c6'
+}
+ GET /dashboard/datasets/cmsb72qlw00076cfh7r6204c6 500 in 1935ms (next.js: 1053ms, proxy.ts: 668ms, application-code: 214ms)
+[browser] Uncaught Error: Jest worker encountered 2 child process exceptions, exceeding retry limit
+ GET /dashboard/datasets 200 in 7.2s (next.js: 270ms, proxy.ts: 657ms, application-code: 6.3s)
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477:13)
+✓ Compiled in 145ms
+ GET /dashboard/datasets 200 in 6.7s (next.js: 427ms, proxy.ts: 2.2s, application-code: 4.1s)
+ GET /dashboard/datasets 200 in 4.8s (next.js: 316ms, proxy.ts: 643ms, application-code: 3.8s)
+✓ Compiled in 655ms
+ GET /dashboard/datasets 200 in 6.1s (next.js: 506ms, proxy.ts: 1694ms, application-code: 3.9s)
+ GET /dashboard/datasets 200 in 4.7s (next.js: 323ms, proxy.ts: 867ms, application-code: 3.5s)
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+✓ Compiled in 419ms
+ GET /dashboard/datasets 200 in 5.6s (next.js: 478ms, proxy.ts: 1633ms, application-code: 3.5s)
+ GET /dashboard/datasets 200 in 4.4s (next.js: 269ms, proxy.ts: 652ms, application-code: 3.5s)
+✓ Compiled in 303ms
+ GET /dashboard/datasets 200 in 5.8s (next.js: 454ms, proxy.ts: 1751ms, application-code: 3.6s)
+ GET /dashboard/datasets 200 in 4.4s (next.js: 269ms, proxy.ts: 661ms, application-code: 3.5s)
+✓ Compiled in 313ms
+ GET /dashboard/datasets 200 in 6.6s (next.js: 427ms, proxy.ts: 1767ms, application-code: 4.4s)
+ GET /dashboard/datasets 200 in 5.2s (next.js: 328ms, proxy.ts: 660ms, application-code: 4.2s)
+ GET /dashboard/datasets 200 in 5.3s (next.js: 473ms, proxy.ts: 716ms, application-code: 4.1s)
+ GET /dashboard/datasets 200 in 5.3s (next.js: 407ms, proxy.ts: 717ms, application-code: 4.1s)
+ GET /dashboard/datasets 200 in 5.3s (next.js: 339ms, proxy.ts: 717ms, application-code: 4.2s)
+ GET /dashboard/datasets 200 in 5.3s (next.js: 279ms, proxy.ts: 716ms, application-code: 4.3s)
+ GET /dashboard/datasets 200 in 5.2s (next.js: 324ms, proxy.ts: 722ms, application-code: 4.1s)
+ GET /dashboard/datasets 200 in 5.0s (next.js: 315ms, proxy.ts: 827ms, application-code: 3.9s)
+ GET /dashboard/datasets 200 in 4.8s (next.js: 379ms, proxy.ts: 710ms, application-code: 3.8s)
+ GET /dashboard/datasets 200 in 4.8s (next.js: 332ms, proxy.ts: 710ms, application-code: 3.8s)
+ GET /dashboard/datasets 200 in 4.8s (next.js: 285ms, proxy.ts: 710ms, application-code: 3.9s)
+ GET /dashboard/datasets 200 in 4.8s (next.js: 433ms, proxy.ts: 682ms, application-code: 3.7s)
+ GET /dashboard/datasets 200 in 5.0s (next.js: 279ms, proxy.ts: 626ms, application-code: 4.1s)
+✓ Compiled in 304ms
+ GET /dashboard/datasets 200 in 5.4s (next.js: 285ms, proxy.ts: 746ms, application-code: 4.4s)
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+ GET /dashboard/datasets 200 in 5.9s (next.js: 296ms, proxy.ts: 751ms, application-code: 4.9s)
+ GET /dashboard/datasets 200 in 5.9s (next.js: 343ms, proxy.ts: 750ms, application-code: 4.9s)
+ GET /dashboard/datasets 200 in 5.9s (next.js: 395ms, proxy.ts: 711ms, application-code: 4.8s)
+ GET /dashboard/datasets 200 in 5.9s (next.js: 499ms, proxy.ts: 670ms, application-code: 4.7s)
+ GET /dashboard/datasets 200 in 6.1s (next.js: 532ms, proxy.ts: 1029ms, application-code: 4.5s)
+ GET /dashboard/datasets 200 in 5.9s (next.js: 298ms, proxy.ts: 1565ms, application-code: 4.0s)
+ GET /dashboard/datasets 200 in 5.9s (next.js: 361ms, proxy.ts: 1572ms, application-code: 4.0s)
+ GET /dashboard/datasets 200 in 5.9s (next.js: 511ms, proxy.ts: 1569ms, application-code: 3.8s)
+ GET /dashboard/datasets 200 in 5.9s (next.js: 442ms, proxy.ts: 1566ms, application-code: 3.9s)
+ GET /dashboard/datasets 200 in 4.7s (next.js: 279ms, proxy.ts: 834ms, application-code: 3.6s)
+ GET /dashboard/datasets 200 in 4.9s (next.js: 285ms, proxy.ts: 689ms, application-code: 3.9s)
+ GET /dashboard/datasets 200 in 5.2s (next.js: 294ms, proxy.ts: 642ms, application-code: 4.3s)
+ GET /dashboard/datasets 200 in 5.3s (next.js: 355ms, proxy.ts: 642ms, application-code: 4.3s)
+ GET /dashboard/datasets 200 in 5.3s (next.js: 482ms, proxy.ts: 650ms, application-code: 4.2s)
+ GET /dashboard/datasets 200 in 5.3s (next.js: 433ms, proxy.ts: 649ms, application-code: 4.2s)
+ GET /dashboard/datasets 200 in 5.3s (next.js: 290ms, proxy.ts: 859ms, application-code: 4.1s)
+ GET /dashboard/datasets 200 in 5.6s (next.js: 289ms, proxy.ts: 762ms, application-code: 4.5s)
+ GET /dashboard/datasets 200 in 5.2s (next.js: 283ms, proxy.ts: 731ms, application-code: 4.2s)
+ GET /dashboard/datasets 200 in 5.2s (next.js: 375ms, proxy.ts: 689ms, application-code: 4.1s)
+ GET /dashboard/datasets 200 in 5.2s (next.js: 329ms, proxy.ts: 690ms, application-code: 4.2s)
+ GET /dashboard/datasets 200 in 5.2s (next.js: 488ms, proxy.ts: 668ms, application-code: 4.0s)
+✓ Compiled in 131ms
+ GET /dashboard/datasets 200 in 6.2s (next.js: 478ms, proxy.ts: 1582ms, application-code: 4.2s)
+ GET /dashboard/datasets 200 in 5.1s (next.js: 301ms, proxy.ts: 724ms, application-code: 4.0s)
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+✓ Compiled in 132ms
+ GET /dashboard/datasets 200 in 5.5s (next.js: 479ms, proxy.ts: 1470ms, application-code: 3.5s)
+✓ Compiled in 120ms
+ GET /dashboard/datasets 200 in 4.5s (next.js: 259ms, proxy.ts: 641ms, application-code: 3.6s)
+ GET /dashboard/datasets 200 in 5.6s (next.js: 426ms, proxy.ts: 1702ms, application-code: 3.5s)
+ GET /dashboard/datasets 200 in 4.4s (next.js: 269ms, proxy.ts: 652ms, application-code: 3.5s)
+✓ Compiled in 296ms
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+ GET /dashboard/datasets 200 in 5.5s (next.js: 437ms, proxy.ts: 1435ms, application-code: 3.6s)
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+ GET /dashboard/datasets 200 in 5.8s (next.js: 453ms, proxy.ts: 1577ms, application-code: 3.8s)
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+✓ Compiled in 411ms
+ GET /dashboard/datasets 200 in 5.8s (next.js: 492ms, proxy.ts: 1589ms, application-code: 3.7s)
+ GET /dashboard/datasets 200 in 4.6s (next.js: 268ms, proxy.ts: 679ms, application-code: 3.6s)
+ GET /dashboard/datasets 200 in 4.5s (next.js: 265ms, proxy.ts: 689ms, application-code: 3.5s)
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+ GET /dashboard/datasets 200 in 6.0s (next.js: 483ms, proxy.ts: 1662ms, application-code: 3.8s)
+✓ Compiled in 153ms
+ GET /dashboard/datasets 200 in 5.4s (next.js: 429ms, proxy.ts: 1481ms, application-code: 3.5s)
+✓ Compiled in 160ms
+ GET /dashboard/datasets 200 in 5.5s (next.js: 473ms, proxy.ts: 1399ms, application-code: 3.6s)
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+✓ Compiled in 303ms
+ GET /dashboard/datasets 200 in 7.4s (next.js: 523ms, proxy.ts: 2.1s, application-code: 4.8s)
+ GET /dashboard/datasets 200 in 5.4s (next.js: 340ms, proxy.ts: 775ms, application-code: 4.3s)
+ GET /dashboard/datasets 200 in 5.3s (next.js: 387ms, proxy.ts: 738ms, application-code: 4.2s)
+ GET /dashboard/datasets 200 in 5.3s (next.js: 435ms, proxy.ts: 738ms, application-code: 4.1s)
+ GET /dashboard/datasets 200 in 5.3s (next.js: 293ms, proxy.ts: 738ms, application-code: 4.3s)
+ GET /dashboard/datasets 200 in 5.3s (next.js: 340ms, proxy.ts: 738ms, application-code: 4.2s)
+ GET /dashboard/datasets 200 in 5.3s (next.js: 300ms, proxy.ts: 639ms, application-code: 4.3s)
+ GET /dashboard/datasets 200 in 5.3s (next.js: 327ms, proxy.ts: 900ms, application-code: 4.0s)
+ GET /dashboard/datasets 200 in 5.1s (next.js: 351ms, proxy.ts: 729ms, application-code: 4.0s)
+ GET /dashboard/datasets 200 in 5.1s (next.js: 301ms, proxy.ts: 730ms, application-code: 4.0s)
+ GET /dashboard/datasets 200 in 5.1s (next.js: 402ms, proxy.ts: 716ms, application-code: 4.0s)
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+✓ Compiled in 148ms
+ GET /dashboard/datasets 200 in 8.4s (next.js: 598ms, proxy.ts: 2.4s, application-code: 5.4s)
+ GET /dashboard/datasets 200 in 6.1s (next.js: 454ms, proxy.ts: 858ms, application-code: 4.8s)
+✓ Compiled in 226ms
+ GET /dashboard/datasets 200 in 6.1s (next.js: 526ms, proxy.ts: 1618ms, application-code: 4.0s)
+ GET /dashboard/datasets 200 in 4.9s (next.js: 305ms, proxy.ts: 734ms, application-code: 3.9s)
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+✓ Compiled in 2.3s
+✓ Compiled in 896ms
+✓ Compiled in 121ms
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+ GET /dashboard 307 in 2.2s (next.js: 503ms, proxy.ts: 666ms, application-code: 1058ms)
+ GET /dashboard/datasets 307 in 2.0s (next.js: 459ms, proxy.ts: 521ms, application-code: 1035ms)
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}

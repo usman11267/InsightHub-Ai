@@ -20,12 +20,14 @@
   --card-foreground: #0F172A;
   --popover: #FFFFFF;
   --popover-foreground: #0F172A;
-  --sidebar: #0F172A;
-  --sidebar-foreground: #94A3B8;
-  --sidebar-hover: #1E293B;
+  /* Sidebar follows the theme: a light rail on light, slate on dark.
+     Its own token set keeps nav chrome independent of card surfaces. */
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #475569;
+  --sidebar-hover: #F1F5F9;
   --sidebar-active: #2563EB;
-  --sidebar-border: #1E293B;
-  --sidebar-title: #F8FAFC;
+  --sidebar-border: #E2E8F0;
+  --sidebar-title: #0F172A;
 
   /* Brand Palette */
   --primary: #2563EB;

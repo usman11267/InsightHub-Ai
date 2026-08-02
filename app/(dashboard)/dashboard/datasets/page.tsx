@@ -9,7 +9,7 @@ import { getProjectOptions } from "@/features/projects/queries";
 import { datasetFiltersSchema } from "@/features/datasets/schemas";
 import { DatasetCard } from "@/features/datasets/components/dataset-card";
 import { DatasetFilters } from "@/features/datasets/components/dataset-filters";
-import { UploadDropzone } from "@/features/datasets/components/upload-dropzone";
+import { UploadPanel } from "@/features/datasets/components/upload-panel";
 import { PageHeader } from "@/components/shared/page-header";
 import { StatCard } from "@/components/shared/stat-card";
 import { EmptyState } from "@/components/shared/empty-state";
@@ -47,8 +47,6 @@ export default async function DatasetsPage({ searchParams }: PageProps) {
     getProjectOptions(user.id),
   ]);
 
-  const defaultProjectId = projects[0]?.id ?? "";
-
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between gap-4">
@@ -76,24 +74,7 @@ export default async function DatasetsPage({ searchParams }: PageProps) {
                 </Button>
               </div>
             ) : (
-              <div className="space-y-4">
-                {/* Project selector */}
-                <div>
-                  <label className="mb-1.5 block text-sm font-medium">Project</label>
-                  <select
-                    id="upload-project-select"
-                    className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring"
-                    defaultValue={defaultProjectId}
-                  >
-                    {projects.map((p) => (
-                      <option key={p.id} value={p.id}>
-                        {p.name}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <UploadDropzone projectId={defaultProjectId} />
-              </div>
+              <UploadPanel projects={projects} />
             )}
           </DialogContent>
         </Dialog>

@@ -120,10 +120,14 @@ export function UploadDropzone({ projectId, onSuccess, className }: UploadDropzo
 
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
+        // Surface the status when the body is empty or not JSON — a bare
+        // "Upload failed" gives the user nothing to act on.
+        const message =
+          body.error ?? `Upload failed (HTTP ${res.status} ${res.statusText}).`;
         if (res.status === 409) {
-          setState({ status: "error", message: body.error, duplicateId: body.duplicateId });
+          setState({ status: "error", message, duplicateId: body.duplicateId });
         } else {
-          setState({ status: "error", message: body.error ?? "Upload failed" });
+          setState({ status: "error", message });
         }
         return;
       }
