@@ -149,7 +149,7 @@ CLERK_SECRET_KEY="sk_test_..."
 CLERK_WEBHOOK_SECRET="whsec_..."
 
 GROQ_API_KEY="gsk_..."
-GROQ_MODEL="gpt-oss-120b"
+GROQ_MODEL="openai/gpt-oss-120b"
 
 NEXT_PUBLIC_APP_URL="http://localhost:3000"
 ```

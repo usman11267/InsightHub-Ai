@@ -14,11 +14,11 @@ import Groq from "groq-sdk";
  */
 
 // ─── Model constants ───────────────────────────────────────────────────────
-/** Primary heavy model — Llama 3.3 70B Versatile (70B parameters, 128k context). */
-export const GROQ_MODEL = process.env.GROQ_MODEL || "llama-3.3-70b-versatile";
+/** Primary heavy model — openai/gpt-oss-120b (configurable via GROQ_MODEL env). */
+export const GROQ_MODEL = process.env.GROQ_MODEL || "openai/gpt-oss-120b";
 
-/** Fast interactive model — Llama 3.1 8B Instant. */
-export const GROQ_MODEL_FAST = process.env.GROQ_MODEL_FAST || "llama-3.1-8b-instant";
+/** Fast interactive model — openai/gpt-oss-120b. */
+export const GROQ_MODEL_FAST = process.env.GROQ_MODEL_FAST || "openai/gpt-oss-120b";
 
 /** DeepSeek R1 70B Reasoning model. */
 export const GROQ_MODEL_DEEPSEEK = "deepseek-r1-distill-llama-70b";

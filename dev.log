@@ -1010,3 +1010,23 @@ Error: write EPIPE
 ✓ Compiled in 220ms
 ✓ Compiled in 198ms
 ✓ Compiled in 190ms
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+  Reload env: .env
+✓ Compiled in 140ms
