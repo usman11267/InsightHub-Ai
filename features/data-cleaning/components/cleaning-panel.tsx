@@ -88,7 +88,11 @@ export function CleaningPanel({ datasetId, schema, canEdit }: CleaningPanelProps
         setSuggestions(result.data.suggestions);
         setSuggestionTried(true);
       } else {
-        toast.success(result.data.description);
+        if (result.data.rowsAffected === 0) {
+          toast.info(result.data.description);
+        } else {
+          toast.success(result.data.description);
+        }
         router.refresh();
       }
     } finally {

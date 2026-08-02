@@ -147,3 +147,52 @@ export const datasetFiltersSchema = z.object({
 export type UploadDatasetInput = z.input<typeof uploadDatasetSchema>;
 export type UpdateDatasetInput = z.input<typeof updateDatasetSchema>;
 export type DatasetFilters = z.output<typeof datasetFiltersSchema>;
+
+export type ColumnSchema = {
+  name: string;
+  inferredType: "string" | "number" | "boolean" | "date" | "mixed";
+  missingCount: number;
+  uniqueCount: number;
+};
+
+export type ParsedRow = Record<string, unknown>;
+
+export function inferColumnType(values: unknown[]): ColumnSchema["inferredType"] {
+  const nonNull = values.filter((v) => v !== null && v !== "" && v !== undefined);
+  if (nonNull.length === 0) return "string";
+
+  let numCount = 0;
+  let boolCount = 0;
+  let dateCount = 0;
+
+  for (const v of nonNull) {
+    const s = String(v).trim();
+    if (!isNaN(Number(s)) && s !== "") numCount++;
+    else if (["true", "false", "yes", "no", "1", "0"].includes(s.toLowerCase())) boolCount++;
+    else if (!isNaN(Date.parse(s)) && s.length >= 8) dateCount++;
+  }
+
+  const ratio = (count: number) => count / nonNull.length;
+  if (ratio(numCount) > 0.85) return "number";
+  if (ratio(boolCount) > 0.85) return "boolean";
+  if (ratio(dateCount) > 0.85) return "date";
+  return "string";
+}
+
+export function buildSchema(rows: ParsedRow[]): ColumnSchema[] {
+  if (rows.length === 0) return [];
+  const columns = Object.keys(rows[0]);
+
+  return columns.map((name) => {
+    const values = rows.map((r) => r[name] ?? null);
+    const nonNull = values.filter((v) => v !== null && v !== "" && v !== undefined).length;
+    const unique = new Set(values.map(String)).size;
+
+    return {
+      name,
+      inferredType: inferColumnType(values),
+      missingCount: values.length - nonNull,
+      uniqueCount: unique,
+    };
+  });
+}

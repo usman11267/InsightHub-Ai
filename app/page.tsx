@@ -110,11 +110,11 @@ export default function LandingPage() {
           <Link href="/" className="flex items-center gap-2.5 group">
             <div className="flex size-9 items-center justify-center overflow-hidden rounded-xl gradient-brand shadow-md shadow-primary/25 transition-transform group-hover:scale-105">
               <Image
-                src="/logo.png"
+                src="/logo-mark.png"
                 alt="InsightHub AI logo"
                 width={32}
                 height={32}
-                className="size-7 object-cover"
+                className="size-7 object-contain"
               />
             </div>
             <div className="flex flex-col">

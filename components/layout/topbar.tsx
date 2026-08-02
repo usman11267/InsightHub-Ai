@@ -46,7 +46,7 @@ export function Topbar({ unreadCount = 0 }: { unreadCount?: number }) {
           <SheetTitle className="sr-only">Navigation</SheetTitle>
           <div className="flex h-16 items-center gap-2 border-b border-sidebar-border px-4">
             <div className="flex size-8 items-center justify-center rounded-lg overflow-hidden">
-              <Image src="/logo.png" alt="InsightHub Logo" width={32} height={32} className="object-cover" />
+              <Image src="/logo-mark.png" alt="InsightHub AI Logo" width={32} height={32} className="size-7 object-contain" />
             </div>
             <span className="text-[15px] font-semibold tracking-tight text-sidebar-title">InsightHub AI</span>
           </div>

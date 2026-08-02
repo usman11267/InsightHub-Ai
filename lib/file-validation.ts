@@ -52,7 +52,7 @@ export function sniffFileType(
     if (declaredType !== "XLSX") {
       return {
         ok: false,
-        reason: `File content is a spreadsheet but was declared as ${declaredType}`,
+        reason: `File content is an XLSX/ZIP archive but was declared as ${declaredType}`,
       };
     }
     return { ok: true, detectedType: "XLSX" };

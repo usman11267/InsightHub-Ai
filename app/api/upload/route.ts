@@ -300,8 +300,8 @@ export async function POST(req: NextRequest) {
 
           const columnCount = Math.min(Object.keys(rows[0] ?? {}).length, MAX_PARSED_COLUMNS);
           const schema = buildSchema(rows);
-          // Store the full parsed rows (capped at MAX_PARSED_ROWS): cleaning,
-          // analytics, and AI features operate on real data, not a preview.
+          // Store a preview subset in previewJson (capped at 2000 rows) to keep payload sizes efficient
+          const previewRows = rows.slice(0, 2000);
           const finalName = target ? `${cleanName} - ${target}` : cleanName;
 
           // Persist dataset + initial version atomically.
@@ -315,7 +315,7 @@ export async function POST(req: NextRequest) {
                 rowCount: rows.length,
                 columnCount,
                 schemaJson: schema,
-                previewJson: rows,
+                previewJson: previewRows,
                 storagePath: finalStoragePath,
                 checksum,
                 status: "READY",

@@ -10,6 +10,8 @@ import { assertRateLimited, actionError, type ActionResult } from "@/lib/rate-li
 import { ask, buildCleaningPrompt } from "@/lib/gemini";
 import { z } from "zod";
 
+import { buildSchema } from "@/features/datasets/schemas";
+
 const cleanSchema = z.object({
   datasetId: z.string().min(1),
   operation: z.enum([
@@ -110,7 +112,9 @@ export async function runCleaningOperation(
           seen.add(key);
           return true;
         });
-        description = `Removed ${rowsAffected} duplicate rows`;
+        description = rowsAffected > 0
+          ? `Removed ${rowsAffected} duplicate row${rowsAffected === 1 ? "" : "s"}`
+          : "No duplicate rows found — dataset is already clean";
         break;
       }
 
@@ -123,7 +127,9 @@ export async function runCleaningOperation(
           }
           return cleaned;
         });
-        description = `Trimmed whitespace in ${rowsAffected} cells`;
+        description = rowsAffected > 0
+          ? `Trimmed whitespace in ${rowsAffected} cell${rowsAffected === 1 ? "" : "s"}`
+          : "No text cells needed whitespace trimming";
         break;
       }
 
@@ -141,7 +147,9 @@ export async function runCleaningOperation(
           }
           return cleaned;
         });
-        description = `Normalized text casing in ${rowsAffected} cells`;
+        description = rowsAffected > 0
+          ? `Normalized text casing in ${rowsAffected} cell${rowsAffected === 1 ? "" : "s"}`
+          : "No text cells needed casing normalization";
         break;
       }
 
@@ -157,7 +165,9 @@ export async function runCleaningOperation(
           .sort((a, b) => a - b);
 
         let fillValue: number;
-        if (operation === "fill_missing_mean") {
+        if (numValues.length === 0) {
+          fillValue = 0;
+        } else if (operation === "fill_missing_mean") {
           fillValue = numValues.reduce((s, v) => s + v, 0) / numValues.length;
         } else if (operation === "fill_missing_median") {
           const mid = Math.floor(numValues.length / 2);
@@ -176,7 +186,9 @@ export async function runCleaningOperation(
           }
           return row;
         });
-        description = `Filled ${rowsAffected} missing values in "${target}" with ${operation.replace("fill_missing_", "")} (${fillValue.toFixed(2)})`;
+        description = rowsAffected > 0
+          ? `Filled ${rowsAffected} missing value${rowsAffected === 1 ? "" : "s"} in "${target}" with ${operation.replace("fill_missing_", "")} (${fillValue.toFixed(2)})`
+          : `No missing values found in "${target}"`;
         break;
       }
 
@@ -196,11 +208,14 @@ export async function runCleaningOperation(
       }
     }
 
-    // Persist cleaned data. rowCount tracks the stored rows exactly.
+    const newSchema = buildSchema(newRows);
+
+    // Persist cleaned data and updated column schema.
     await prisma.dataset.update({
       where: { id: datasetId },
       data: {
         previewJson: newRows as Prisma.InputJsonValue,
+        schemaJson: newSchema as unknown as Prisma.InputJsonValue,
         rowCount: newRows.length,
       },
     });
