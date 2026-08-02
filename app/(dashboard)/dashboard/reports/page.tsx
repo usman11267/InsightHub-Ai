@@ -56,8 +56,8 @@ export default async function ReportsPage({ searchParams }: PageProps) {
         />
       ) : (
         <div className="space-y-3">
-          {items.map((report: any) => {
-            const sc = STATUS_CONFIG[report.status];
+          {items.map((report) => {
+            const sc = STATUS_CONFIG[report.status as keyof typeof STATUS_CONFIG] ?? STATUS_CONFIG.DRAFT;
             const StatusIcon = sc.icon;
 
             return (

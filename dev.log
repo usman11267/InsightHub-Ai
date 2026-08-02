@@ -513,3 +513,11 @@ Error: write EPIPE
   code: 'EPIPE',
   syscall: 'write'
 }
+✓ Compiled in 143ms
+⨯ Error: Jest worker encountered 2 child process exceptions, exceeding retry limit
+    at ignore-listed frames {
+  type: 'WorkerError',
+  page: '/dashboard/projects/cmsb70wkt00056cfhaxxabr1z'
+}
+ GET /dashboard/projects/cmsb70wkt00056cfhaxxabr1z 500 in 4.1s (next.js: 1132ms, proxy.ts: 2.8s, application-code: 160ms)
+[browser] Uncaught Error: Jest worker encountered 2 child process exceptions, exceeding retry limit
