@@ -177,7 +177,7 @@ function ProjectForm({
           {...register("name")}
         />
         {errors.name && (
-          <p id="project-name-error" className="text-xs text-destructive">
+          <p id="project-name-error" className="text-xs text-destructive-on-surface">
             {errors.name.message}
           </p>
         )}
@@ -195,7 +195,7 @@ function ProjectForm({
           {...register("description")}
         />
         {errors.description && (
-          <p className="text-xs text-destructive">{errors.description.message}</p>
+          <p className="text-xs text-destructive-on-surface">{errors.description.message}</p>
         )}
       </div>
 

@@ -114,7 +114,7 @@ export function SQLWorkspace({ savedQueries: initialQueries, projects }: SQLWork
                       <ChevronRight className="size-3 text-muted-foreground" />
                       <button
                         onClick={(e) => { e.stopPropagation(); handleDelete(q.id); }}
-                        className="hidden group-hover:block text-destructive hover:text-destructive/80"
+                        className="hidden group-hover:block text-destructive-on-surface hover:text-destructive-on-surface/80"
                       >
                         <Trash2 className="size-3" />
                       </button>
@@ -178,7 +178,7 @@ export function SQLWorkspace({ savedQueries: initialQueries, projects }: SQLWork
                 <select
                   value={projectId}
                   onChange={(e) => setProjectId(e.target.value)}
-                  className="rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none"
+                  className="rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring"
                 >
                   {projects.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
                 </select>

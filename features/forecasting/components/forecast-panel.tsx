@@ -73,7 +73,11 @@ export function ForecastPanel({ datasets, selectedDataset }: ForecastPanelProps)
     }
   }
 
-  const TREND_COLORS = { up: "text-success", down: "text-destructive", stable: "text-info" };
+  const TREND_COLORS = {
+    up: "text-success-on-surface",
+    down: "text-destructive-on-surface",
+    stable: "text-info-on-surface",
+  };
   const TREND_LABELS = { up: "↑ Upward trend", down: "↓ Downward trend", stable: "→ Stable" };
 
   return (
@@ -101,7 +105,7 @@ export function ForecastPanel({ datasets, selectedDataset }: ForecastPanelProps)
             <select
               value={periods}
               onChange={(e) => setPeriods(Number(e.target.value))}
-              className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm"
+              className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring"
             >
               {[1, 2, 3, 5, 7, 10, 12].map((p) => (
                 <option key={p} value={p}>{p}</option>
@@ -119,7 +123,7 @@ export function ForecastPanel({ datasets, selectedDataset }: ForecastPanelProps)
       {/* Error */}
       {error && (
         <Card className="border-destructive/30 bg-destructive/5 p-4">
-          <p className="text-sm text-destructive">{error}</p>
+          <p className="text-sm text-destructive-on-surface">{error}</p>
         </Card>
       )}
 
@@ -149,7 +153,7 @@ export function ForecastPanel({ datasets, selectedDataset }: ForecastPanelProps)
                 {result.growthRate !== null && (
                   <div className="rounded-xl bg-muted/40 px-4 py-3">
                     <p className="text-xs text-muted-foreground">Estimated growth</p>
-                    <p className={`text-lg font-bold ${result.growthRate >= 0 ? "text-success" : "text-destructive"}`}>
+                    <p className={`text-lg font-bold ${result.growthRate >= 0 ? "text-success-on-surface" : "text-destructive-on-surface"}`}>
                       {result.growthRate >= 0 ? "+" : ""}{result.growthRate.toFixed(1)}%
                     </p>
                   </div>
@@ -177,17 +181,39 @@ export function ForecastPanel({ datasets, selectedDataset }: ForecastPanelProps)
                         <stop offset="95%" stopColor="var(--color-chart-1)" stopOpacity={0} />
                       </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" />
-                    <XAxis dataKey="label" tick={{ fontSize: 11 }} />
-                    <YAxis tick={{ fontSize: 11 }} />
-                    <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8, border: "1px solid var(--color-border)" }} />
+                    <CartesianGrid vertical={false} stroke="var(--color-border)" strokeOpacity={0.6} />
+                    <XAxis
+                      dataKey="label"
+                      tick={{ fontSize: 11, fill: "var(--color-muted-foreground)" }}
+                      tickLine={false}
+                      axisLine={{ stroke: "var(--color-border)" }}
+                      minTickGap={24}
+                    />
+                    <YAxis
+                      tick={{ fontSize: 11, fill: "var(--color-muted-foreground)" }}
+                      tickLine={false}
+                      axisLine={false}
+                      width={48}
+                    />
+                    <Tooltip
+                      contentStyle={{
+                        fontSize: 12,
+                        borderRadius: 10,
+                        border: "1px solid var(--color-border)",
+                        background: "var(--color-popover)",
+                        color: "var(--color-popover-foreground)",
+                        boxShadow: "var(--shadow-popover)",
+                        padding: "8px 10px",
+                      }}
+                      cursor={{ stroke: "var(--color-border)", strokeWidth: 1 }}
+                    />
                     {/* Separator line between historical and forecast */}
                     {result.forecastPoints.find((p) => p.isForecast) && (
                       <ReferenceLine
                         x={result.forecastPoints.find((p) => p.isForecast)?.label}
                         stroke="var(--color-warning)"
                         strokeDasharray="4 4"
-                        label={{ value: "Forecast →", fontSize: 10, fill: "var(--color-warning)" }}
+                        label={{ value: "Forecast →", fontSize: 10, fill: "var(--color-warning-on-surface)" }}
                       />
                     )}
                     <Area
@@ -197,6 +223,7 @@ export function ForecastPanel({ datasets, selectedDataset }: ForecastPanelProps)
                       fill="url(#fcast)"
                       strokeWidth={2}
                       dot={false}
+                      activeDot={{ r: 4, strokeWidth: 2, stroke: "var(--color-card)" }}
                     />
                   </AreaChart>
                 </ResponsiveContainer>

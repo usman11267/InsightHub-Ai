@@ -12,9 +12,9 @@ interface KpiGridProps {
 
 const ACCENT_STYLES = {
   primary: { bg: "bg-primary/10", text: "text-primary", border: "border-primary/20" },
-  success: { bg: "bg-success/10", text: "text-success", border: "border-success/20" },
-  warning: { bg: "bg-warning/10", text: "text-warning", border: "border-warning/20" },
-  info: { bg: "bg-info/10", text: "text-info", border: "border-info/20" },
+  success: { bg: "bg-success/10", text: "text-success-on-surface", border: "border-success/20" },
+  warning: { bg: "bg-warning/10", text: "text-warning-on-surface", border: "border-warning/20" },
+  info: { bg: "bg-info/10", text: "text-info-on-surface", border: "border-info/20" },
 };
 
 export function KpiGrid({ kpis }: KpiGridProps) {

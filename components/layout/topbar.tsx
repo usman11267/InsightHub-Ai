@@ -34,7 +34,7 @@ export function Topbar({ unreadCount = 0 }: { unreadCount?: number }) {
   }
 
   return (
-    <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-border glass px-4 lg:px-6">
+    <header className="glass sticky top-0 z-30 flex h-16 items-center gap-3 border-x-0 border-t-0 border-b border-border px-4 lg:px-6">
       {/* Mobile nav */}
       <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
         <SheetTrigger asChild>
@@ -42,13 +42,13 @@ export function Topbar({ unreadCount = 0 }: { unreadCount?: number }) {
             <Menu />
           </Button>
         </SheetTrigger>
-        <SheetContent side="left" className="w-64 p-0">
+        <SheetContent side="left" className="w-64 p-0 bg-sidebar border-sidebar-border">
           <SheetTitle className="sr-only">Navigation</SheetTitle>
-          <div className="flex h-16 items-center gap-2 border-b border-border px-4 glass">
+          <div className="flex h-16 items-center gap-2 border-b border-sidebar-border px-4">
             <div className="flex size-8 items-center justify-center rounded-lg overflow-hidden">
               <Image src="/logo.png" alt="InsightHub Logo" width={32} height={32} className="object-cover" />
             </div>
-            <span className="text-[15px] font-semibold tracking-tight">InsightHub AI</span>
+            <span className="text-[15px] font-semibold tracking-tight text-sidebar-title">InsightHub AI</span>
           </div>
           <nav className="space-y-0.5 p-3">
             {NAV_ITEMS.map((item) => {
@@ -62,8 +62,8 @@ export function Topbar({ unreadCount = 0 }: { unreadCount?: number }) {
                   className={cn(
                     "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
                     active
-                      ? "bg-primary/10 text-primary"
-                      : "text-sidebar-foreground hover:bg-accent hover:text-accent-foreground"
+                      ? "bg-sidebar-active text-white"
+                      : "text-sidebar-foreground hover:bg-sidebar-hover hover:text-sidebar-title"
                   )}
                 >
                   <Icon className="size-4" />
@@ -75,16 +75,15 @@ export function Topbar({ unreadCount = 0 }: { unreadCount?: number }) {
         </SheetContent>
       </Sheet>
 
-      {/* Search — opens the command palette rather than being a real input,
-          so there's one search surface instead of two. */}
+      {/* Search — opens the command palette rather than being a real input */}
       <button
         type="button"
         onClick={() => setCommandOpen(true)}
-        className="flex h-9 flex-1 items-center gap-2 rounded-lg border border-input bg-card px-3 text-sm text-muted-foreground shadow-sm transition-colors hover:bg-accent/50 sm:max-w-sm"
+        className="flex h-9.5 flex-1 items-center gap-2.5 rounded-lg border border-border bg-card px-3.5 text-sm text-muted-foreground shadow-sm transition-colors hover:bg-muted hover:border-primary/30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring sm:max-w-md"
       >
-        <Search className="size-4 shrink-0" />
-        <span className="truncate">Search projects, datasets…</span>
-        <kbd className="ml-auto hidden shrink-0 rounded border border-border px-1.5 py-0.5 font-mono text-[10px] sm:inline-block">
+        <Search className="size-4 shrink-0 text-muted-foreground" />
+        <span className="truncate">Search projects, datasets, reports…</span>
+        <kbd className="ml-auto hidden shrink-0 rounded-md border border-border bg-muted/50 px-1.5 py-0.5 font-mono text-[10px] sm:inline-block">
           ⌘K
         </kbd>
       </button>

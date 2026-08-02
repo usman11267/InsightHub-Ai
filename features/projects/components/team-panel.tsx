@@ -260,7 +260,7 @@ export function TeamPanel({
                 {...form.register("email")}
               />
               {form.formState.errors.email && (
-                <p className="text-xs text-destructive">
+                <p className="text-xs text-destructive-on-surface">
                   {form.formState.errors.email.message}
                 </p>
               )}

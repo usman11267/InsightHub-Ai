@@ -82,7 +82,7 @@ export default async function DatasetsPage({ searchParams }: PageProps) {
                   <label className="mb-1.5 block text-sm font-medium">Project</label>
                   <select
                     id="upload-project-select"
-                    className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm"
+                    className="w-full rounded-lg border border-input bg-background px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-ring"
                     defaultValue={defaultProjectId}
                   >
                     {projects.map((p) => (

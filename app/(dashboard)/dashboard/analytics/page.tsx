@@ -185,11 +185,11 @@ export default async function AnalyticsPage({ searchParams }: PageProps) {
                             <td className="px-4 py-2.5 tabular-nums">{s.stdDev.toFixed(2)}</td>
                             <td className="px-4 py-2.5">
                               {s.outliers > 0 ? (
-                                <span className="flex items-center gap-1 text-warning">
+                                <span className="flex items-center gap-1 text-warning-on-surface">
                                   <AlertTriangle className="size-3" /> {s.outliers}
                                 </span>
                               ) : (
-                                <span className="text-success">None</span>
+                                <span className="text-success-on-surface">None</span>
                               )}
                             </td>
                           </tr>
@@ -248,7 +248,7 @@ export default async function AnalyticsPage({ searchParams }: PageProps) {
                           <div className="flex-1 h-1.5 overflow-hidden rounded-full bg-muted">
                             <div className={`h-full rounded-full ${color}`} style={{ width: `${absR * 100}%` }} />
                           </div>
-                          <span className={`w-12 text-right text-xs tabular-nums font-medium ${pair.r > 0 ? "text-success" : "text-destructive"}`}>
+                          <span className={`w-12 text-right text-xs tabular-nums font-medium ${pair.r > 0 ? "text-success-on-surface" : "text-destructive-on-surface"}`}>
                             {pair.r.toFixed(3)}
                           </span>
                         </div>

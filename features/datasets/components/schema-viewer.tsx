@@ -16,10 +16,10 @@ interface SchemaViewerProps {
 }
 
 const TYPE_COLORS: Record<InferredType, string> = {
-  number: "bg-info/10 text-info border-info/20",
+  number: "bg-info/10 text-info-on-surface border-info/20",
   string: "bg-primary/10 text-primary border-primary/20",
-  boolean: "bg-success/10 text-success border-success/20",
-  date: "bg-warning/10 text-warning border-warning/20",
+  boolean: "bg-success/10 text-success-on-surface border-success/20",
+  date: "bg-warning/10 text-warning-on-surface border-warning/20",
   mixed: "bg-muted text-muted-foreground",
 };
 

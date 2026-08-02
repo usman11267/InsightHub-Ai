@@ -39,9 +39,9 @@ import { FileType, DatasetStatus } from "@prisma/client";
 const FILE_ICONS: Record<FileType, typeof FileText> = { CSV: FileText, XLSX: FileSpreadsheet, JSON: FileJson };
 
 const statusColors: Record<DatasetStatus, string> = {
-  READY: "bg-success/10 text-success border-success/20",
-  PROCESSING: "bg-warning/10 text-warning border-warning/20",
-  ERROR: "bg-destructive/10 text-destructive border-destructive/20",
+  READY: "bg-success/10 text-success-on-surface border-success/20",
+  PROCESSING: "bg-warning/10 text-warning-on-surface border-warning/20",
+  ERROR: "bg-destructive/10 text-destructive-on-surface border-destructive/20",
 };
 
 export default async function DatasetDetailPage({

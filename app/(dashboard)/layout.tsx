@@ -36,7 +36,7 @@ export default async function DashboardLayout({
         <div className="flex min-w-0 flex-1 flex-col">
           <Topbar unreadCount={unreadCount} />
           <main className="flex-1 px-4 py-6 lg:px-8 lg:py-8">
-            <div className="mx-auto w-full max-w-7xl">{children}</div>
+            <div className="mx-auto w-full max-w-7xl page-enter">{children}</div>
           </main>
         </div>
       </div>

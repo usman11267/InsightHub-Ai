@@ -103,7 +103,7 @@ export default async function AssistantPage({ searchParams }: PageProps) {
 
         {!aiConfigured && (
           <Card className="mt-auto p-3 border-warning/30 bg-warning/5">
-            <p className="text-xs text-warning font-medium">⚠️ GROQ_API_KEY not set</p>
+            <p className="text-xs text-warning-on-surface font-medium">⚠️ GROQ_API_KEY not set</p>
             <p className="mt-1 text-xs text-muted-foreground">
               Add your key to .env to enable AI features.
             </p>

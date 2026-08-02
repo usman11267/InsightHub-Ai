@@ -37,15 +37,15 @@ const FILE_ICONS = {
 } as const;
 
 const FILE_COLORS = {
-  CSV: "text-success bg-success/10",
-  XLSX: "text-info bg-info/10",
-  JSON: "text-warning bg-warning/10",
+  CSV: "text-success-on-surface bg-success/10",
+  XLSX: "text-info-on-surface bg-info/10",
+  JSON: "text-warning-on-surface bg-warning/10",
 } as const;
 
 const STATUS_BADGE = {
-  READY: { label: "Ready", icon: CheckCircle2, class: "bg-success/10 text-success border-success/20" },
-  PROCESSING: { label: "Processing", icon: Loader2, class: "bg-warning/10 text-warning border-warning/20" },
-  ERROR: { label: "Error", icon: AlertCircle, class: "bg-destructive/10 text-destructive border-destructive/20" },
+  READY: { label: "Ready", icon: CheckCircle2, class: "bg-success/10 text-success-on-surface border-success/20" },
+  PROCESSING: { label: "Processing", icon: Loader2, class: "bg-warning/10 text-warning-on-surface border-warning/20" },
+  ERROR: { label: "Error", icon: AlertCircle, class: "bg-destructive/10 text-destructive-on-surface border-destructive/20" },
 } as const;
 
 interface DatasetCardProps {
@@ -114,7 +114,7 @@ export function DatasetCard({ dataset, onDelete, onEdit }: DatasetCardProps) {
               <>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
-                  className="text-destructive focus:text-destructive"
+                  className="text-destructive-on-surface focus:text-destructive-on-surface"
                   onClick={() => onDelete?.(dataset.id)}
                 >
                   <Trash2 className="size-3.5" /> Delete

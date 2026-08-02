@@ -23,10 +23,10 @@ interface PageProps {
 }
 
 const STATUS_CONFIG = {
-  READY: { icon: CheckCircle2, class: "text-success", label: "Ready" },
-  GENERATING: { icon: Loader2, class: "text-warning animate-spin", label: "Generating…" },
+  READY: { icon: CheckCircle2, class: "text-success-on-surface", label: "Ready" },
+  GENERATING: { icon: Loader2, class: "text-warning-on-surface animate-spin", label: "Generating…" },
   DRAFT: { icon: FileText, class: "text-muted-foreground", label: "Draft" },
-  ERROR: { icon: AlertCircle, class: "text-destructive", label: "Error" },
+  ERROR: { icon: AlertCircle, class: "text-destructive-on-surface", label: "Error" },
 };
 
 export default async function ReportsPage({ searchParams }: PageProps) {

@@ -27,9 +27,9 @@ export function StatCard({
 }) {
   const accents = {
     primary: "bg-primary/10 text-primary",
-    info: "bg-info/10 text-info",
-    success: "bg-success/10 text-success",
-    warning: "bg-warning/12 text-warning",
+    info: "bg-info/10 text-info-on-surface",
+    success: "bg-success/10 text-success-on-surface",
+    warning: "bg-warning/12 text-warning-on-surface",
   };
 
   const hasDelta = typeof delta === "number" && Number.isFinite(delta);
@@ -61,7 +61,7 @@ export function StatCard({
             <span
               className={cn(
                 "inline-flex items-center gap-0.5 rounded-full px-1.5 py-0.5 font-medium tabular-nums",
-                isUp ? "bg-success/12 text-success" : "bg-destructive/12 text-destructive"
+                isUp ? "bg-success/12 text-success-on-surface" : "bg-destructive/12 text-destructive-on-surface"
               )}
             >
               <DeltaIcon className="size-3" />

@@ -39,8 +39,8 @@ const BENTO_FEATURES = [
     title: "Universal Data Parser",
     description:
       "Instant schema inference for CSV, XLSX, and JSON files. Automatic column detection, checksum deduplication, and zero-loss type casting.",
-    gradient: "from-blue-500/10 via-indigo-500/5 to-transparent",
-    iconBg: "bg-blue-500/10 text-blue-500",
+    gradient: "from-primary/8 via-primary/4 to-transparent",
+    iconBg: "bg-primary/10 text-primary",
   },
   {
     icon: Bot,
@@ -48,8 +48,8 @@ const BENTO_FEATURES = [
     title: "Context-Aware AI Analyst",
     description:
       "Ask natural questions like 'Identify our top 5 revenue anomalies'. The AI reads your actual dataset schema and returns actionable insights.",
-    gradient: "from-purple-500/10 via-pink-500/5 to-transparent",
-    iconBg: "bg-purple-500/10 text-purple-500",
+    gradient: "from-accent-foreground/8 via-accent-foreground/4 to-transparent",
+    iconBg: "badge-ai",
   },
   {
     icon: BarChart3,
@@ -57,8 +57,8 @@ const BENTO_FEATURES = [
     title: "Interactive Charts & Heatmaps",
     description:
       "Render bar charts, area trends, scatter matrices, treemaps, and radar graphs in real time. Export crisp vector SVG or high-res PNGs.",
-    gradient: "from-emerald-500/10 via-teal-500/5 to-transparent",
-    iconBg: "bg-emerald-500/10 text-emerald-500",
+    gradient: "from-success/8 via-success/4 to-transparent",
+    iconBg: "bg-success/10 text-success-on-surface",
   },
   {
     icon: FileText,
@@ -66,8 +66,8 @@ const BENTO_FEATURES = [
     title: "Executive PDF & Doc Generation",
     description:
       "Turn multi-page data metrics into executive summaries, key trends, and board-ready recommendations in PDF, Markdown, or DOCX formats.",
-    gradient: "from-amber-500/10 via-orange-500/5 to-transparent",
-    iconBg: "bg-amber-500/10 text-amber-500",
+    gradient: "from-warning/8 via-warning/4 to-transparent",
+    iconBg: "bg-warning/12 text-warning-on-surface",
   },
   {
     icon: TrendingUp,
@@ -75,8 +75,8 @@ const BENTO_FEATURES = [
     title: "AI Trend Forecasting",
     description:
       "Project sales, user acquisition, and financial metrics into future periods with mathematically backed confidence intervals.",
-    gradient: "from-cyan-500/10 via-blue-500/5 to-transparent",
-    iconBg: "bg-cyan-500/10 text-cyan-500",
+    gradient: "from-info/8 via-info/4 to-transparent",
+    iconBg: "bg-info/10 text-info-on-surface",
   },
   {
     icon: Table2,
@@ -84,8 +84,8 @@ const BENTO_FEATURES = [
     title: "High-Performance Query Engine",
     description:
       "Direct SQL sandbox for developers. Write custom aggregations, save reusable views, and let AI explain complex query plans.",
-    gradient: "from-rose-500/10 via-red-500/5 to-transparent",
-    iconBg: "bg-rose-500/10 text-rose-500",
+    gradient: "from-muted-foreground/8 via-muted-foreground/4 to-transparent",
+    iconBg: "bg-muted text-foreground",
   },
 ];
 
@@ -103,16 +103,16 @@ export default function LandingPage() {
         aria-hidden="true"
         className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
       >
-        <div className="absolute -top-40 left-1/2 h-[45rem] w-[90rem] -translate-x-1/2 rounded-full bg-gradient-to-tr from-primary/20 via-purple-500/10 to-blue-500/10 blur-[130px] opacity-70" />
-        <div className="absolute top-[40rem] -left-40 h-[35rem] w-[50rem] rounded-full bg-gradient-to-r from-blue-600/10 to-indigo-600/10 blur-[140px]" />
-        <div className="absolute top-[80rem] -right-40 h-[35rem] w-[50rem] rounded-full bg-gradient-to-l from-purple-600/10 to-emerald-600/10 blur-[140px]" />
+        <div className="absolute -top-40 left-1/2 h-[45rem] w-[90rem] -translate-x-1/2 rounded-full bg-gradient-to-tr from-primary/12 via-info/8 to-transparent blur-[130px] opacity-70" />
+        <div className="absolute top-[40rem] -left-40 h-[35rem] w-[50rem] rounded-full bg-gradient-to-r from-primary/8 to-info/6 blur-[140px]" />
+        <div className="absolute top-[80rem] -right-40 h-[35rem] w-[50rem] rounded-full bg-gradient-to-l from-info/8 to-primary/6 blur-[140px]" />
       </div>
 
       {/* ── Header Nav ─────────────────────────────────────────────── */}
       <header className="sticky top-0 z-50 border-b border-border/40 glass">
         <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
           <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="flex size-9 items-center justify-center rounded-xl bg-gradient-to-tr from-primary via-purple-600 to-indigo-500 shadow-md shadow-primary/25 transition-transform group-hover:scale-105">
+            <div className="flex size-9 items-center justify-center rounded-xl gradient-brand shadow-md shadow-primary/25 transition-transform group-hover:scale-105">
               <Sparkles className="size-5 text-white" />
             </div>
             <div className="flex flex-col">
@@ -167,7 +167,7 @@ export default function LandingPage() {
             {/* Main Headline */}
             <h1 className="text-4xl font-extrabold tracking-tight sm:text-6xl lg:text-7xl leading-[1.08]">
               Turn Raw Data Into{" "}
-              <span className="bg-gradient-to-r from-primary via-purple-500 to-indigo-400 bg-clip-text text-transparent">
+              <span className="text-gradient-brand">
                 Decision-Ready
               </span>{" "}
               Intelligence
@@ -209,13 +209,13 @@ export default function LandingPage() {
             {/* Micro Trust Indicators */}
             <div className="mt-8 flex flex-wrap items-center justify-center gap-6 text-xs text-muted-foreground">
               <span className="flex items-center gap-1.5">
-                <CheckCircle2 className="size-4 text-emerald-500" /> No Credit Card Required
+                <CheckCircle2 className="size-4 text-success-on-surface" /> No Credit Card Required
               </span>
               <span className="flex items-center gap-1.5">
-                <CheckCircle2 className="size-4 text-emerald-500" /> Enterprise AES-256 Security
+                <CheckCircle2 className="size-4 text-success-on-surface" /> Enterprise AES-256 Security
               </span>
               <span className="flex items-center gap-1.5">
-                <CheckCircle2 className="size-4 text-emerald-500" /> 20,000+ Scalable Concurrency
+                <CheckCircle2 className="size-4 text-success-on-surface" /> 20,000+ Scalable Concurrency
               </span>
             </div>
           </div>
@@ -226,9 +226,9 @@ export default function LandingPage() {
               {/* Window Controls */}
               <div className="flex items-center justify-between border-b border-border/40 pb-3 px-3">
                 <div className="flex items-center gap-2">
-                  <div className="size-3 rounded-full bg-rose-500/80" />
-                  <div className="size-3 rounded-full bg-amber-500/80" />
-                  <div className="size-3 rounded-full bg-emerald-500/80" />
+                  <div className="size-3 rounded-full bg-destructive/80" />
+                  <div className="size-3 rounded-full bg-warning/80" />
+                  <div className="size-3 rounded-full bg-success/80" />
                   <span className="ml-2 text-xs font-mono text-muted-foreground">insighthub-ai / dashboard / analytics</span>
                 </div>
                 <Badge variant="outline" className="text-[10px] uppercase font-mono tracking-wider bg-primary/10 text-primary border-primary/20">
@@ -242,10 +242,10 @@ export default function LandingPage() {
                 <div className="rounded-xl border border-border/40 bg-background/50 p-4 shadow-sm">
                   <div className="flex justify-between text-xs text-muted-foreground">
                     <span>Total Revenue</span>
-                    <TrendingUp className="size-4 text-emerald-500" />
+                    <TrendingUp className="size-4 text-success-on-surface" />
                   </div>
                   <p className="mt-2 text-2xl font-bold">$1,482,900</p>
-                  <p className="mt-1 text-xs text-emerald-500 font-medium">↑ +24.8% vs last quarter</p>
+                  <p className="mt-1 text-xs text-success-on-surface font-medium">↑ +24.8% vs last quarter</p>
                 </div>
 
                 {/* Metric Card 2 */}
@@ -262,10 +262,10 @@ export default function LandingPage() {
                 <div className="rounded-xl border border-border/40 bg-background/50 p-4 shadow-sm">
                   <div className="flex justify-between text-xs text-muted-foreground">
                     <span>Forecast Confidence</span>
-                    <ShieldCheck className="size-4 text-purple-500" />
+                    <ShieldCheck className="size-4 text-accent-foreground" />
                   </div>
                   <p className="mt-2 text-2xl font-bold">99.4%</p>
-                  <p className="mt-1 text-xs text-purple-400 font-medium">AI Regression Model</p>
+                  <p className="mt-1 text-xs text-accent-foreground font-medium">AI Regression Model</p>
                 </div>
 
                 {/* Chart Mockup Banner */}
@@ -287,8 +287,8 @@ export default function LandingPage() {
                           style={{ height: `${h}%` }}
                           className={`w-full rounded-t-md transition-all duration-300 group-hover:brightness-125 ${
                             i >= 8
-                              ? "bg-gradient-to-t from-purple-600/80 to-indigo-500"
-                              : "bg-gradient-to-t from-primary/80 to-blue-500/80"
+                              ? "bg-gradient-to-t from-accent-foreground/70 to-accent-foreground"
+                              : "bg-gradient-to-t from-primary/70 to-info"
                           }`}
                         />
                       </div>
@@ -381,7 +381,7 @@ export default function LandingPage() {
 
         {/* ── Scalability & Architecture Section ──────────────────────── */}
         <section className="mx-auto max-w-7xl px-6 py-24">
-          <div className="rounded-3xl border border-primary/20 bg-gradient-to-r from-primary/10 via-purple-600/10 to-indigo-600/10 p-8 sm:p-12 glass relative overflow-hidden">
+          <div className="rounded-3xl border border-primary/20 bg-gradient-to-r from-primary/8 via-info/6 to-transparent p-8 sm:p-12 glass relative overflow-hidden">
             <div className="grid gap-8 lg:grid-cols-2 items-center">
               <div>
                 <Badge variant="outline" className="mb-4 border-primary/40 bg-primary/10 text-primary">
@@ -395,13 +395,13 @@ export default function LandingPage() {
                 </p>
                 <div className="mt-6 space-y-2 text-sm font-medium">
                   <div className="flex items-center gap-2">
-                    <CheckCircle2 className="size-4 text-emerald-500" /> Automatic Edge CDN Distribution (Vercel)
+                    <CheckCircle2 className="size-4 text-success-on-surface" /> Automatic Edge CDN Distribution (Vercel)
                   </div>
                   <div className="flex items-center gap-2">
-                    <CheckCircle2 className="size-4 text-emerald-500" /> Transaction-level Connection Pooling (Supabase)
+                    <CheckCircle2 className="size-4 text-success-on-surface" /> Transaction-level Connection Pooling (Supabase)
                   </div>
                   <div className="flex items-center gap-2">
-                    <CheckCircle2 className="size-4 text-emerald-500" /> Parallel Worker Threads for CSV Parsing
+                    <CheckCircle2 className="size-4 text-success-on-surface" /> Parallel Worker Threads for CSV Parsing
                   </div>
                 </div>
               </div>
@@ -412,15 +412,15 @@ export default function LandingPage() {
                   <p className="text-xs text-muted-foreground mt-1">Concurreny Capacity</p>
                 </div>
                 <div className="rounded-2xl border border-border/40 bg-background/60 p-5 glass">
-                  <p className="text-3xl font-black text-emerald-500">99.99%</p>
+                  <p className="text-3xl font-black text-success-on-surface">99.99%</p>
                   <p className="text-xs text-muted-foreground mt-1">System Uptime</p>
                 </div>
                 <div className="rounded-2xl border border-border/40 bg-background/60 p-5 glass">
-                  <p className="text-3xl font-black text-purple-500">&lt; 100ms</p>
+                  <p className="text-3xl font-black text-info-on-surface">&lt; 100ms</p>
                   <p className="text-xs text-muted-foreground mt-1">Edge Response</p>
                 </div>
                 <div className="rounded-2xl border border-border/40 bg-background/60 p-5 glass">
-                  <p className="text-3xl font-black text-indigo-500">256-bit</p>
+                  <p className="text-3xl font-black text-accent-foreground">256-bit</p>
                   <p className="text-xs text-muted-foreground mt-1">SSL/TLS Security</p>
                 </div>
               </div>

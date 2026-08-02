@@ -3,122 +3,142 @@
 
 /* ─────────────────────────────────────────────────────────────
    InsightHub AI — Design tokens
-   Premium SaaS surface language: layered neutrals, a violet brand
+   Enterprise surface language: slate neutrals, a blue/cyan brand
    ramp, and a categorical data palette tuned for both themes.
-   All colors are OKLCH so light/dark pairs share perceptual lightness.
+   Purple is reserved as an accent for AI affordances only.
    ───────────────────────────────────────────────────────────── */
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --radius: 0.75rem;
+  --radius: 18px;
 
-  /* Surfaces — three elevation steps rather than one flat white */
-  --background: oklch(0.985 0.002 265);
-  --foreground: oklch(0.21 0.015 265);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.21 0.015 265);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.21 0.015 265);
-  --sidebar: oklch(0.995 0.002 265);
-  --sidebar-foreground: oklch(0.35 0.012 265);
+  /* Enterprise Clean Surfaces */
+  --background: #F8FAFC;
+  --foreground: #0F172A;
+  --card: #FFFFFF;
+  --card-foreground: #0F172A;
+  --popover: #FFFFFF;
+  --popover-foreground: #0F172A;
+  --sidebar: #0F172A;
+  --sidebar-foreground: #94A3B8;
+  --sidebar-hover: #1E293B;
+  --sidebar-active: #2563EB;
+  --sidebar-border: #1E293B;
+  --sidebar-title: #F8FAFC;
 
-  /* Brand — violet, the accent that carries gradients and focus rings */
-  --primary: oklch(0.55 0.215 285);
-  --primary-foreground: oklch(0.99 0 0);
-  --primary-muted: oklch(0.95 0.03 285);
+  /* Brand Palette */
+  --primary: #2563EB;
+  --primary-hover: #1D4ED8;
+  --primary-foreground: #FFFFFF;
+  --primary-muted: #EFF6FF;
 
-  --secondary: oklch(0.96 0.005 265);
-  --secondary-foreground: oklch(0.28 0.015 265);
-  --muted: oklch(0.965 0.004 265);
-  --muted-foreground: oklch(0.53 0.014 265);
-  --accent: oklch(0.955 0.008 285);
-  --accent-foreground: oklch(0.28 0.02 285);
+  --secondary: #F1F5F9;
+  --secondary-foreground: #0F172A;
+  --muted: #F1F5F9;
+  --muted-foreground: #64748B;
+  --accent: #F5F3FF;
+  --accent-foreground: #7C3AED;
 
-  /* Status */
-  --success: oklch(0.62 0.15 155);
-  --success-foreground: oklch(0.99 0 0);
-  --warning: oklch(0.72 0.16 75);
-  --warning-foreground: oklch(0.24 0.04 75);
-  --destructive: oklch(0.58 0.21 25);
-  --destructive-foreground: oklch(0.99 0 0);
-  --info: oklch(0.6 0.15 245);
-  --info-foreground: oklch(0.99 0 0);
+  /* Status. The `-on-surface` variants are darkened so status text and
+     icons clear 4.5:1 against tinted chips; the base hues are reserved
+     for fills, charts, and borders where contrast is not a text concern. */
+  --success: #10B981;
+  --success-foreground: #FFFFFF;
+  --success-on-surface: #047857;
+  --warning: #F59E0B;
+  --warning-foreground: #422006;
+  --warning-on-surface: #B45309;
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
+  --destructive-on-surface: #B91C1C;
+  --info: #06B6D4;
+  --info-foreground: #083344;
+  --info-on-surface: #0E7490;
 
-  --border: oklch(0.92 0.005 265);
-  --input: oklch(0.92 0.005 265);
-  --ring: oklch(0.55 0.215 285);
+  --border: #E2E8F0;
+  --input: #E2E8F0;
+  --ring: #2563EB;
 
-  /* Categorical data palette — 8 hues, distinguishable in sequence
-     and safe for the common forms of color vision deficiency. */
-  --chart-1: oklch(0.55 0.215 285);
-  --chart-2: oklch(0.62 0.17 195);
-  --chart-3: oklch(0.68 0.16 145);
-  --chart-4: oklch(0.74 0.16 85);
-  --chart-5: oklch(0.64 0.2 35);
-  --chart-6: oklch(0.58 0.2 350);
-  --chart-7: oklch(0.6 0.16 255);
-  --chart-8: oklch(0.7 0.11 175);
+  /* Categorical data palette. Hue ORDER is load-bearing, not decorative:
+     this sequence is validated for adjacent-pair separation under protan,
+     deutan, and tritan color-vision deficiency. Reordering the slots or
+     swapping a hue re-opens that check — green next to cyan, in particular,
+     fails it. Assign in order; never cycle past slot 6. */
+  --chart-1: #2563EB;
+  --chart-2: #F59E0B;
+  --chart-3: #10B981;
+  --chart-4: #7C3AED;
+  --chart-5: #06B6D4;
+  --chart-6: #EF4444;
 
-  /* Sequential ramp for heatmaps / density */
-  --chart-seq-1: oklch(0.96 0.02 285);
-  --chart-seq-2: oklch(0.88 0.06 285);
-  --chart-seq-3: oklch(0.79 0.11 285);
-  --chart-seq-4: oklch(0.69 0.16 285);
-  --chart-seq-5: oklch(0.58 0.21 285);
-  --chart-seq-6: oklch(0.45 0.19 285);
+  --chart-seq-1: #EFF6FF;
+  --chart-seq-2: #DBEAFE;
+  --chart-seq-3: #93C5FD;
+  --chart-seq-4: #3B82F6;
+  --chart-seq-5: #2563EB;
+  --chart-seq-6: #1D4ED8;
 }
 
 .dark {
-  --background: oklch(0.16 0.01 265);
-  --foreground: oklch(0.96 0.003 265);
-  --card: oklch(0.2 0.012 265);
-  --card-foreground: oklch(0.96 0.003 265);
-  --popover: oklch(0.22 0.013 265);
-  --popover-foreground: oklch(0.96 0.003 265);
-  --sidebar: oklch(0.18 0.011 265);
-  --sidebar-foreground: oklch(0.78 0.01 265);
+  --background: #0B0F17;
+  --foreground: #F8FAFC;
+  --card: #111827;
+  --card-foreground: #F8FAFC;
+  --popover: #111827;
+  --popover-foreground: #F8FAFC;
+  --sidebar: #0F172A;
+  --sidebar-foreground: #94A3B8;
+  --sidebar-hover: #1E293B;
+  --sidebar-active: #2563EB;
+  --sidebar-border: #1E293B;
+  --sidebar-title: #F8FAFC;
 
-  --primary: oklch(0.68 0.19 288);
-  --primary-foreground: oklch(0.16 0.01 265);
-  --primary-muted: oklch(0.28 0.06 288);
+  --primary: #2563EB;
+  --primary-hover: #1D4ED8;
+  --primary-foreground: #FFFFFF;
+  --primary-muted: #1E293B;
 
-  --secondary: oklch(0.26 0.014 265);
-  --secondary-foreground: oklch(0.93 0.005 265);
-  --muted: oklch(0.25 0.012 265);
-  --muted-foreground: oklch(0.68 0.012 265);
-  --accent: oklch(0.28 0.02 288);
-  --accent-foreground: oklch(0.93 0.01 288);
+  --secondary: #1E293B;
+  --secondary-foreground: #F8FAFC;
+  --muted: #1E293B;
+  --muted-foreground: #94A3B8;
+  --accent: #1E1B4B;
+  --accent-foreground: #C4B5FD;
 
-  --success: oklch(0.7 0.15 155);
-  --success-foreground: oklch(0.16 0.01 265);
-  --warning: oklch(0.78 0.15 75);
-  --warning-foreground: oklch(0.18 0.03 75);
-  --destructive: oklch(0.65 0.19 25);
-  --destructive-foreground: oklch(0.99 0 0);
-  --info: oklch(0.68 0.14 245);
-  --info-foreground: oklch(0.16 0.01 265);
+  /* On dark surfaces the status hues lighten rather than darken to hold 4.5:1 */
+  --success: #10B981;
+  --success-foreground: #022C22;
+  --success-on-surface: #34D399;
+  --warning: #F59E0B;
+  --warning-foreground: #422006;
+  --warning-on-surface: #FBBF24;
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
+  --destructive-on-surface: #F87171;
+  --info: #06B6D4;
+  --info-foreground: #083344;
+  --info-on-surface: #22D3EE;
 
-  --border: oklch(0.3 0.012 265);
-  --input: oklch(0.32 0.013 265);
-  --ring: oklch(0.68 0.19 288);
+  --border: #1E293B;
+  --input: #1E293B;
+  --ring: #2563EB;
 
-  /* Lifted lightness so series stay legible on dark surfaces */
-  --chart-1: oklch(0.68 0.19 288);
-  --chart-2: oklch(0.72 0.15 195);
-  --chart-3: oklch(0.76 0.15 145);
-  --chart-4: oklch(0.82 0.15 85);
-  --chart-5: oklch(0.72 0.18 35);
-  --chart-6: oklch(0.68 0.18 350);
-  --chart-7: oklch(0.7 0.15 255);
-  --chart-8: oklch(0.78 0.1 175);
+  /* Dark steps are selected against the dark surface, not lightened flips
+     of the light ramp — same CVD ordering, re-validated at this surface. */
+  --chart-1: #3B82F6;
+  --chart-2: #D97706;
+  --chart-3: #10A37F;
+  --chart-4: #8B5CF6;
+  --chart-5: #0891B2;
+  --chart-6: #EF4444;
 
-  --chart-seq-1: oklch(0.28 0.04 285);
-  --chart-seq-2: oklch(0.38 0.09 285);
-  --chart-seq-3: oklch(0.48 0.14 285);
-  --chart-seq-4: oklch(0.58 0.18 285);
-  --chart-seq-5: oklch(0.68 0.19 285);
-  --chart-seq-6: oklch(0.78 0.16 285);
+  --chart-seq-1: #1E293B;
+  --chart-seq-2: #1E3A8A;
+  --chart-seq-3: #1D4ED8;
+  --chart-seq-4: #2563EB;
+  --chart-seq-5: #3B82F6;
+  --chart-seq-6: #60A5FA;
 }
 
 @theme inline {
@@ -130,7 +150,12 @@
   --color-popover-foreground: var(--popover-foreground);
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-hover: var(--sidebar-hover);
+  --color-sidebar-active: var(--sidebar-active);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-title: var(--sidebar-title);
   --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
   --color-primary-foreground: var(--primary-foreground);
   --color-primary-muted: var(--primary-muted);
   --color-secondary: var(--secondary);
@@ -141,12 +166,16 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-success: var(--success);
   --color-success-foreground: var(--success-foreground);
+  --color-success-on-surface: var(--success-on-surface);
   --color-warning: var(--warning);
   --color-warning-foreground: var(--warning-foreground);
+  --color-warning-on-surface: var(--warning-on-surface);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
+  --color-destructive-on-surface: var(--destructive-on-surface);
   --color-info: var(--info);
   --color-info-foreground: var(--info-foreground);
+  --color-info-on-surface: var(--info-on-surface);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
@@ -157,24 +186,25 @@
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
   --color-chart-6: var(--chart-6);
-  --color-chart-7: var(--chart-7);
-  --color-chart-8: var(--chart-8);
 
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) + 10px);
+  /* Cards sit at the 18px --radius; controls step down so a 36px-tall
+     button reads as a rounded rectangle rather than a pill. */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 14px;
+  --radius-2xl: var(--radius);
+  --radius-3xl: calc(var(--radius) + 6px);
 
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-geist-sans), Inter, ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 
-  --shadow-card: 0 1px 2px 0 oklch(0.21 0.015 265 / 0.04),
-    0 1px 3px 0 oklch(0.21 0.015 265 / 0.06);
-  --shadow-elevated: 0 4px 12px -2px oklch(0.21 0.015 265 / 0.08),
-    0 2px 6px -2px oklch(0.21 0.015 265 / 0.06);
-  --shadow-popover: 0 12px 32px -8px oklch(0.21 0.015 265 / 0.14),
-    0 4px 12px -4px oklch(0.21 0.015 265 / 0.08);
+  /* Soft, layered shadows. Enterprise surfaces read as raised paper,
+     not as outlined boxes — so elevation carries the hierarchy and
+     borders stay light. */
+  --shadow-card: 0 1px 2px 0 rgba(15, 23, 42, 0.04), 0 1px 3px 0 rgba(15, 23, 42, 0.06);
+  --shadow-elevated: 0 2px 4px -1px rgba(15, 23, 42, 0.05), 0 8px 16px -4px rgba(15, 23, 42, 0.08);
+  --shadow-popover: 0 4px 6px -2px rgba(15, 23, 42, 0.05), 0 16px 32px -8px rgba(15, 23, 42, 0.14);
 }
 
 @layer base {
@@ -188,7 +218,6 @@
     text-rendering: optimizeLegibility;
   }
 
-  /* Focus rings: visible for keyboard users, quiet for mouse users */
   :focus-visible {
     @apply outline-ring outline-2 outline-offset-2;
   }
@@ -209,50 +238,110 @@
 }
 
 @layer utilities {
-  /* Frosted panel used by the topbar, command palette, and modals */
+  /* Frosted surfaces. Saturation is boosted alongside the blur so color
+     showing through stays vivid rather than turning milky — the detail
+     that separates premium glass from a flat translucent panel. */
   .glass {
-    background: color-mix(in oklch, var(--background) 65%, transparent);
-    backdrop-filter: blur(24px) saturate(200%);
-    -webkit-backdrop-filter: blur(24px) saturate(200%);
-    border: 1px solid color-mix(in oklch, var(--border) 50%, transparent);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+    background: color-mix(in srgb, var(--background) 72%, transparent);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
   }
 
   .glass-card {
-    background: color-mix(in oklch, var(--card) 40%, transparent);
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
-    border: 1px solid color-mix(in oklch, var(--border) 60%, transparent);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
+    background: color-mix(in srgb, var(--card) 78%, transparent);
+    backdrop-filter: blur(16px) saturate(170%);
+    -webkit-backdrop-filter: blur(16px) saturate(170%);
+    border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-card);
+  }
+
+  /* A hairline of light along the top edge reads as a glass bevel. */
+  .glass-panel {
+    position: relative;
+    background: color-mix(in srgb, var(--card) 70%, transparent);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-elevated);
+  }
+
+  .glass-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 1px;
+    border-radius: inherit;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in srgb, #FFFFFF 55%, transparent),
+      transparent
+    );
+    pointer-events: none;
+  }
+
+  /* Backdrop blur is a compositing cost on low-end GPUs and a readability
+     problem for users who ask for reduced transparency. Fall back to a
+     solid surface in both cases. */
+  @supports not (backdrop-filter: blur(1px)) {
+    .glass, .glass-card, .glass-panel {
+      background: var(--card);
+    }
+  }
+
+  @media (prefers-reduced-transparency: reduce) {
+    .glass, .glass-card, .glass-panel {
+      background: var(--card);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
   }
 
   .gradient-brand {
-    background-image: linear-gradient(
-      135deg,
-      oklch(0.6 0.21 288) 0%,
-      oklch(0.55 0.215 275) 50%,
-      oklch(0.58 0.19 255) 100%
-    );
+    background-image: linear-gradient(135deg, #2563EB 0%, #06B6D4 100%);
   }
 
   .text-gradient-brand {
-    background-image: linear-gradient(
-      120deg,
-      var(--foreground) 20%,
-      oklch(0.55 0.215 285) 60%,
-      oklch(0.6 0.17 250) 100%
-    );
+    background-image: linear-gradient(135deg, #2563EB 0%, #06B6D4 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
 
-  /* Sweeping highlight for skeletons — calmer than a pulse */
+  /* AI affordances are the one place purple appears in the product UI. */
+  .badge-ai {
+    background-color: var(--accent);
+    color: var(--accent-foreground);
+    border: 1px solid color-mix(in srgb, var(--accent-foreground) 22%, transparent);
+  }
+
+  /* Enterprise data grid: header stays put while the body scrolls. Pair
+     with a scroll container that has a bounded height. */
+  .table-sticky thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: var(--muted);
+    box-shadow: inset 0 -1px 0 0 var(--border);
+  }
+
+  .page-enter {
+    animation: page-enter 0.24s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes page-enter {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: none; }
+  }
+
   .shimmer {
     background: linear-gradient(
       90deg,
       var(--muted) 25%,
-      color-mix(in oklch, var(--muted) 60%, var(--background)) 50%,
+      color-mix(in srgb, var(--muted) 60%, var(--background)) 50%,
       var(--muted) 75%
     );
     background-size: 200% 100%;
@@ -270,8 +359,8 @@
   }
 
   .scrollbar-thin::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
   }
 
   .scrollbar-thin::-webkit-scrollbar-thumb {

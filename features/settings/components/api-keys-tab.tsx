@@ -78,15 +78,15 @@ export function ApiKeysTab({ apiKeys: initial }: ApiKeysTabProps) {
       {newKey && (
         <Card className="border-success/30 bg-success/5">
           <CardContent className="flex items-center gap-3 p-4">
-            <AlertTriangle className="size-4 shrink-0 text-warning" />
+            <AlertTriangle className="size-4 shrink-0 text-warning-on-surface" />
             <div className="min-w-0 flex-1">
-              <p className="text-xs font-semibold text-warning">Copy your key now — you won&apos;t see it again</p>
+              <p className="text-xs font-semibold text-warning-on-surface">Copy your key now — you won&apos;t see it again</p>
               <code className="mt-1 block truncate rounded bg-muted/50 px-2 py-1 font-mono text-xs">
                 {newKey}
               </code>
             </div>
             <Button variant="outline" size="sm" onClick={copyKey}>
-              {copied ? <Check className="size-3.5 text-success" /> : <Copy className="size-3.5" />}
+              {copied ? <Check className="size-3.5 text-success-on-surface" /> : <Copy className="size-3.5" />}
             </Button>
           </CardContent>
         </Card>
@@ -138,7 +138,7 @@ export function ApiKeysTab({ apiKeys: initial }: ApiKeysTabProps) {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="size-7 text-destructive hover:text-destructive"
+                    className="size-7 text-destructive-on-surface hover:text-destructive-on-surface"
                     disabled={revoking === key.id}
                     onClick={() => handleRevoke(key.id)}
                   >

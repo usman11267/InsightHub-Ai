@@ -18,21 +18,21 @@ interface PageProps {
 
 // Map action codes to human-readable labels
 const ACTION_LABELS: Record<string, { label: string; color: string }> = {
-  PROJECT_CREATED: { label: "Project created", color: "text-success" },
-  PROJECT_UPDATED: { label: "Project updated", color: "text-info" },
-  PROJECT_DELETED: { label: "Project deleted", color: "text-destructive" },
-  DATASET_UPLOADED: { label: "Dataset uploaded", color: "text-success" },
-  DATASET_DELETED: { label: "Dataset deleted", color: "text-destructive" },
-  DATASET_CLEANED: { label: "Dataset cleaned", color: "text-info" },
+  PROJECT_CREATED: { label: "Project created", color: "text-success-on-surface" },
+  PROJECT_UPDATED: { label: "Project updated", color: "text-info-on-surface" },
+  PROJECT_DELETED: { label: "Project deleted", color: "text-destructive-on-surface" },
+  DATASET_UPLOADED: { label: "Dataset uploaded", color: "text-success-on-surface" },
+  DATASET_DELETED: { label: "Dataset deleted", color: "text-destructive-on-surface" },
+  DATASET_CLEANED: { label: "Dataset cleaned", color: "text-info-on-surface" },
   REPORT_GENERATED: { label: "Report generated", color: "text-primary" },
-  REPORT_DELETED: { label: "Report deleted", color: "text-destructive" },
-  QUERY_SAVED: { label: "Query saved", color: "text-info" },
-  API_KEY_CREATED: { label: "API key created", color: "text-warning" },
-  API_KEY_REVOKED: { label: "API key revoked", color: "text-destructive" },
+  REPORT_DELETED: { label: "Report deleted", color: "text-destructive-on-surface" },
+  QUERY_SAVED: { label: "Query saved", color: "text-info-on-surface" },
+  API_KEY_CREATED: { label: "API key created", color: "text-warning-on-surface" },
+  API_KEY_REVOKED: { label: "API key revoked", color: "text-destructive-on-surface" },
   SETTINGS_UPDATED: { label: "Settings updated", color: "text-muted-foreground" },
-  MEMBER_INVITED: { label: "Member invited", color: "text-success" },
-  MEMBER_REMOVED: { label: "Member removed", color: "text-destructive" },
-  ROLE_CHANGED: { label: "Role changed", color: "text-warning" },
+  MEMBER_INVITED: { label: "Member invited", color: "text-success-on-surface" },
+  MEMBER_REMOVED: { label: "Member removed", color: "text-destructive-on-surface" },
+  ROLE_CHANGED: { label: "Role changed", color: "text-warning-on-surface" },
 };
 
 export default async function AuditLogPage({ searchParams }: PageProps) {

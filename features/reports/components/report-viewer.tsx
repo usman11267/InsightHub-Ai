@@ -63,7 +63,7 @@ export function ReportActions({ reportId, shareSlug: initialSlug }: ReportAction
     <div className="flex items-center gap-2">
       {shareSlug && (
         <Button variant="outline" size="sm" onClick={copyLink}>
-          {copied ? <Check className="size-3.5 text-success" /> : <Copy className="size-3.5" />}
+          {copied ? <Check className="size-3.5 text-success-on-surface" /> : <Copy className="size-3.5" />}
           {copied ? "Copied!" : "Copy link"}
         </Button>
       )}
@@ -82,7 +82,7 @@ export function ReportActions({ reportId, shareSlug: initialSlug }: ReportAction
         size="sm"
         onClick={handleDelete}
         disabled={deleting}
-        className="text-destructive hover:text-destructive"
+        className="text-destructive-on-surface hover:text-destructive-on-surface"
         id="delete-report-btn"
       >
         {deleting ? <Loader2 className="size-3.5 animate-spin" /> : <Trash2 className="size-3.5" />}

@@ -88,7 +88,7 @@ export function NotificationList({ notifications: initial }: NotificationListPro
             <div className="flex shrink-0 items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100">
               {!notif.read && (
                 <Button variant="ghost" size="icon" className="size-7" onClick={() => handleMarkRead(notif.id)}>
-                  <CheckCheck className="size-3.5 text-success" />
+                  <CheckCheck className="size-3.5 text-success-on-surface" />
                 </Button>
               )}
               {notif.href && (
@@ -104,7 +104,7 @@ export function NotificationList({ notifications: initial }: NotificationListPro
                 className="size-7"
                 onClick={() => handleDelete(notif.id)}
               >
-                <Trash2 className="size-3.5 text-destructive" />
+                <Trash2 className="size-3.5 text-destructive-on-surface" />
               </Button>
             </div>
           </Card>

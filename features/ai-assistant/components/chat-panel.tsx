@@ -217,7 +217,7 @@ export function ChatPanel({ context }: ChatPanelProps) {
 
           {isStreaming ? (
             <Button variant="outline" size="icon" onClick={stopStream} className="shrink-0">
-              <StopCircle className="size-4 text-destructive" />
+              <StopCircle className="size-4 text-destructive-on-surface" />
             </Button>
           ) : (
             <Button
@@ -235,7 +235,7 @@ export function ChatPanel({ context }: ChatPanelProps) {
         {messages.length > 0 && (
           <button
             onClick={() => setMessages([])}
-            className="mt-2 flex items-center gap-1 text-xs text-muted-foreground hover:text-destructive transition-colors"
+            className="mt-2 flex items-center gap-1 text-xs text-muted-foreground hover:text-destructive-on-surface transition-colors"
           >
             <Trash2 className="size-3" />
             Clear conversation

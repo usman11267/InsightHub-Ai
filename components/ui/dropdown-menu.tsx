@@ -78,7 +78,7 @@ const DropdownMenuItem = React.forwardRef<
       itemStyles,
       inset && "pl-8",
       destructive &&
-        "text-destructive focus:bg-destructive/10 focus:text-destructive [&_svg]:text-destructive",
+        "text-destructive-on-surface focus:bg-destructive/10 focus:text-destructive-on-surface [&_svg]:text-destructive-on-surface",
       className
     )}
     {...props}

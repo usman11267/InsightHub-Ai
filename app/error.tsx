@@ -23,7 +23,7 @@ export default function GlobalError({
   return (
     <div className="flex min-h-[70vh] flex-col items-center justify-center px-6 text-center">
       <div className="flex size-12 items-center justify-center rounded-2xl border border-border bg-card shadow-[var(--shadow-card)]">
-        <AlertTriangle className="size-5 text-warning" />
+        <AlertTriangle className="size-5 text-warning-on-surface" />
       </div>
 
       <h1 className="mt-5 text-xl font-semibold tracking-tight">Something went wrong</h1>
@@ -32,7 +32,7 @@ export default function GlobalError({
         usually resolves it.
       </p>
 
-      <p className="mt-3 max-w-lg font-mono text-xs text-destructive/90 bg-destructive/10 p-3 rounded-lg border border-destructive/20 break-all">
+      <p className="mt-3 max-w-lg font-mono text-xs text-destructive-on-surface/90 bg-destructive/10 p-3 rounded-lg border border-destructive/20 break-all">
         {error.message || "Unknown rendering error"}
       </p>
 

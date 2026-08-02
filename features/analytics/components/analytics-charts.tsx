@@ -28,6 +28,22 @@ const CHART_COLORS = [
   "var(--color-chart-6)",
 ];
 
+/** Recessive axis/grid styling shared by every chart on the page. */
+const AXIS_TICK = { fontSize: 11, fill: "var(--color-muted-foreground)" } as const;
+const AXIS_LINE = { stroke: "var(--color-border)" } as const;
+
+const TOOLTIP_STYLE = {
+  fontSize: 12,
+  borderRadius: 10,
+  border: "1px solid var(--color-border)",
+  background: "var(--color-popover)",
+  color: "var(--color-popover-foreground)",
+  boxShadow: "var(--shadow-popover)",
+  padding: "8px 10px",
+} as const;
+
+const TOOLTIP_CURSOR = { fill: "var(--color-muted)", opacity: 0.5 } as const;
+
 type Row = Record<string, unknown>;
 
 interface AnalyticsChartsProps {
@@ -66,11 +82,18 @@ export function AnalyticsCharts({ rows, schema }: AnalyticsChartsProps) {
         <CardContent>
           <ResponsiveContainer width="100%" height={240}>
             <BarChart data={aggregated} margin={{ top: 4, right: 8, left: 0, bottom: 40 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" />
-              <XAxis dataKey="name" tick={{ fontSize: 11 }} angle={-35} textAnchor="end" />
-              <YAxis tick={{ fontSize: 11 }} />
-              <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8, border: "1px solid var(--color-border)" }} />
-              <Bar dataKey="value" fill={CHART_COLORS[0]} radius={[4, 4, 0, 0]} />
+              <CartesianGrid vertical={false} stroke="var(--color-border)" strokeOpacity={0.6} />
+              <XAxis
+                dataKey="name"
+                tick={AXIS_TICK}
+                angle={-35}
+                textAnchor="end"
+                tickLine={false}
+                axisLine={AXIS_LINE}
+              />
+              <YAxis tick={AXIS_TICK} tickLine={false} axisLine={false} width={48} />
+              <Tooltip contentStyle={TOOLTIP_STYLE} cursor={TOOLTIP_CURSOR} />
+              <Bar dataKey="value" fill={CHART_COLORS[0]} radius={[4, 4, 0, 0]} maxBarSize={44} />
             </BarChart>
           </ResponsiveContainer>
         </CardContent>
@@ -100,11 +123,11 @@ export function AnalyticsCharts({ rows, schema }: AnalyticsChartsProps) {
                   <stop offset="95%" stopColor={CHART_COLORS[0]} stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" />
-              <XAxis dataKey={xKey} tick={{ fontSize: 10 }} />
-              <YAxis tick={{ fontSize: 11 }} />
-              <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8 }} />
-              <Area type="monotone" dataKey={yKey} stroke={CHART_COLORS[0]} fill="url(#grad0)" strokeWidth={2} dot={false} />
+              <CartesianGrid vertical={false} stroke="var(--color-border)" strokeOpacity={0.6} />
+              <XAxis dataKey={xKey} tick={AXIS_TICK} tickLine={false} axisLine={AXIS_LINE} minTickGap={24} />
+              <YAxis tick={AXIS_TICK} tickLine={false} axisLine={false} width={48} />
+              <Tooltip contentStyle={TOOLTIP_STYLE} cursor={{ stroke: "var(--color-border)", strokeWidth: 1 }} />
+              <Area type="monotone" dataKey={yKey} stroke={CHART_COLORS[0]} fill="url(#grad0)" strokeWidth={2} dot={false} activeDot={{ r: 4, strokeWidth: 2, stroke: "var(--color-card)" }} />
             </AreaChart>
           </ResponsiveContainer>
         </CardContent>
@@ -130,12 +153,12 @@ export function AnalyticsCharts({ rows, schema }: AnalyticsChartsProps) {
         <CardContent>
           <ResponsiveContainer width="100%" height={220}>
             <PieChart>
-              <Pie data={pieData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} label={({ name, percent }) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`} labelLine={false}>
+              <Pie data={pieData} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={48} outerRadius={80} paddingAngle={2} label={({ name, percent }) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`} labelLine={false}>
                 {pieData.map((_, i) => (
-                  <Cell key={i} fill={CHART_COLORS[i % CHART_COLORS.length]} />
+                  <Cell key={i} fill={CHART_COLORS[i % CHART_COLORS.length]} stroke="var(--color-card)" strokeWidth={2} />
                 ))}
               </Pie>
-              <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8 }} />
+              <Tooltip contentStyle={TOOLTIP_STYLE} />
             </PieChart>
           </ResponsiveContainer>
         </CardContent>
@@ -157,11 +180,11 @@ export function AnalyticsCharts({ rows, schema }: AnalyticsChartsProps) {
         <CardContent>
           <ResponsiveContainer width="100%" height={220}>
             <ScatterChart margin={{ top: 4, right: 8, left: 0, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" />
-              <XAxis dataKey="x" name={xKey} tick={{ fontSize: 11 }} />
-              <YAxis dataKey="y" name={yKey} tick={{ fontSize: 11 }} />
-              <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8 }} />
-              <Scatter data={scatterData} fill={CHART_COLORS[2]} opacity={0.7} />
+              <CartesianGrid stroke="var(--color-border)" strokeOpacity={0.6} />
+              <XAxis dataKey="x" name={xKey} tick={AXIS_TICK} tickLine={false} axisLine={AXIS_LINE} />
+              <YAxis dataKey="y" name={yKey} tick={AXIS_TICK} tickLine={false} axisLine={false} width={48} />
+              <Tooltip contentStyle={TOOLTIP_STYLE} cursor={{ strokeDasharray: "3 3", stroke: "var(--color-border)" }} />
+              <Scatter data={scatterData} fill={CHART_COLORS[2]} fillOpacity={0.7} />
             </ScatterChart>
           </ResponsiveContainer>
         </CardContent>
