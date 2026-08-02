@@ -32,9 +32,13 @@ export default function GlobalError({
         usually resolves it.
       </p>
 
+      <p className="mt-3 max-w-lg font-mono text-xs text-destructive/90 bg-destructive/10 p-3 rounded-lg border border-destructive/20 break-all">
+        {error.message || "Unknown rendering error"}
+      </p>
+
       {error.digest && (
-        <p className="mt-3 font-mono text-xs text-muted-foreground">
-          Reference: {error.digest}
+        <p className="mt-2 font-mono text-[10px] text-muted-foreground">
+          Digest: {error.digest}
         </p>
       )}
 

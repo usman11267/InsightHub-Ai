@@ -41,46 +41,66 @@ export const getCurrentDbUser = cache(async () => {
   if (existing) return existing;
 
   // Fallback sync — the webhook normally does this first.
-  const clerkUser = await currentUser();
-  if (!clerkUser) return null;
+  let clerkUser = null;
+  try {
+    clerkUser = await currentUser();
+  } catch {
+    clerkUser = null;
+  }
 
   const email =
-    clerkUser.primaryEmailAddress?.emailAddress ??
-    clerkUser.emailAddresses[0]?.emailAddress ??
-    `${clerkId}@unknown.local`;
+    clerkUser?.primaryEmailAddress?.emailAddress ??
+    clerkUser?.emailAddresses[0]?.emailAddress ??
+    `${clerkId}@user.clerk`;
+
+  const firstName = clerkUser?.firstName ?? "User";
+  const lastName = clerkUser?.lastName ?? "";
+  const imageUrl = clerkUser?.imageUrl ?? null;
 
   try {
     return await prisma.user.upsert({
       where: { clerkId },
       update: {
         email,
-        firstName: clerkUser.firstName ?? undefined,
-        lastName: clerkUser.lastName ?? undefined,
-        imageUrl: clerkUser.imageUrl ?? undefined,
+        firstName: firstName || undefined,
+        lastName: lastName || undefined,
+        imageUrl: imageUrl || undefined,
       },
       create: {
         clerkId,
         email,
-        firstName: clerkUser.firstName,
-        lastName: clerkUser.lastName,
-        imageUrl: clerkUser.imageUrl,
+        firstName,
+        lastName,
+        imageUrl,
       },
     });
   } catch {
     // If unique email constraint fails (e.g. email exists with old clerkId), fallback to finding by email and updating clerkId
     const existingByEmail = await prisma.user.findUnique({ where: { email } });
     if (existingByEmail) {
-      return prisma.user.update({
+      return await prisma.user.update({
         where: { id: existingByEmail.id },
         data: {
           clerkId,
-          firstName: clerkUser.firstName ?? undefined,
-          lastName: clerkUser.lastName ?? undefined,
-          imageUrl: clerkUser.imageUrl ?? undefined,
+          firstName: firstName || undefined,
+          lastName: lastName || undefined,
+          imageUrl: imageUrl || undefined,
         },
       });
     }
-    return null;
+    // Final fallback creation with unique email if needed
+    const fallbackEmail = `${clerkId}@user.clerk`;
+    return await prisma.user.upsert({
+      where: { clerkId },
+      update: { clerkId },
+      create: {
+        clerkId,
+        email: fallbackEmail,
+        firstName,
+        lastName,
+        imageUrl,
+      },
+    });
   }
 });
 

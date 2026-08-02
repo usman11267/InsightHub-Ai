@@ -18,9 +18,16 @@ export default async function DashboardLayout({
   const user = await getCurrentDbUser();
   if (!user) redirect("/sign-in");
 
-  const unreadCount = await prisma.notification.count({
-    where: { userId: user.id, read: false },
-  });
+  let unreadCount = 0;
+  if (user) {
+    try {
+      unreadCount = await prisma.notification.count({
+        where: { userId: user.id, read: false },
+      });
+    } catch {
+      unreadCount = 0;
+    }
+  }
 
   return (
     <SidebarProvider>
