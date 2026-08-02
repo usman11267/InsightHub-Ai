@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import { getCurrentDbUser } from "@/lib/auth";
 import { getReportDetail } from "@/features/reports/queries";
+import { markdownToHtml } from "@/features/reports/lib/report-markdown";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   FileText, Loader2, AlertCircle, CheckCircle2, Calendar, Sparkles, Database, LayoutDashboard
@@ -151,41 +152,3 @@ export default async function ReportDetailPage({ params }: { params: Promise<{ r
   );
 }
 
-function markdownToHtml(md: string): string {
-  return escapeHtml(md)
-    .replace(/```[\w]*\n([\s\S]*?)```/g, "<pre><code>$1</code></pre>")
-    .replace(/`([^`]+)`/g, "<code>$1</code>")
-    .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
-    .replace(/\*([^*]+)\*/g, "<em>$1</em>")
-    .replace(/^### (.+)$/gm, "<h3>$1</h3>")
-    .replace(/^## (.+)$/gm, "<h2>$1</h2>")
-    .replace(/^# (.+)$/gm, "<h1>$1</h1>")
-    .replace(TABLE_BLOCK, renderTable)
-    .replace(/^[*-] (.+)$/gm, "<li>$1</li>")
-    .replace(/(<li>[\s\S]*?<\/li>)/g, "<ul>$1</ul>")
-    .replace(/^\d+\. (.+)$/gm, "<li>$1</li>")
-    .replace(/\n\n/g, "</p><p>")
-    .replace(/^(?!<[hupltc])(.+)$/gm, "<p>$1</p>");
-}
-
-function escapeHtml(s: string): string {
-  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-}
-
-/** A header row, a dashed separator row, then one or more body rows. */
-const TABLE_BLOCK = /^\|(.+)\|[ \t]*\n\|[ \t:|-]+\|[ \t]*\n((?:\|.*\|[ \t]*\n?)+)/gm;
-
-function renderTable(_match: string, header: string, body: string): string {
-  const cells = (row: string) =>
-    row.replace(/^\||\|$/g, "").split("|").map((c) => c.trim());
-
-  const head = cells(header).map((c) => `<th>${c}</th>`).join("");
-  const rows = body
-    .trimEnd()
-    .split("\n")
-    .filter((r) => r.trim())
-    .map((r) => `<tr>${cells(r).map((c) => `<td>${c}</td>`).join("")}</tr>`)
-    .join("");
-
-  return `<table><thead><tr>${head}</tr></thead><tbody>${rows}</tbody></table>`;
-}

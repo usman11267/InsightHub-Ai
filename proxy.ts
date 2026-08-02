@@ -34,14 +34,12 @@ export default clerkMiddleware(async () => {
 
 export const config = {
   matcher: [
-    // Skip Next internals, the upload API (see below), and static files unless
-    // they appear in search params.
-    "/((?!_next|api/upload|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
-    // All API routes — except /api/upload. Running the proxy there would force
-    // Next.js to buffer the request body (10MB hard limit) so the proxy could
-    // re-read it, which silently truncates large file uploads and fails with
-    // HTTP 413. The upload route authenticates itself with Clerk's auth() and
-    // only returns JSON, so the proxy's security headers add nothing to it.
-    "/((?!api/upload)(?:api|trpc)(?:/.*)?)",
+    // Skip Next internals and static files unless they appear in search params.
+    "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
+    // All API routes, including /api/upload: Clerk's `auth()` requires the
+    // request to have passed through this proxy. Large upload bodies are safe
+    // because `experimental.proxyClientMaxBodySize` in next.config.ts raises
+    // the proxy's body-clone limit above the app's MAX_UPLOAD_BYTES.
+    "/((?:api|trpc)(?:/.*)?)",
   ],
 };

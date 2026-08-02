@@ -12,6 +12,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { formatBytes, formatNumber } from "@/lib/utils";
+import { PREVIEW_ROW_COUNT } from "@/features/datasets/schemas";
 import {
   FileText,
   FileSpreadsheet,
@@ -69,7 +70,8 @@ export default async function DatasetDetailPage({
   const versions = await getDatasetVersions(datasetId);
 
   const Icon = FILE_ICONS[dataset.fileType];
-  const previewRows = (dataset.previewJson as Record<string, unknown>[]) ?? [];
+  const allRows = (dataset.previewJson as Record<string, unknown>[]) ?? [];
+  const previewRows = allRows.slice(0, PREVIEW_ROW_COUNT);
   const schema = (dataset.schemaJson as unknown as ColumnInfo[]) ?? [];
 
 
@@ -153,7 +155,11 @@ export default async function DatasetDetailPage({
               <CardTitle className="text-base">
                 Data Preview{" "}
                 <span className="font-normal text-muted-foreground text-sm">
-                  (first {previewRows.length} rows)
+                  (first {previewRows.length}
+                  {allRows.length > previewRows.length
+                    ? ` of ${formatNumber(allRows.length)} rows`
+                    : " rows"}
+                  )
                 </span>
               </CardTitle>
             </CardHeader>

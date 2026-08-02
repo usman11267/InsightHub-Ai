@@ -241,6 +241,11 @@ Completeness, missing values, outliers, type inconsistencies. Flag anything that
 ## Predictions
 1-3 short-term projections, each explicitly labelled as an estimate with the assumption it depends on.
 
+## Forbidden output
+- Never include code blocks, code snippets, or programming-language syntax of any kind (Python, SQL, JavaScript, plotly, matplotlib, echarts, etc.). This report is rendered as plain text markdown — there is no code execution or chart rendering engine.
+- Do not reference libraries or "the code below". If a chart would help, describe the pattern in prose and put exact numbers in a markdown table instead.
+- Tables must be genuine markdown tables (| col | col |), never ASCII art or tab-separated fragments.
+
 Every quantitative claim must trace to an actual column name and value from the sample. Do not invent columns, and do not pad sections to fill space.`;
 }
 

@@ -196,12 +196,12 @@ export async function runCleaningOperation(
       }
     }
 
-    // Persist cleaned preview
+    // Persist cleaned data. rowCount tracks the stored rows exactly.
     await prisma.dataset.update({
       where: { id: datasetId },
       data: {
         previewJson: newRows as Prisma.InputJsonValue,
-        rowCount: operation === "remove_duplicates" ? dataset.rowCount - rowsAffected : dataset.rowCount,
+        rowCount: newRows.length,
       },
     });
 

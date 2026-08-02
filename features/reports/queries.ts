@@ -57,3 +57,26 @@ export const getReportDetail = cache(async function getReportDetail(userId: stri
   });
 }
 );
+
+/**
+ * Public lookup for the shared-report route (`/r/[slug]`). No auth filter on
+ * purpose: the share slug is the capability — knowing it means being allowed
+ * to read the report. Only READY reports are shareable.
+ */
+export const getReportByShareSlug = cache(async function getReportByShareSlug(slug: string) {
+  return prisma.report.findFirst({
+    where: { shareSlug: slug },
+    select: {
+      id: true,
+      title: true,
+      summary: true,
+      status: true,
+      contentJson: true,
+      createdAt: true,
+      project: { select: { id: true, name: true, color: true } },
+      dataset: { select: { id: true, name: true } },
+      author: { select: { firstName: true, lastName: true } },
+    },
+  });
+}
+);

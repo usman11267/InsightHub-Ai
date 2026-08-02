@@ -44,6 +44,12 @@ export default async function ForecastingPage({ searchParams }: PageProps) {
       take: 20,
       select: { id: true, name: true, fileType: true, rowCount: true, schemaJson: true, previewJson: true },
     });
+    // The panel and forecast API work off the full dataset server-side; only a
+    // light slice of rows needs to cross the wire for the client picker.
+    datasets = datasets.map((d) => ({
+      ...d,
+      previewJson: ((d.previewJson as Record<string, unknown>[]) ?? []).slice(0, 200),
+    }));
   } catch {
     datasets = [];
   }

@@ -14,7 +14,6 @@ import {
   MAX_UPLOAD_BYTES,
   MAX_PARSED_ROWS,
   MAX_PARSED_COLUMNS,
-  PREVIEW_ROW_COUNT,
   fileTypeFromExtension,
 } from "@/features/datasets/schemas";
 import { findDuplicateByChecksum } from "@/features/datasets/queries";
@@ -301,7 +300,8 @@ export async function POST(req: NextRequest) {
 
           const columnCount = Math.min(Object.keys(rows[0] ?? {}).length, MAX_PARSED_COLUMNS);
           const schema = buildSchema(rows);
-          const previewRows = rows.slice(0, PREVIEW_ROW_COUNT);
+          // Store the full parsed rows (capped at MAX_PARSED_ROWS): cleaning,
+          // analytics, and AI features operate on real data, not a preview.
           const finalName = target ? `${cleanName} - ${target}` : cleanName;
 
           // Persist dataset + initial version atomically.
@@ -315,7 +315,7 @@ export async function POST(req: NextRequest) {
                 rowCount: rows.length,
                 columnCount,
                 schemaJson: schema,
-                previewJson: previewRows,
+                previewJson: rows,
                 storagePath: finalStoragePath,
                 checksum,
                 status: "READY",
