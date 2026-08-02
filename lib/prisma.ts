@@ -15,7 +15,7 @@ function createClient(): PrismaClient {
     globalForPrisma.pgPool ??
     new Pool({
       connectionString: process.env.DATABASE_URL,
-      max: 2,
+      max: 1,
       idleTimeoutMillis: 1_000,
       connectionTimeoutMillis: 10_000,
     });
