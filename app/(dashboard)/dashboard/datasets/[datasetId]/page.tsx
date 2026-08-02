@@ -34,7 +34,15 @@ export async function generateMetadata({
   return { title: `Dataset · ${datasetId}` };
 }
 
-const FILE_ICONS = { CSV: FileText, XLSX: FileSpreadsheet, JSON: FileJson };
+import { FileType, DatasetStatus } from "@prisma/client";
+
+const FILE_ICONS: Record<FileType, typeof FileText> = { CSV: FileText, XLSX: FileSpreadsheet, JSON: FileJson };
+
+const statusColors: Record<DatasetStatus, string> = {
+  READY: "bg-success/10 text-success border-success/20",
+  PROCESSING: "bg-warning/10 text-warning border-warning/20",
+  ERROR: "bg-destructive/10 text-destructive border-destructive/20",
+};
 
 export default async function DatasetDetailPage({
   params,
@@ -64,11 +72,6 @@ export default async function DatasetDetailPage({
   const previewRows = (dataset.previewJson as Record<string, unknown>[]) ?? [];
   const schema = (dataset.schemaJson as unknown as ColumnInfo[]) ?? [];
 
-  const statusColors = {
-    READY: "bg-success/10 text-success border-success/20",
-    PROCESSING: "bg-warning/10 text-warning border-warning/20",
-    ERROR: "bg-destructive/10 text-destructive border-destructive/20",
-  };
 
   return (
     <div className="space-y-6">
