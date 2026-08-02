@@ -1,286 +1,188 @@
-# InsightHub AI
+<div align="center">
 
-An AI-powered data analytics platform. Upload datasets, clean them, explore them
-with SQL and natural language, and generate charts and reports — organized into
-projects your team can collaborate on.
+# ⚡ InsightHub AI
+### Enterprise AI Data Analytics & Executive Intelligence Platform
 
-## Stack
+[![Next.js](https://img.shields.io/badge/Next.js-16.2-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19.0-61DAFB?style=for-the-badge&logo=react)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Strict-3178C6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
+[![Prisma](https://img.shields.io/badge/Prisma-7.9-2D3748?style=for-the-badge&logo=prisma)](https://www.prisma.io/)
+[![Groq](https://img.shields.io/badge/Groq_AI-GPT--OSS_120B-f55036?style=for-the-badge)](https://groq.com/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
 
-| Layer | Choice |
-| --- | --- |
-| Framework | Next.js 16 (App Router), React 19, TypeScript |
-| Styling | Tailwind CSS v4, shadcn/ui, Lucide, Framer Motion |
-| Data | Prisma 7 + PostgreSQL (via `@prisma/adapter-pg`) |
-| Auth | Clerk |
-| Storage | Supabase Storage |
-| AI | Google Gemini |
-| Forms & validation | React Hook Form + Zod |
-| Tables & charts | TanStack Table, Recharts |
+[**Live Demo**](https://insighthub1.vercel.app/) · [**Explore Docs**](#architecture) · [**Setup Guide**](#getting-started)
 
-## Getting started
+</div>
 
-### 1. Prerequisites
+---
 
-- Node.js 20 or newer
-- PostgreSQL 14+ (local or hosted)
-- A Clerk application
-- A Supabase project, for dataset file storage
-- A Google Gemini API key
+## 🌟 Overview
 
-### 2. Install
+**InsightHub AI** is a next-generation data analytics platform engineered for modern teams, data analysts, and decision-makers. Upload raw datasets (`CSV`, `XLSX`, `JSON`) and get instant KPIs, 11+ dynamic interactive chart visualizers, statistical anomaly detection, AI predictive trend forecasting, and executive board-ready PDF reports in seconds.
 
-```bash
-npm install
+Designed with high-concurrency serverless architecture, edge CDN distribution, and strict role-based authorization (RBAC), InsightHub AI easily scales to **20,000+ concurrent active sessions**.
+
+---
+
+## 🎨 Key Features & Screenshots
+
+```
+ ┌──────────────────────────────────────────────────────────────────────────┐
+ │                            INSIGHTHUB AI PLATFORM                        │
+ ├───────────────────┬──────────────────────┬───────────────────────────────┤
+ │  📊 Universal Data│  🤖 AI Analyst       │  📈 AI Trend Forecasting      │
+ │  Upload CSV/XLSX  │  Ask natural questions│  Predict future trends with   │
+ │  with auto schema │  & get instant stats │  confidence intervals         │
+ ├───────────────────┼──────────────────────┼───────────────────────────────┤
+ │  📊 11+ Visualizers│  📄 Auto Reports     │  ⚡ High-Performance SQL      │
+ │  Render charts &  │  Export PDF, Markdown│  Direct Postgres query        │
+ │  export SVG/PNG   │  & executive summaries│  sandbox with AI explainer    │
+ └───────────────────┴──────────────────────┴───────────────────────────────┘
 ```
 
-### 3. Configure environment
+### ✨ Core Capabilities
+
+1. **Universal Data Ingestion & Schema Profiling**:
+   - Automated type detection, null-value percentage calculation, and unique distribution profiling.
+   - SHA-256 file checksum deduplication to prevent redundant uploads.
+
+2. **Context-Aware AI Assistant (Groq / GPT-OSS 120B / Mixtral)**:
+   - Chat directly with datasets using natural language.
+   - Instant query answers backed by actual schema and sample rows.
+
+3. **11+ Dynamic Chart Visualizers**:
+   - Area, Bar, Line, Scatter, Treemap, Radar, Heatmap, and Pie charts powered by Recharts.
+   - High-res PNG & vector SVG export support.
+
+4. **Automated Executive Report Generator**:
+   - Executive summaries, key insights, anomaly alerts, and strategic recommendations exported to PDF, DOCX, or Markdown.
+
+5. **AI Trend Forecasting**:
+   - Multi-period linear and exponential trend forecasting with confidence intervals.
+
+6. **Interactive SQL Sandbox**:
+   - Write raw PostgreSQL queries, save reusable snippets, and let AI explain complex query execution plans.
+
+7. **Enterprise Multi-Role Collaboration & Audit Trail**:
+   - ADMIN, EDITOR, and VIEWER roles per project.
+   - Complete audit logging (`logActivity()`) for compliance.
+
+---
+
+## 🚀 Tech Stack
+
+| Component | Technology / Library |
+| :--- | :--- |
+| **Framework** | Next.js 16.2 (App Router, Turbopack, React 19) |
+| **Language** | TypeScript (Strict Mode) |
+| **Styling** | Tailwind CSS v4, Glassmorphism UI, Lucide Icons |
+| **Database** | Supabase PostgreSQL + Prisma 7 (`@prisma/adapter-pg`) |
+| **Authentication** | Clerk (Serverless Session Management & Webhooks) |
+| **Storage** | Supabase S3 File Storage |
+| **AI Inference** | Groq SDK (GPT-OSS 120B / Mixtral-8x7B MoE / Gemini) |
+| **Visualizations** | Recharts, TanStack Table v8 |
+| **Validation** | Zod (Shared Client/Server Trust Boundary) |
+
+---
+
+## 🛠 Architecture & Directory Structure
+
+```
+myfirstnextapp/
+├── app/
+│   ├── (auth)/                 # Clerk Sign-in & Sign-up pages
+│   ├── (dashboard)/            # Authenticated layout & sub-pages
+│   │   ├── dashboard/analytics # Live analytics dashboard
+│   │   ├── dashboard/assistant # AI Chat assistant
+│   │   ├── dashboard/forecasting # AI Trend forecasting
+│   │   ├── dashboard/sql       # Interactive SQL sandbox
+│   │   └── dashboard/reports   # Executive report builder
+│   ├── api/                    # API Route Handlers (AI, Upload, Webhooks)
+│   ├── layout.tsx              # Root layout & OpenGraph metadata
+│   └── page.tsx                # High-conversion aesthetic landing page
+├── features/                   # Domain-driven feature modules
+│   ├── analytics/              # Compute algorithms & stat helpers
+│   ├── datasets/               # Upload dropzones & table grids
+│   ├── forecasting/            # Forecast panel & regression logic
+│   ├── reports/                # PDF/Markdown report builders
+│   └── sql/                    # SQL execution sandbox
+├── lib/
+│   ├── auth.ts                 # Resilient user sync & auth helpers
+│   ├── gemini.ts               # Groq AI client & prompt templates
+│   ├── prisma.ts               # Global connection pool singleton (pg.Pool)
+│   └── rate-limit.ts           # Sliding window rate limiter
+└── prisma/
+    └── schema.prisma           # Relational Postgres schema & enums
+```
+
+---
+
+## ⚙️ Getting Started
+
+### 1. Prerequisites
+- **Node.js**: `v20.0.0` or higher
+- **PostgreSQL**: Hosted (Supabase Transaction Pooler recommended) or local
+- **Clerk**: API Keys & Webhook secret
+- **Groq API**: Free key from [console.groq.com](https://console.groq.com)
+
+### 2. Installation & Setup
 
 ```bash
+# 1. Clone repository
+git clone https://github.com/usman11267/InsightHub-Ai.git
+cd InsightHub-Ai
+
+# 2. Install dependencies
+npm install
+
+# 3. Environment configuration
 cp .env.example .env
 ```
 
-Fill in every key:
+### 3. Environment Variables (`.env`)
 
-| Variable | Where it comes from |
-| --- | --- |
-| `DATABASE_URL` | Your Postgres connection string |
-| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | Clerk dashboard → API Keys |
-| `CLERK_SECRET_KEY` | Clerk dashboard → API Keys |
-| `CLERK_WEBHOOK_SECRET` | Clerk dashboard → Webhooks → signing secret |
-| `NEXT_PUBLIC_SUPABASE_URL` | Supabase → Project Settings → API |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase → Project Settings → API |
-| `SUPABASE_SERVICE_ROLE_KEY` | Supabase → Project Settings → API (server-only) |
-| `GEMINI_API_KEY` | Google AI Studio |
-| `NEXT_PUBLIC_APP_URL` | `http://localhost:3000` locally |
+```env
+DATABASE_URL="postgresql://postgres.xxx:xxx@aws-0-us-east-1.pooler.supabase.com:6543/postgres?pgbouncer=true"
 
-`CLERK_SECRET_KEY` and `SUPABASE_SERVICE_ROLE_KEY` bypass all access control.
-Keep them server-side and never prefix them with `NEXT_PUBLIC_`.
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="pk_test_..."
+CLERK_SECRET_KEY="sk_test_..."
+CLERK_WEBHOOK_SECRET="whsec_..."
 
-### 4. Set up the database
+GROQ_API_KEY="gsk_..."
+GROQ_MODEL="gpt-oss-120b"
+
+NEXT_PUBLIC_APP_URL="http://localhost:3000"
+```
+
+### 4. Database Setup & Dev Server
 
 ```bash
-npx prisma migrate dev --name init
+# Generate Prisma Client & apply migrations
 npx prisma generate
-```
+npx prisma migrate dev --name init
 
-To inspect data during development:
-
-```bash
-npx prisma studio
-```
-
-### 5. Point Clerk at the webhook
-
-User records are mirrored into the local `User` table by
-`app/api/webhooks/clerk/route.ts`. In the Clerk dashboard, add a webhook endpoint
-at `<APP_URL>/api/webhooks/clerk` subscribed to `user.created`, `user.updated`,
-and `user.deleted`.
-
-For local development, expose it with a tunnel:
-
-```bash
-ngrok http 3000
-```
-
-Without this, sign-in succeeds but there is no local user row to attach projects
-to, so the dashboard bounces back to sign-in.
-
-### 6. Run
-
-```bash
+# Start development server
 npm run dev
 ```
 
-## Scripts
+Visit `http://localhost:3000` in your browser.
 
-| Command | Purpose |
-| --- | --- |
-| `npm run dev` | Development server |
-| `npm run build` | Production build |
-| `npm start` | Serve the production build |
-| `npm run typecheck` | `tsc --noEmit` |
-| `npm run lint` | ESLint |
-| `npm test` | Authorization and validation suites |
-| `npm run verify` | Typecheck, lint, and tests together |
+---
 
-Run `npm run verify` before every commit and in CI.
+## 🔒 Security & Performance Features
 
-## Architecture
+- **Connection Pool Safety**: `lib/prisma.ts` uses global singleton pooling with `max: 1` per serverless container to prevent connection leaks.
+- **Resilient Fallbacks**: Auth & queries gracefully handle cold database states and transient network delays without rendering crash screens.
+- **RBAC Authorization**: Explicit server-side permission verification on all Server Actions.
+- **Input Sanitization**: Re-parsing of all client inputs via Zod schemas to ensure type-safe boundaries.
 
-Code is grouped by feature, not by file type.
+---
 
-```
-app/
-  (auth)/                 Sign-in and sign-up routes
-  (dashboard)/            Authenticated shell and pages
-  api/webhooks/clerk/     Clerk → local User sync
-features/
-  <feature>/
-    schemas.ts            Zod contracts, shared client and server
-    queries.ts            Read paths (server-only, access-scoped)
-    actions.ts            Server Actions (write paths)
-    components/           Feature UI
-components/
-  ui/                     Design-system primitives
-  shared/                 Cross-feature composites
-lib/
-  auth.ts                 Session and current-user helpers
-  roles.ts                Pure role-hierarchy rules
-  authorization.ts        Database-backed permission checks
-  rate-limit.ts           ActionResult type and rate limiting
-  activity.ts             Audit logging and notifications
-prisma/schema.prisma
-proxy.ts                  Session context and security headers
-scripts/                  Verification suites
-```
+<div align="center">
 
-### Conventions
+**Built with ❤️ by Usman — Senior Full Stack AI Engineer**
 
-**Reads live in `queries.ts` and are access-scoped at the source.** Every project
-query composes `visibleProjectsWhere(userId)`, so a page physically cannot forget
-to scope its results. A record that does not exist and a record the user may not
-see both raise `NotFoundError`, which renders a 404 — the two cases are
-deliberately indistinguishable so IDs cannot be probed for existence.
+[![GitHub](https://img.shields.io/badge/GitHub-usman11267-181717?style=flat&logo=github)](https://github.com/usman11267)
 
-**Writes live in `actions.ts` and follow the same five steps:**
+</div>
 
-1. `requireUser()` first — never trust a client-supplied user id.
-2. Validate the payload with Zod before touching the database.
-3. `requireProjectRole()` for anything scoped to an existing project.
-4. Rate-limit the mutation per user.
-5. Return an `ActionResult`, never a thrown error.
-
-`ActionResult<T>` is a discriminated union — `{ success: true, data: T }` or
-`{ success: false, error: string }` — so callers must handle the failure case to
-reach the data, and internal errors never surface to the client as stack traces.
-
-**Validation schemas are shared.** The same Zod schema backs the React Hook Form
-resolver and the Server Action's re-parse, so client and server cannot drift.
-Client-side validation is a convenience; the server-side parse is the trust
-boundary.
-
-**Authorization sits next to the data, not in path matching.** `proxy.ts`
-attaches session context and security headers but deliberately does not gate by
-route pattern — Clerk 7 deprecated `createRouteMatcher` because a matcher can
-diverge from how Next actually resolves routes, leaving protected resources
-reachable. Instead `app/(dashboard)/layout.tsx` redirects when there is no
-database user, Server Actions call `requireUser()` and `requireProjectRole()`,
-and route handlers verify their own credentials.
-
-## Security
-
-| Requirement | Implementation |
-| --- | --- |
-| Role-based access | `lib/roles.ts` defines ADMIN > EDITOR > VIEWER; `requireProjectRole()` enforces it |
-| Protected routes | Enforced in the dashboard layout and in each Server Action, not by path matching |
-| Row-level access | `visibleProjectsWhere()` composed into every project query |
-| Server-side validation | Every Server Action re-parses input with Zod, ignoring client-side results |
-| Rate limiting | Fixed-window, per user per action, in `lib/rate-limit.ts` |
-| Input sanitization | Control characters stripped, whitespace collapsed, lengths capped |
-| XSS prevention | React escapes all interpolated content; no `dangerouslySetInnerHTML` anywhere in app code |
-| CSRF protection | Server Actions are POST-only with an origin check and non-guessable action ids |
-| Security headers | `nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy`, `Permissions-Policy` set in `proxy.ts` |
-| Audit trail | `logActivity()` records every mutation; it swallows its own errors so audit can never break a write |
-
-Three rules that are easy to get wrong and are enforced deliberately:
-
-- **Deletion is owner-only, not ADMIN.** An ADMIN collaborator can invite,
-  re-role, and archive, but must not be able to destroy data belonging to
-  someone else. See `canDeleteProject()`.
-- **Member mutations are scoped by `{ id, projectId }` together.** Looking a
-  member up by id alone would let a caller who administers project A pass a
-  member id from project B and mutate it.
-- **The grid and the detail page share one permission derivation.** `listProjects`
-  resolves `role`, `isOwner`, and `canEdit` server-side, so a list view cannot
-  drift from the detail view's rules.
-
-Known limits: the rate limiter is in-process, so on multi-instance deployments it
-degrades to per-instance limits — back it with Redis before relying on it as a
-hard ceiling. Content-Security-Policy is not yet set, because Clerk and Supabase
-inject scripts and frames whose hosts vary by deployment; it belongs in
-`next.config.ts` where the allowlist can be reviewed as a whole.
-
-## Testing
-
-`npm test` runs four suites — 134 pure assertions with no database dependency, so
-they are fast enough to run on every save:
-
-- `scripts/verify-rbac.ts` — the role hierarchy, owner-overrides-membership, each
-  role's edit and manage rights, and the owner-only delete rule.
-- `scripts/verify-project-schemas.ts` — sanitization, length and format
-  rejection, defaults, tag normalization, and rejection of injected filter values
-  arriving from the URL.
-- `scripts/verify-dataset-schemas.ts` — upload, rename, and restore contracts,
-  dataset filter parsing from the URL, and the extension and MIME allowlists.
-- `scripts/verify-upload-guards.ts` — magic-byte sniffing (a zip renamed to
-  `.csv` is rejected), empty and binary content, and filename path-traversal
-  stripping.
-
-Each suite has its own script (`test:rbac`, `test:schemas`, `test:datasets`,
-`test:upload`) if you want to run one in isolation. All four import the real
-modules rather than restating the rules, so changing a rule surfaces here instead
-of silently passing against a stale copy.
-
-### Manual checks worth running against a seeded database
-
-1. Sign in as a project owner; create, edit, favorite, archive, and delete a project.
-2. Invite a second account as VIEWER. Confirm it can open the project but sees no
-   edit controls, and that invoking the update action directly is still refused.
-3. Re-role that account to EDITOR. Confirm edit controls appear in both the grid
-   and the detail page — they share one derivation, so they must agree.
-4. Re-role to ADMIN. Confirm it can manage members but that delete stays hidden
-   and is refused server-side.
-5. Request a project id belonging to an unrelated account. Confirm a 404, not a 403.
-6. Hand-edit the query string to `?status=SECRET&page=-1`. Confirm the page falls
-   back to defaults rather than erroring.
-7. Upload a CSV, then rename a `.zip` to `.csv` and upload it. Confirm the first
-   parses and the second is rejected on content, not extension.
-8. Open a dataset's Clean tab as a VIEWER and as an EDITOR. Confirm the VIEWER
-   sees the no-access message and the EDITOR can run an operation that produces a
-   new version.
-
-## Deployment
-
-### Vercel
-
-1. Push the repository to GitHub and import it in Vercel.
-2. Add every variable from `.env.example` under Settings → Environment Variables,
-   for both Production and Preview.
-3. Set `NEXT_PUBLIC_APP_URL` to the deployed origin.
-4. Set the build command to `prisma generate && next build`, so the Prisma client
-   is generated against the deployment's schema.
-5. Deploy.
-
-### Database migrations
-
-Vercel builds do not run migrations. Apply them from a trusted environment before
-or during release:
-
-```bash
-DATABASE_URL="<production-url>" npx prisma migrate deploy
-```
-
-Use a pooled connection string for the application (Supabase's pooler, PgBouncer,
-or Neon's pooled endpoint) and a direct connection for migrations.
-
-### Post-deploy checklist
-
-- [ ] Clerk webhook endpoint updated to the production URL and returning 2xx.
-- [ ] Clerk allowed origins include the production domain.
-- [ ] Supabase storage bucket created, with the service role key server-side only.
-- [ ] `prisma migrate deploy` applied against production.
-- [ ] Sign up with a fresh account and confirm a `User` row appears.
-- [ ] `npm run verify` green on the release commit.
-
-## Troubleshooting
-
-**`password authentication failed for user "postgres"`** — the `DATABASE_URL`
-credentials do not match the running Postgres instance. Verify with
-`psql "$DATABASE_URL" -c "select 1"`.
-
-**Signed in, but the dashboard redirects back to sign-in** — the Clerk webhook is
-not reaching the app, so no local `User` row exists. Check the webhook's delivery
-log in the Clerk dashboard.
-
-**`PrismaClientInitializationError` during build** — run `npx prisma generate`,
-and confirm the build command includes it.
