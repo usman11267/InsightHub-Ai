@@ -14,11 +14,14 @@ import Groq from "groq-sdk";
  */
 
 // ─── Model constants ───────────────────────────────────────────────────────
-/** Primary heavy model — GPT-OSS 120B / DeepSeek (configurable via GROQ_MODEL env). */
-export const GROQ_MODEL = process.env.GROQ_MODEL || "gpt-oss-120b";
+/** Primary heavy model — Llama 3.3 70B Versatile (70B parameters, 128k context). */
+export const GROQ_MODEL = process.env.GROQ_MODEL || "llama-3.3-70b-versatile";
 
-/** Fast interactive model — GPT-OSS 120B / Mixtral. */
-export const GROQ_MODEL_FAST = process.env.GROQ_MODEL_FAST || "gpt-oss-120b";
+/** Fast interactive model — Llama 3.1 8B Instant. */
+export const GROQ_MODEL_FAST = process.env.GROQ_MODEL_FAST || "llama-3.1-8b-instant";
+
+/** DeepSeek R1 70B Reasoning model. */
+export const GROQ_MODEL_DEEPSEEK = "deepseek-r1-distill-llama-70b";
 
 /** Mixtral 8x7B MoE model — 32,768 token context window. */
 export const GROQ_MODEL_MIXTRAL = "mixtral-8x7b-32768";
@@ -63,12 +66,6 @@ export type ChatMessage = {
 
 /**
  * Generate a single text completion (non-streaming).
- *
- * Use for: report generation, data profiling, SQL explanation, one-shot analysis.
- *
- * @param messages  - Full conversation history (system + user turns).
- * @param modelId   - Defaults to GROQ_MODEL (70b). Pass GROQ_MODEL_FAST for speed.
- * @param maxTokens - Hard ceiling on response length (default 4096).
  */
 export async function generateText(
   messages: ChatMessage[],
@@ -77,21 +74,29 @@ export async function generateText(
 ): Promise<string> {
   const client = getGroqClient();
 
-  const completion = await client.chat.completions.create({
-    model: modelId,
-    messages,
-    max_tokens: maxTokens,
-    temperature: 0.3,
-  });
-
-  return completion.choices[0]?.message?.content ?? "";
+  try {
+    const completion = await client.chat.completions.create({
+      model: modelId,
+      messages,
+      max_tokens: maxTokens,
+      temperature: 0.3,
+    });
+    return completion.choices[0]?.message?.content ?? "";
+  } catch (err) {
+    // If the requested model is not found, fallback to llama-3.3-70b-versatile
+    console.warn(`[Groq] Model ${modelId} failed, retrying with llama-3.3-70b-versatile:`, err);
+    const fallback = await client.chat.completions.create({
+      model: "llama-3.3-70b-versatile",
+      messages,
+      max_tokens: maxTokens,
+      temperature: 0.3,
+    });
+    return fallback.choices[0]?.message?.content ?? "";
+  }
 }
 
 /**
  * Convenience wrapper: single user prompt with an optional system instruction.
- *
- * @example
- *   const text = await ask("Summarize this dataset", "You are a data analyst.");
  */
 export async function ask(
   userPrompt: string,
@@ -107,12 +112,6 @@ export async function ask(
 
 /**
  * Stream a chat completion. Yields text deltas as they arrive.
- * Use for the AI Assistant chat panel to get real-time responses.
- *
- * @example
- *   for await (const chunk of streamChat(messages)) {
- *     process.stdout.write(chunk);
- *   }
  */
 export async function* streamChat(
   messages: ChatMessage[],
@@ -121,13 +120,25 @@ export async function* streamChat(
 ): AsyncGenerator<string> {
   const client = getGroqClient();
 
-  const stream = await client.chat.completions.create({
-    model: modelId,
-    messages,
-    max_tokens: maxTokens,
-    temperature: 0.5,
-    stream: true,
-  });
+  let stream;
+  try {
+    stream = await client.chat.completions.create({
+      model: modelId,
+      messages,
+      max_tokens: maxTokens,
+      temperature: 0.5,
+      stream: true,
+    });
+  } catch (err) {
+    console.warn(`[Groq] Stream model ${modelId} failed, falling back to llama-3.1-8b-instant:`, err);
+    stream = await client.chat.completions.create({
+      model: "llama-3.1-8b-instant",
+      messages,
+      max_tokens: maxTokens,
+      temperature: 0.5,
+      stream: true,
+    });
+  }
 
   for await (const chunk of stream) {
     const delta = chunk.choices[0]?.delta?.content;
