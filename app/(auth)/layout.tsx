@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Sparkles } from "lucide-react";
+import Image from "next/image";
 
 /**
  * Split layout for all Clerk screens: brand panel on the left (desktop),
@@ -20,8 +20,14 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         />
 
         <Link href="/" className="relative flex items-center gap-2 text-white">
-          <div className="flex size-8 items-center justify-center rounded-lg bg-white/20 backdrop-blur">
-            <Sparkles className="size-4" />
+          <div className="flex size-8 items-center justify-center overflow-hidden rounded-lg bg-white/20 backdrop-blur">
+            <Image
+              src="/logo-mark.png"
+              alt="InsightHub AI logo"
+              width={24}
+              height={24}
+              className="size-6 object-contain"
+            />
           </div>
           <span className="text-base font-semibold tracking-tight">InsightHub AI</span>
         </Link>
@@ -55,8 +61,14 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
       {/* Form panel */}
       <div className="flex flex-col items-center justify-center px-6 py-12">
         <Link href="/" className="mb-8 flex items-center gap-2 lg:hidden">
-          <div className="flex size-8 items-center justify-center rounded-lg gradient-brand">
-            <Sparkles className="size-4 text-white" />
+          <div className="flex size-8 items-center justify-center overflow-hidden rounded-lg gradient-brand">
+            <Image
+              src="/logo-mark.png"
+              alt="InsightHub AI logo"
+              width={24}
+              height={24}
+              className="size-6 object-contain"
+            />
           </div>
           <span className="text-base font-semibold tracking-tight">InsightHub AI</span>
         </Link>

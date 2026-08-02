@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Show } from "@clerk/nextjs";
 import {
   ArrowRight,
@@ -107,8 +108,14 @@ export default function LandingPage() {
       <header className="sticky top-0 z-50 border-b border-border/40 glass">
         <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
           <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="flex size-9 items-center justify-center rounded-xl gradient-brand shadow-md shadow-primary/25 transition-transform group-hover:scale-105">
-              <Sparkles className="size-5 text-white" />
+            <div className="flex size-9 items-center justify-center overflow-hidden rounded-xl gradient-brand shadow-md shadow-primary/25 transition-transform group-hover:scale-105">
+              <Image
+                src="/logo.png"
+                alt="InsightHub AI logo"
+                width={32}
+                height={32}
+                className="size-7 object-cover"
+              />
             </div>
             <div className="flex flex-col">
               <span className="text-base font-bold tracking-tight bg-gradient-to-r from-foreground via-foreground/90 to-foreground/70 bg-clip-text">
