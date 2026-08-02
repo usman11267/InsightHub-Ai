@@ -9,16 +9,34 @@ const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"]
 
 export const metadata: Metadata = {
   title: {
-    default: "InsightHub AI — AI-powered data analytics",
+    default: "InsightHub AI — AI-Powered Data Analytics & Executive Intelligence",
     template: "%s · InsightHub AI",
   },
   description:
-    "Upload any dataset and get instant KPIs, charts, forecasts, and AI-written reports. Built for teams that need answers, not spreadsheets.",
-  keywords: ["data analytics", "AI reports", "business intelligence", "data visualization"],
+    "Transform CSV, Excel, and JSON datasets into automated KPIs, 11+ interactive charts, predictive trend forecasts, and board-ready executive reports in seconds.",
+  keywords: [
+    "data analytics",
+    "AI data reports",
+    "business intelligence",
+    "data visualization",
+    "predictive forecasting",
+    "SQL analytics",
+    "Gemini AI",
+    "Next.js 16",
+  ],
+  authors: [{ name: "Usman" }],
   openGraph: {
-    title: "InsightHub AI",
-    description: "AI-powered data analytics for modern teams.",
+    title: "InsightHub AI — Enterprise AI Data Analytics Platform",
+    description:
+      "Transform CSV, Excel, and JSON datasets into automated KPIs, 11+ interactive charts, predictive forecasts, and executive reports in seconds.",
     type: "website",
+    siteName: "InsightHub AI",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "InsightHub AI — Enterprise AI Data Analytics",
+    description:
+      "Transform raw datasets into executive insights, dynamic charts, and AI trend forecasts.",
   },
   robots: { index: true, follow: true },
 };

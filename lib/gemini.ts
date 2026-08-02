@@ -14,13 +14,13 @@ import Groq from "groq-sdk";
  */
 
 // ─── Model constants ───────────────────────────────────────────────────────
-/** Primary model — strong reasoning, 128k context. */
-export const GROQ_MODEL = "llama-3.3-70b-versatile";
+/** Primary heavy model — Mixtral 8x7B MoE (32k context, high reasoning). */
+export const GROQ_MODEL = "mixtral-8x7b-32768";
 
-/** Fast model — lower latency for interactive chat. */
-export const GROQ_MODEL_FAST = "llama-3.1-8b-instant";
+/** Fast interactive model — Mixtral 8x7B MoE. */
+export const GROQ_MODEL_FAST = "mixtral-8x7b-32768";
 
-/** Mixtral model — great for structured data tasks. */
+/** Mixtral 8x7B MoE model — 32,768 token context window. */
 export const GROQ_MODEL_MIXTRAL = "mixtral-8x7b-32768";
 
 // ─── Singleton client ──────────────────────────────────────────────────────
