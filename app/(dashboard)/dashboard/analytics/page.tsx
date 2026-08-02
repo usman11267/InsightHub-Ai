@@ -128,7 +128,7 @@ export default async function AnalyticsPage({ searchParams }: PageProps) {
       {/* Dataset selector */}
       {datasets.length > 1 && (
         <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-thin">
-          {datasets.map((ds) => (
+          {datasets.map((ds: { id: string; name: string }) => (
             <Link key={ds.id} href={`/dashboard/analytics?datasetId=${ds.id}`}>
               <Badge
                 variant={ds.id === dataset?.id ? "default" : "outline"}
