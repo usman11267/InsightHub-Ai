@@ -23,26 +23,45 @@ export default async function ForecastingPage({ searchParams }: PageProps) {
   const sp = await searchParams;
   const datasetId = sp.datasetId;
 
-  const datasets = await prisma.dataset.findMany({
-    where: {
-      status: "READY",
-      project: {
-        OR: [{ ownerId: user.id }, { members: { some: { userId: user.id } } }],
+  let datasets: Array<{
+    id: string;
+    name: string;
+    fileType: string;
+    rowCount: number;
+    schemaJson: unknown;
+    previewJson: unknown;
+  }> = [];
+
+  try {
+    datasets = await prisma.dataset.findMany({
+      where: {
+        status: "READY",
+        project: {
+          OR: [{ ownerId: user.id }, { members: { some: { userId: user.id } } }],
+        },
       },
-    },
-    orderBy: { createdAt: "desc" },
-    take: 20,
-    select: { id: true, name: true, fileType: true, rowCount: true, schemaJson: true, previewJson: true },
-  });
+      orderBy: { createdAt: "desc" },
+      take: 20,
+      select: { id: true, name: true, fileType: true, rowCount: true, schemaJson: true, previewJson: true },
+    });
+  } catch {
+    datasets = [];
+  }
 
   if (datasets.length === 0) {
     return (
-      <EmptyState
-        icon={Database}
-        title="No datasets available"
-        description="Upload a dataset with numeric data to generate forecasts."
-        action={{ label: "Upload dataset", href: "/dashboard/datasets?upload=1" }}
-      />
+      <div className="space-y-6">
+        <PageHeader
+          title="Forecasting"
+          description="AI-powered trend analysis and predictions from your data."
+        />
+        <EmptyState
+          icon={Database}
+          title="No datasets available"
+          description="Upload a dataset with numeric data to generate forecasts."
+          action={{ label: "Upload dataset", href: "/dashboard/datasets?upload=1" }}
+        />
+      </div>
     );
   }
 
