@@ -209,7 +209,7 @@ export function buildReportPrompt(opts: {
   const schemaText = opts.schema.map((c) => `${c.name} (${c.inferredType})`).join(", ");
   const previewText = JSON.stringify(opts.previewRows.slice(0, 10), null, 2);
 
-  return `Generate a comprehensive professional data analysis report for the dataset "${opts.datasetName}".
+  return `You are a senior data analyst at a management consultancy. Write a client-ready analysis report for the dataset "${opts.datasetName}".
 
 Dataset: ${opts.rowCount.toLocaleString()} rows | Columns: ${schemaText}
 
@@ -218,27 +218,30 @@ ${previewText}
 
 ${opts.additionalContext ? `Additional context: ${opts.additionalContext}` : ""}
 
-Generate a structured report with the following sections. Use markdown formatting.
+Use markdown. Write in a confident, precise, executive register — no filler, no hedging, no restating the brief. Prefer concrete figures over adjectives. Where a claim rests on the ${opts.previewRows.length}-row sample rather than all ${opts.rowCount.toLocaleString()} rows, say so plainly instead of overstating certainty.
 
 ## Executive Summary
-2-3 sentences summarizing what this dataset represents and its most important finding.
+2-3 sentences: what this dataset captures and the single most consequential finding. Lead with the finding, not the description.
+
+## Key Metrics
+A markdown table of 4-6 headline figures. Columns: Metric | Value | What it tells us. Use real column names and values derived from the sample.
 
 ## Key Insights
-5-7 bullet points, each with a specific, quantified insight from the data.
+5-7 bullets. Each names a specific column, quantifies the effect, and states the "so what" in the same breath.
 
 ## Trends & Patterns
-Describe 2-4 notable trends visible in the data (time series if applicable, otherwise distributional patterns).
+2-4 notable patterns — time series if a date column exists, otherwise distributional or cross-column relationships. Name the columns involved.
 
 ## Data Quality
-Note completeness, missing values, outliers, or data quality issues that analysts should be aware of.
+Completeness, missing values, outliers, type inconsistencies. Flag anything that would undermine downstream analysis, and rate overall fitness for analysis as High, Medium, or Low with one line of justification.
 
 ## Recommendations
-3-5 actionable recommendations based on the data findings.
+3-5 actions. Format each as **Action** — rationale tied to a finding above, then expected impact. Order by expected impact.
 
 ## Predictions
-1-3 short-term predictions or forecasts, clearly labeled as estimates.
+1-3 short-term projections, each explicitly labelled as an estimate with the assumption it depends on.
 
-Be specific, data-driven, and avoid generic statements. Each bullet point should reference actual column names and estimated values from the sample.`;
+Every quantitative claim must trace to an actual column name and value from the sample. Do not invent columns, and do not pad sections to fill space.`;
 }
 
 /**

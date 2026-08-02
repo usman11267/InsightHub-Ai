@@ -25,19 +25,19 @@ export default async function ReportDetailPage({ params }: { params: Promise<{ r
   const errorMsg = content?.error;
 
   const STATUS_CONFIG = {
-    READY: { icon: CheckCircle2, label: "Generated", class: "text-emerald-500 bg-emerald-500/10 border-emerald-500/20" },
-    GENERATING: { icon: Loader2, label: "Generating…", class: "text-amber-500 bg-amber-500/10 border-amber-500/20" },
-    DRAFT: { icon: FileText, label: "Draft", class: "text-slate-500 bg-slate-500/10 border-slate-500/20" },
-    ERROR: { icon: AlertCircle, label: "Error", class: "text-red-500 bg-red-500/10 border-red-500/20" },
+    READY: { icon: CheckCircle2, label: "Generated", class: "text-success-on-surface bg-success/10 border-success/20" },
+    GENERATING: { icon: Loader2, label: "Generating…", class: "text-warning-on-surface bg-warning/10 border-warning/20" },
+    DRAFT: { icon: FileText, label: "Draft", class: "text-muted-foreground bg-muted border-border" },
+    ERROR: { icon: AlertCircle, label: "Error", class: "text-destructive-on-surface bg-destructive/10 border-destructive/20" },
   };
   const sc = STATUS_CONFIG[report.status];
   const StatusIcon = sc.icon;
 
   return (
-    <div className="mx-auto max-w-5xl space-y-8 pb-12">
+    <div className="mx-auto max-w-5xl space-y-6 pb-12">
       {/* Premium Header Section */}
-      <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-primary/10 via-background to-background p-8 shadow-2xl backdrop-blur-3xl">
-        <div className="absolute -top-24 -right-24 h-64 w-64 rounded-full bg-primary/20 blur-[80px]" />
+      <div className="glass-panel relative overflow-hidden bg-gradient-to-b from-primary/8 via-card to-card p-8">
+        <div className="absolute -top-24 -right-24 h-64 w-64 rounded-full bg-primary/15 blur-[80px]" />
         
         <div className="relative z-10 flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
           <div className="space-y-4">
@@ -52,7 +52,7 @@ export default async function ReportDetailPage({ params }: { params: Promise<{ r
               </span>
             </div>
             
-            <h1 className="bg-gradient-to-br from-foreground to-foreground/70 bg-clip-text text-3xl font-bold tracking-tight text-transparent sm:text-4xl">
+            <h1 className="text-2xl font-semibold tracking-tight text-foreground sm:text-[28px] sm:leading-9">
               {report.title}
             </h1>
             
@@ -83,11 +83,11 @@ export default async function ReportDetailPage({ params }: { params: Promise<{ r
 
       {/* Content Section */}
       {report.status === "GENERATING" && (
-        <Card className="overflow-hidden border-amber-500/20 bg-gradient-to-b from-amber-500/5 to-transparent">
+        <Card className="overflow-hidden border-warning/20 bg-gradient-to-b from-warning/5 to-transparent">
           <CardContent className="flex flex-col items-center justify-center p-16 text-center">
             <div className="relative mb-6">
-              <div className="absolute inset-0 animate-ping rounded-full bg-amber-500/20" />
-              <div className="relative flex size-16 items-center justify-center rounded-full bg-amber-500/10 text-amber-500">
+              <div className="absolute inset-0 animate-ping rounded-full bg-warning/20" />
+              <div className="relative flex size-16 items-center justify-center rounded-full bg-warning/10 text-warning-on-surface">
                 <Sparkles className="size-8 animate-pulse" />
               </div>
             </div>
@@ -100,9 +100,9 @@ export default async function ReportDetailPage({ params }: { params: Promise<{ r
       )}
 
       {report.status === "ERROR" && (
-        <Card className="overflow-hidden border-red-500/20 bg-gradient-to-b from-red-500/5 to-transparent">
+        <Card className="overflow-hidden border-destructive/20 bg-gradient-to-b from-destructive/5 to-transparent">
           <CardContent className="flex flex-col items-center justify-center p-12 text-center">
-            <div className="mb-4 flex size-12 items-center justify-center rounded-full bg-red-500/10 text-red-500">
+            <div className="mb-4 flex size-12 items-center justify-center rounded-full bg-destructive/10 text-destructive-on-surface">
               <AlertCircle className="size-6" />
             </div>
             <h3 className="text-lg font-semibold text-foreground">Report generation failed</h3>
@@ -117,15 +117,15 @@ export default async function ReportDetailPage({ params }: { params: Promise<{ r
             <div className="bg-muted/30 border-b border-border/50 px-8 py-4 flex items-center justify-between">
               <h2 className="text-sm font-semibold tracking-wide text-muted-foreground uppercase">Analysis Findings</h2>
               <div className="flex items-center gap-2">
-                <span className="flex size-2 rounded-full bg-emerald-500" />
-                <span className="text-xs font-medium text-emerald-500">Analysis Complete</span>
+                <span className="flex size-2 rounded-full bg-success" />
+                <span className="text-xs font-medium text-success-on-surface">Analysis Complete</span>
               </div>
             </div>
             <div className="p-8 sm:p-12">
               <div
                 className="prose prose-slate max-w-none dark:prose-invert 
                   prose-headings:scroll-mt-20 prose-headings:font-bold prose-headings:tracking-tight 
-                  prose-h1:text-3xl prose-h1:bg-gradient-to-r prose-h1:from-foreground prose-h1:to-foreground/70 prose-h1:bg-clip-text prose-h1:text-transparent
+                  prose-h1:text-3xl prose-h1:text-foreground
                   prose-h2:mt-10 prose-h2:text-2xl prose-h2:border-b prose-h2:border-border/50 prose-h2:pb-2
                   prose-h3:text-xl prose-h3:text-foreground/90
                   prose-p:leading-relaxed prose-p:text-muted-foreground
@@ -135,7 +135,10 @@ export default async function ReportDetailPage({ params }: { params: Promise<{ r
                   prose-blockquote:border-l-4 prose-blockquote:border-primary/50 prose-blockquote:bg-primary/5 prose-blockquote:py-1 prose-blockquote:pr-4 prose-blockquote:pl-6 prose-blockquote:rounded-r-lg prose-blockquote:text-muted-foreground prose-blockquote:not-italic
                   prose-pre:rounded-xl prose-pre:border prose-pre:border-border/50 prose-pre:bg-muted/50 
                   prose-code:rounded-md prose-code:bg-muted/80 prose-code:px-1.5 prose-code:py-0.5 prose-code:text-sm prose-code:font-medium
-                  prose-img:rounded-xl prose-img:border prose-img:shadow-sm"
+                  prose-img:rounded-xl prose-img:border prose-img:shadow-sm
+                  prose-table:w-full prose-table:overflow-hidden prose-table:rounded-xl prose-table:border prose-table:border-border/60 prose-table:text-sm
+                  prose-thead:bg-muted/60 prose-th:px-4 prose-th:py-2.5 prose-th:text-left prose-th:font-semibold prose-th:text-foreground
+                  prose-td:border-t prose-td:border-border/50 prose-td:px-4 prose-td:py-2.5 prose-td:text-muted-foreground"
                 dangerouslySetInnerHTML={{
                   __html: markdownToHtml(markdown),
                 }}
@@ -149,8 +152,7 @@ export default async function ReportDetailPage({ params }: { params: Promise<{ r
 }
 
 function markdownToHtml(md: string): string {
-  return md
-    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+  return escapeHtml(md)
     .replace(/```[\w]*\n([\s\S]*?)```/g, "<pre><code>$1</code></pre>")
     .replace(/`([^`]+)`/g, "<code>$1</code>")
     .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
@@ -158,9 +160,32 @@ function markdownToHtml(md: string): string {
     .replace(/^### (.+)$/gm, "<h3>$1</h3>")
     .replace(/^## (.+)$/gm, "<h2>$1</h2>")
     .replace(/^# (.+)$/gm, "<h1>$1</h1>")
+    .replace(TABLE_BLOCK, renderTable)
     .replace(/^[*-] (.+)$/gm, "<li>$1</li>")
     .replace(/(<li>[\s\S]*?<\/li>)/g, "<ul>$1</ul>")
     .replace(/^\d+\. (.+)$/gm, "<li>$1</li>")
     .replace(/\n\n/g, "</p><p>")
-    .replace(/^(?!<[h|u|p|l|c|p])(.+)$/gm, "<p>$1</p>");
+    .replace(/^(?!<[hupltc])(.+)$/gm, "<p>$1</p>");
+}
+
+function escapeHtml(s: string): string {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+/** A header row, a dashed separator row, then one or more body rows. */
+const TABLE_BLOCK = /^\|(.+)\|[ \t]*\n\|[ \t:|-]+\|[ \t]*\n((?:\|.*\|[ \t]*\n?)+)/gm;
+
+function renderTable(_match: string, header: string, body: string): string {
+  const cells = (row: string) =>
+    row.replace(/^\||\|$/g, "").split("|").map((c) => c.trim());
+
+  const head = cells(header).map((c) => `<th>${c}</th>`).join("");
+  const rows = body
+    .trimEnd()
+    .split("\n")
+    .filter((r) => r.trim())
+    .map((r) => `<tr>${cells(r).map((c) => `<td>${c}</td>`).join("")}</tr>`)
+    .join("");
+
+  return `<table><thead><tr>${head}</tr></thead><tbody>${rows}</tbody></table>`;
 }
