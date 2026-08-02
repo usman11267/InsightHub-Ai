@@ -15,23 +15,17 @@ function createClient(): PrismaClient {
     globalForPrisma.pgPool ??
     new Pool({
       connectionString: process.env.DATABASE_URL,
-      // Supabase pooler friendly defaults
-      max: 5,
+      max: 10,
       idleTimeoutMillis: 30_000,
+      connectionTimeoutMillis: 10_000,
     });
 
+  globalForPrisma.pgPool = pool;
+
   const adapter = new PrismaPg(pool);
-  const client = new PrismaClient({ adapter });
-
-  if (process.env.NODE_ENV !== "production") {
-    globalForPrisma.pgPool = pool;
-  }
-
-  return client;
+  return new PrismaClient({ adapter });
 }
 
 export const prisma = globalForPrisma.prisma ?? createClient();
 
-if (process.env.NODE_ENV !== "production") {
-  globalForPrisma.prisma = prisma;
-}
+globalForPrisma.prisma = prisma;
