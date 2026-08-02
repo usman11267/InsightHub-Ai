@@ -18,7 +18,7 @@ function SkeletonRows({ rows = 5, className }: { rows?: number; className?: stri
 
 function SkeletonCard({ className }: { className?: string }) {
   return (
-    <div className={cn("rounded-xl border border-border bg-card p-5", className)}>
+    <div className={cn("rounded-xl border border-border glass-card p-5", className)}>
       <Skeleton className="h-4 w-24" />
       <Skeleton className="mt-3 h-8 w-16" />
       <Skeleton className="mt-3 h-3 w-32" />

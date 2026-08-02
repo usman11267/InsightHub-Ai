@@ -4,6 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { UserButton } from "@clerk/nextjs";
+import Image from "next/image";
 import { Bell, Menu, Search, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { NAV_ITEMS, isNavItemActive } from "@/lib/navigation";
@@ -43,9 +44,9 @@ export function Topbar({ unreadCount = 0 }: { unreadCount?: number }) {
         </SheetTrigger>
         <SheetContent side="left" className="w-64 p-0">
           <SheetTitle className="sr-only">Navigation</SheetTitle>
-          <div className="flex h-16 items-center gap-2 border-b border-border px-4">
-            <div className="flex size-8 items-center justify-center rounded-lg gradient-brand">
-              <Sparkles className="size-4 text-white" />
+          <div className="flex h-16 items-center gap-2 border-b border-border px-4 glass">
+            <div className="flex size-8 items-center justify-center rounded-lg overflow-hidden">
+              <Image src="/logo.png" alt="InsightHub Logo" width={32} height={32} className="object-cover" />
             </div>
             <span className="text-[15px] font-semibold tracking-tight">InsightHub AI</span>
           </div>

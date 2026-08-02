@@ -1,8 +1,9 @@
 import "server-only";
+import { cache } from "react";
 import { prisma } from "@/lib/prisma";
 import { visibleProjectsWhere } from "@/features/dashboard/queries";
 
-export async function listReports(userId: string, page = 1, pageSize = 12) {
+export const listReports = cache(async function listReports(userId: string, page = 1, pageSize = 12) {
   const skip = (page - 1) * pageSize;
   const where = {
     project: visibleProjectsWhere(userId),
@@ -32,8 +33,9 @@ export async function listReports(userId: string, page = 1, pageSize = 12) {
 
   return { items, total, page, pageCount: Math.max(1, Math.ceil(total / pageSize)) };
 }
+);
 
-export async function getReportDetail(userId: string, reportId: string) {
+export const getReportDetail = cache(async function getReportDetail(userId: string, reportId: string) {
   return prisma.report.findFirst({
     where: {
       id: reportId,
@@ -54,3 +56,4 @@ export async function getReportDetail(userId: string, reportId: string) {
     },
   });
 }
+);

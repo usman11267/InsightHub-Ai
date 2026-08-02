@@ -4,6 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { ChevronsLeft, Plus, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { NAV_ITEMS, isNavItemActive } from "@/lib/navigation";
@@ -18,15 +19,15 @@ export function Sidebar() {
   return (
     <aside
       className={cn(
-        "sticky top-0 hidden h-screen shrink-0 flex-col border-r border-border bg-sidebar transition-[width] duration-200 lg:flex",
+        "sticky top-0 hidden h-screen shrink-0 flex-col border-r border-border/50 glass z-40 transition-[width] duration-200 lg:flex",
         collapsed ? "w-[68px]" : "w-60"
       )}
     >
       {/* Brand */}
       <div className="flex h-16 items-center gap-2 px-4">
         <Link href="/dashboard" className="flex items-center gap-2 overflow-hidden">
-          <div className="flex size-8 shrink-0 items-center justify-center rounded-lg gradient-brand shadow-sm">
-            <Sparkles className="size-4 text-white" />
+          <div className="flex size-8 shrink-0 items-center justify-center rounded-lg shadow-sm overflow-hidden">
+            <Image src="/logo.png" alt="InsightHub Logo" width={32} height={32} className="object-cover" />
           </div>
           {!collapsed && (
             <span className="truncate text-[15px] font-semibold tracking-tight">

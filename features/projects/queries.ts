@@ -1,4 +1,5 @@
 import "server-only";
+import { cache } from "react";
 import { prisma } from "@/lib/prisma";
 import { NotFoundError } from "@/lib/auth";
 import { effectiveRole, satisfiesRole } from "@/lib/roles";
@@ -54,7 +55,7 @@ function buildOrderBy(sort: ProjectFilters["sort"]): Prisma.ProjectOrderByWithRe
   }
 }
 
-export async function listProjects(userId: string, filters: ProjectFilters) {
+export const listProjects = cache(async function listProjects(userId: string, filters: ProjectFilters) {
   const where = buildWhere(userId, filters);
   const skip = (filters.page - 1) * PROJECTS_PAGE_SIZE;
 
@@ -101,12 +102,12 @@ export async function listProjects(userId: string, filters: ProjectFilters) {
     page: filters.page,
     pageCount: Math.max(1, Math.ceil(total / PROJECTS_PAGE_SIZE)),
   };
-}
+});
 
 export type ProjectListItem = Awaited<ReturnType<typeof listProjects>>["items"][number];
 
 /** Distinct tags across the user's visible projects, for the filter bar. */
-export async function getProjectTags(userId: string): Promise<string[]> {
+export const getProjectTags = cache(async function getProjectTags(userId: string): Promise<string[]> {
   const rows = await prisma.project.findMany({
     where: visibleProjectsWhere(userId),
     select: { tags: true },
@@ -114,14 +115,14 @@ export async function getProjectTags(userId: string): Promise<string[]> {
   const set = new Set<string>();
   for (const row of rows) for (const tag of row.tags) set.add(tag);
   return [...set].sort();
-}
+});
 
 /**
  * Full project for the detail page. Throws NotFoundError when the project is
  * missing *or* invisible to this user — the two cases are deliberately
  * indistinguishable so IDs can't be probed for existence.
  */
-export async function getProjectDetail(userId: string, projectId: string) {
+export const getProjectDetail = cache(async function getProjectDetail(userId: string, projectId: string) {
   const project = await prisma.project.findFirst({
     where: { AND: [{ id: projectId }, visibleProjectsWhere(userId)] },
     select: {
@@ -157,11 +158,11 @@ export async function getProjectDetail(userId: string, projectId: string) {
 
   const { favoritedBy, ...rest } = project;
   return { ...rest, isFavorite: favoritedBy.length > 0 };
-}
+});
 
 export type ProjectDetail = Awaited<ReturnType<typeof getProjectDetail>>;
 
-export async function getProjectDatasets(projectId: string, take = 10) {
+export const getProjectDatasets = cache(async function getProjectDatasets(projectId: string, take = 10) {
   return prisma.dataset.findMany({
     where: { projectId },
     orderBy: { createdAt: "desc" },
@@ -177,9 +178,9 @@ export async function getProjectDatasets(projectId: string, take = 10) {
       createdAt: true,
     },
   });
-}
+});
 
-export async function getProjectReports(projectId: string, take = 10) {
+export const getProjectReports = cache(async function getProjectReports(projectId: string, take = 10) {
   return prisma.report.findMany({
     where: { projectId },
     orderBy: { createdAt: "desc" },
@@ -193,9 +194,9 @@ export async function getProjectReports(projectId: string, take = 10) {
       author: { select: { firstName: true, lastName: true, email: true } },
     },
   });
-}
+});
 
-export async function getProjectActivity(projectId: string, take = 20) {
+export const getProjectActivity = cache(async function getProjectActivity(projectId: string, take = 20) {
   return prisma.activityLog.findMany({
     where: { projectId },
     orderBy: { createdAt: "desc" },
@@ -209,13 +210,13 @@ export async function getProjectActivity(projectId: string, take = 20) {
       project: { select: { id: true, name: true } },
     },
   });
-}
+});
 
 /** Lightweight list used by dataset/report pickers elsewhere in the app. */
-export async function getProjectOptions(userId: string) {
+export const getProjectOptions = cache(async function getProjectOptions(userId: string) {
   return prisma.project.findMany({
     where: { AND: [visibleProjectsWhere(userId), { status: "ACTIVE" }] },
     orderBy: { updatedAt: "desc" },
     select: { id: true, name: true, color: true },
   });
-}
+});

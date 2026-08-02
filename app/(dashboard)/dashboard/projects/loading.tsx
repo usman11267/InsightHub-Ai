@@ -19,7 +19,7 @@ export default function ProjectsLoading() {
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
         {Array.from({ length: 6 }).map((_, i) => (
-          <div key={i} className="rounded-xl border border-border bg-card p-5">
+          <div key={i} className="rounded-xl border border-border glass-card p-5">
             <Skeleton className="h-5 w-2/3" />
             <Skeleton className="mt-3 h-4 w-full" />
             <Skeleton className="mt-1.5 h-4 w-4/5" />

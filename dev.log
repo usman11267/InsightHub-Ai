@@ -379,3 +379,101 @@ Clerk: Refreshing the session token resulted in an infinite redirect loop. This 
  GET /dashboard/reports/cmsb7a8tk000g6cfhisoz5fe1 500 in 1403ms (next.js: 714ms, proxy.ts: 586ms, application-code: 104ms)
 [browser] Uncaught Error: Jest worker encountered 2 child process exceptions, exceeding retry limit
 ✓ Compiled in 495ms
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477:13)
+ GET /dashboard/settings 200 in 2.4s (next.js: 115ms, proxy.ts: 835ms, application-code: 1496ms)
+  Reload env: .env
+ GET /dashboard/settings 200 in 2.8s (next.js: 228ms, proxy.ts: 1650ms, application-code: 901ms)
+✓ Compiled in 547ms
+✓ Compiled in 2.1s
+✓ Compiled in 119ms
+ GET /dashboard/settings 200 in 5.7s (next.js: 334ms, proxy.ts: 3.5s, application-code: 1869ms)
+ GET /dashboard/settings 200 in 1636ms (next.js: 95ms, proxy.ts: 532ms, application-code: 1009ms)
+ GET /dashboard/settings 200 in 852ms (next.js: 226ms, proxy.ts: 289ms, application-code: 337ms)
+ GET /dashboard/settings 200 in 851ms (next.js: 307ms, proxy.ts: 289ms, application-code: 255ms)
+ GET /dashboard/settings 200 in 851ms (next.js: 356ms, proxy.ts: 290ms, application-code: 204ms)
+ GET /dashboard/settings 200 in 3.8s (next.js: 78ms, proxy.ts: 1287ms, application-code: 2.4s)
+ GET /dashboard/settings 500 in 2.1s (next.js: 465ms, proxy.ts: 1002ms, application-code: 622ms)
+ GET /dashboard/settings 500 in 1000ms (next.js: 299ms, proxy.ts: 577ms, application-code: 123ms)
+ GET /dashboard/settings 500 in 1165ms (next.js: 342ms, proxy.ts: 724ms, application-code: 99ms)
+[browser] Uncaught Error: ./features/projects/queries.ts:183:1
+Expected ',', got 'export'
+  181 | }
+  182 |
+> 183 | export const getProjectReports = cache(async function getProjectReports(projectId: string...
+      | ^^^^^^
+  184 |   return prisma.report.findMany({
+  185 |     where: { projectId },
+  186 |     orderBy: { createdAt: "desc" },
+
+Parsing ecmascript source code failed
+
+Import trace:
+  Server Component:
+    ./features/projects/queries.ts
+    ./app/(dashboard)/dashboard/projects/page.tsx
+
+
+    at <unknown> (Error: ./features/projects/queries.ts:183:1)
+    at <unknown> (Error: (./features/projects/queries.ts:183:1)
+✓ Compiled in 376ms
+✓ Compiled in 332ms
+ GET /dashboard/settings 200 in 2.5s (next.js: 586ms, proxy.ts: 982ms, application-code: 967ms)
+ GET /dashboard/settings 200 in 3.0s (next.js: 303ms, proxy.ts: 1288ms, application-code: 1446ms)
+✓ Compiled in 221ms
+✓ Compiled in 377ms
+ GET /dashboard/settings 200 in 3.6s (next.js: 354ms, proxy.ts: 701ms, application-code: 2.5s)
+ GET /dashboard/settings 200 in 2.9s (next.js: 100ms, proxy.ts: 132ms, application-code: 2.6s)
+ GET /dashboard/settings 200 in 3.0s (next.js: 504ms, proxy.ts: 893ms, application-code: 1598ms)
+ GET /dashboard/settings 200 in 3.1s (next.js: 644ms, proxy.ts: 893ms, application-code: 1558ms)
+ GET /dashboard/settings 200 in 2.9s (next.js: 129ms, proxy.ts: 1541ms, application-code: 1230ms)
+ GET /dashboard/settings 200 in 1667ms (next.js: 200ms, proxy.ts: 326ms, application-code: 1141ms)
+ GET /dashboard/settings 200 in 1694ms (next.js: 152ms, proxy.ts: 297ms, application-code: 1246ms)
+ GET /dashboard/settings 200 in 1601ms (next.js: 116ms, proxy.ts: 374ms, application-code: 1111ms)
+ GET /dashboard/settings 200 in 1452ms (next.js: 86ms, proxy.ts: 228ms, application-code: 1137ms)
+ GET /dashboard/settings 200 in 1461ms (next.js: 134ms, proxy.ts: 192ms, application-code: 1135ms)
+ GET /dashboard/settings 200 in 1497ms (next.js: 118ms, proxy.ts: 395ms, application-code: 984ms)
+ GET /dashboard/settings 200 in 1432ms (next.js: 85ms, proxy.ts: 201ms, application-code: 1146ms)
+ GET /dashboard/settings 200 in 1419ms (next.js: 140ms, proxy.ts: 195ms, application-code: 1085ms)
+ GET /dashboard/settings 200 in 1427ms (next.js: 114ms, proxy.ts: 292ms, application-code: 1021ms)
+ GET /dashboard/settings 200 in 1723ms (next.js: 92ms, proxy.ts: 209ms, application-code: 1422ms)
+ GET /dashboard/settings 200 in 1755ms (next.js: 150ms, proxy.ts: 211ms, application-code: 1393ms)
+ GET /dashboard/settings 200 in 1770ms (next.js: 90ms, proxy.ts: 367ms, application-code: 1313ms)
+ GET /dashboard/settings 200 in 1568ms (next.js: 133ms, proxy.ts: 237ms, application-code: 1197ms)
+ GET /dashboard/settings 200 in 1558ms (next.js: 185ms, proxy.ts: 258ms, application-code: 1114ms)
+ GET /dashboard/settings 200 in 1560ms (next.js: 300ms, proxy.ts: 324ms, application-code: 936ms)
+ GET /dashboard/settings 200 in 919ms (next.js: 70ms, proxy.ts: 191ms, application-code: 658ms)
+✓ Compiled in 312ms
+✓ Compiled in 0ms
+ GET /dashboard/settings 200 in 4.3s (next.js: 357ms, proxy.ts: 1406ms, application-code: 2.5s)
+ GET /dashboard/settings 200 in 2.7s (next.js: 288ms, proxy.ts: 509ms, application-code: 1939ms)
+ GET /dashboard/settings 200 in 2.4s (next.js: 197ms, proxy.ts: 308ms, application-code: 1918ms)
+ GET /dashboard/settings 200 in 2.5s (next.js: 286ms, proxy.ts: 310ms, application-code: 1879ms)
+ GET /dashboard/settings 200 in 2.5s (next.js: 391ms, proxy.ts: 310ms, application-code: 1774ms)
+ GET /dashboard/settings 200 in 2.5s (next.js: 128ms, proxy.ts: 306ms, application-code: 2.0s)
+ GET /dashboard/settings 200 in 3.2s (next.js: 302ms, proxy.ts: 518ms, application-code: 2.4s)
+ GET /dashboard/settings 200 in 3.0s (next.js: 100ms, proxy.ts: 619ms, application-code: 2.3s)
+ GET /dashboard/settings 200 in 2.7s (next.js: 127ms, proxy.ts: 579ms, application-code: 1951ms)
+ GET /dashboard/settings 200 in 2.5s (next.js: 560ms, proxy.ts: 428ms, application-code: 1520ms)
+ GET /dashboard/settings 200 in 2.5s (next.js: 672ms, proxy.ts: 424ms, application-code: 1409ms)
+ GET /dashboard/settings 200 in 2.6s (next.js: 790ms, proxy.ts: 383ms, application-code: 1389ms)
+ GET /dashboard/settings 200 in 2.2s (next.js: 78ms, proxy.ts: 975ms, application-code: 1163ms)
+ GET /dashboard/settings 200 in 1474ms (next.js: 136ms, proxy.ts: 255ms, application-code: 1083ms)
+ GET /dashboard/settings 200 in 1473ms (next.js: 178ms, proxy.ts: 255ms, application-code: 1039ms)
+ GET /dashboard/settings 200 in 1435ms (next.js: 146ms, proxy.ts: 393ms, application-code: 896ms)
+ GET /dashboard/settings 200 in 2.1s (next.js: 190ms, proxy.ts: 1100ms, application-code: 791ms)
+ GET /dashboard/settings 200 in 1716ms (next.js: 192ms, proxy.ts: 834ms, application-code: 690ms)
+ GET /dashboard/settings 200 in 1446ms (next.js: 77ms, proxy.ts: 169ms, application-code: 1200ms)
+ GET /dashboard/settings 200 in 1343ms (next.js: 76ms, proxy.ts: 182ms, application-code: 1085ms)
+ GET /dashboard/settings 200 in 1489ms (next.js: 192ms, proxy.ts: 215ms, application-code: 1082ms)
+ GET /dashboard/settings 200 in 1488ms (next.js: 242ms, proxy.ts: 214ms, application-code: 1032ms)
+ GET /dashboard/settings 200 in 1496ms (next.js: 94ms, proxy.ts: 215ms, application-code: 1188ms)
+ GET /dashboard/settings 200 in 1613ms (next.js: 142ms, proxy.ts: 214ms, application-code: 1257ms)
+ GET /dashboard/settings 200 in 1451ms (next.js: 75ms, proxy.ts: 142ms, application-code: 1234ms)
+ GET /dashboard/settings 200 in 1442ms (next.js: 80ms, proxy.ts: 323ms, application-code: 1038ms)
+ GET /dashboard/settings 200 in 1269ms (next.js: 132ms, proxy.ts: 198ms, application-code: 939ms)
+ GET /dashboard/settings 200 in 1340ms (next.js: 194ms, proxy.ts: 222ms, application-code: 924ms)
+ GET /dashboard/settings 200 in 1405ms (next.js: 88ms, proxy.ts: 234ms, application-code: 1084ms)
+ GET /dashboard/settings 200 in 1367ms (next.js: 277ms, proxy.ts: 195ms, application-code: 895ms)
+ GET /dashboard/settings 200 in 1104ms (next.js: 72ms, proxy.ts: 200ms, application-code: 832ms)
+ GET /dashboard/settings 200 in 999ms (next.js: 69ms, proxy.ts: 165ms, application-code: 766ms)
+ GET /dashboard/settings 200 in 929ms (next.js: 84ms, proxy.ts: 212ms, application-code: 634ms)

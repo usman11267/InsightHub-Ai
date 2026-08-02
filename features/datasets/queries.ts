@@ -1,4 +1,5 @@
 import "server-only";
+import { cache } from "react";
 import { prisma } from "@/lib/prisma";
 import { NotFoundError } from "@/lib/auth";
 import { effectiveRole, satisfiesRole } from "@/lib/roles";
@@ -65,7 +66,7 @@ function buildOrderBy(
   }
 }
 
-export async function listDatasets(userId: string, filters: DatasetFilters) {
+export const listDatasets = cache(async function listDatasets(userId: string, filters: DatasetFilters) {
   const where = buildWhere(userId, filters);
   const skip = (filters.page - 1) * DATASETS_PAGE_SIZE;
 
@@ -122,7 +123,7 @@ export async function listDatasets(userId: string, filters: DatasetFilters) {
     page: filters.page,
     pageCount: Math.max(1, Math.ceil(total / DATASETS_PAGE_SIZE)),
   };
-}
+});
 
 export type DatasetListItem = Awaited<ReturnType<typeof listDatasets>>["items"][number];
 
@@ -131,7 +132,7 @@ export type DatasetListItem = Awaited<ReturnType<typeof listDatasets>>["items"][
  * missing *or* invisible to this user — the two cases are deliberately
  * indistinguishable so IDs can't be probed for existence.
  */
-export async function getDatasetDetail(userId: string, datasetId: string) {
+export const getDatasetDetail = cache(async function getDatasetDetail(userId: string, datasetId: string) {
   const dataset = await prisma.dataset.findFirst({
     where: { AND: [{ id: datasetId }, visibleDatasetsWhere(userId)] },
     select: {
@@ -180,7 +181,7 @@ export async function getDatasetDetail(userId: string, datasetId: string) {
     canEdit: satisfiesRole(role, "EDITOR"),
     canDelete: satisfiesRole(role, "ADMIN") || dataset.uploadedById === userId,
   };
-}
+});
 
 export type DatasetDetail = Awaited<ReturnType<typeof getDatasetDetail>>;
 
@@ -191,7 +192,7 @@ export type DatasetDetail = Awaited<ReturnType<typeof getDatasetDetail>>;
  * `getDatasetDetail` — it is not independently scoped, so never call it with an
  * unvalidated id from a request.
  */
-export async function getDatasetVersions(datasetId: string, take = 50) {
+export const getDatasetVersions = cache(async function getDatasetVersions(datasetId: string, take = 50) {
   return prisma.datasetVersion.findMany({
     where: { datasetId },
     orderBy: { version: "desc" },
@@ -205,10 +206,10 @@ export async function getDatasetVersions(datasetId: string, take = 50) {
       createdAt: true,
     },
   });
-}
+});
 
 /** Aggregate counts for the datasets list header. */
-export async function getDatasetStats(userId: string) {
+export const getDatasetStats = cache(async function getDatasetStats(userId: string) {
   const where = visibleDatasetsWhere(userId);
 
   const [total, ready, processing, errored, aggregate] = await Promise.all([
@@ -227,7 +228,7 @@ export async function getDatasetStats(userId: string) {
     totalBytes: aggregate._sum.fileSize ?? 0,
     totalRows: aggregate._sum.rowCount ?? 0,
   };
-}
+});
 
 /**
  * Finds an existing dataset in the same project with identical content.
@@ -236,9 +237,9 @@ export async function getDatasetStats(userId: string) {
  * legitimately belongs in two different projects, and a global check would also
  * leak the existence of files in projects the user cannot see.
  */
-export async function findDuplicateByChecksum(projectId: string, checksum: string) {
+export const findDuplicateByChecksum = cache(async function findDuplicateByChecksum(projectId: string, checksum: string) {
   return prisma.dataset.findFirst({
     where: { projectId, checksum },
     select: { id: true, name: true, createdAt: true },
   });
-}
+});

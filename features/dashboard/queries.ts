@@ -1,4 +1,5 @@
 import "server-only";
+import { cache } from "react";
 import { prisma } from "@/lib/prisma";
 import type { Prisma } from "@prisma/client";
 
@@ -26,7 +27,7 @@ export type DashboardStats = {
   datasetTrend: number | null;
 };
 
-export async function getDashboardStats(userId: string): Promise<DashboardStats> {
+export const getDashboardStats = cache(async function getDashboardStats(userId: string): Promise<DashboardStats> {
   const projectScope = { project: visibleProjectsWhere(userId) };
 
   const now = new Date();
@@ -64,9 +65,9 @@ export async function getDashboardStats(userId: string): Promise<DashboardStats>
     storageBytes: storage._sum.fileSize ?? 0,
     datasetTrend,
   };
-}
+});
 
-export async function getRecentActivity(userId: string, take = 8) {
+export const getRecentActivity = cache(async function getRecentActivity(userId: string, take = 8) {
   return prisma.activityLog.findMany({
     where: {
       OR: [{ actorId: userId }, { project: visibleProjectsWhere(userId) }],
@@ -82,9 +83,9 @@ export async function getRecentActivity(userId: string, take = 8) {
       project: { select: { id: true, name: true } },
     },
   });
-}
+});
 
-export async function getRecentReports(userId: string, take = 5) {
+export const getRecentReports = cache(async function getRecentReports(userId: string, take = 5) {
   return prisma.report.findMany({
     where: { project: visibleProjectsWhere(userId) },
     orderBy: { createdAt: "desc" },
@@ -98,9 +99,9 @@ export async function getRecentReports(userId: string, take = 5) {
       project: { select: { id: true, name: true } },
     },
   });
-}
+});
 
-export async function getRecentProjects(userId: string, take = 4) {
+export const getRecentProjects = cache(async function getRecentProjects(userId: string, take = 4) {
   return prisma.project.findMany({
     where: visibleProjectsWhere(userId),
     orderBy: { updatedAt: "desc" },
@@ -115,4 +116,4 @@ export async function getRecentProjects(userId: string, take = 4) {
       _count: { select: { datasets: true, reports: true, members: true } },
     },
   });
-}
+});
