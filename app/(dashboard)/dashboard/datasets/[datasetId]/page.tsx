@@ -56,7 +56,7 @@ export default async function DatasetDetailPage({
   if (!user) redirect("/sign-in");
 
   const { datasetId } = await params;
-  const sp = await searchParams;
+  const sp = (await searchParams) ?? {};
   const TABS = ["preview", "schema", "clean", "versions"];
   const activeTab = TABS.includes(sp.tab) ? sp.tab : "preview";
 
@@ -67,13 +67,23 @@ export default async function DatasetDetailPage({
     notFound();
   }
 
-  const versions = await getDatasetVersions(datasetId);
+  let versions: Awaited<ReturnType<typeof getDatasetVersions>> = [];
+  try {
+    versions = (await getDatasetVersions(datasetId)) ?? [];
+  } catch {
+    versions = [];
+  }
 
-  const Icon = FILE_ICONS[dataset.fileType];
-  const allRows = (dataset.previewJson as Record<string, unknown>[]) ?? [];
+  const Icon = FILE_ICONS[dataset.fileType] ?? FileText;
+  const statusStyle = statusColors[dataset.status] ?? "bg-muted text-muted-foreground";
+  const allRows = Array.isArray(dataset.previewJson)
+    ? (dataset.previewJson as Record<string, unknown>[])
+    : [];
   const previewRows = allRows.slice(0, PREVIEW_ROW_COUNT);
-  const schema = (dataset.schemaJson as unknown as ColumnInfo[]) ?? [];
-
+  const schema = Array.isArray(dataset.schemaJson)
+    ? (dataset.schemaJson as unknown as ColumnInfo[])
+    : [];
+  const project = dataset.project ?? { id: "", name: "Project", color: "#3b82f6" };
 
   return (
     <div className="space-y-6">
@@ -87,21 +97,23 @@ export default async function DatasetDetailPage({
             <PageHeader title={dataset.name} description={dataset.description ?? undefined} />
             <div className="mt-2 flex flex-wrap items-center gap-2">
               <span
-                className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium ${statusColors[dataset.status]}`}
+                className={`inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium ${statusStyle}`}
               >
                 {dataset.status}
               </span>
               <Badge variant="outline">{dataset.fileType}</Badge>
-              <Link
-                href={`/dashboard/projects/${dataset.project.id}`}
-                className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <span
-                  className="inline-block size-2 rounded-full"
-                  style={{ background: dataset.project.color }}
-                />
-                {dataset.project.name}
-              </Link>
+              {project.id ? (
+                <Link
+                  href={`/dashboard/projects/${project.id}`}
+                  className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <span
+                    className="inline-block size-2 rounded-full"
+                    style={{ background: project.color }}
+                  />
+                  {project.name}
+                </Link>
+              ) : null}
             </div>
           </div>
         </div>
