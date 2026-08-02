@@ -37,11 +37,22 @@ export function sniffFileType(
     buffer[2] === 0x03 &&
     buffer[3] === 0x04;
 
-  if (isZip) {
+  // Legacy .xls — OLE2 compound document magic bytes: D0 CF 11 E0 A1 B1 1A E1
+  const isOle2 =
+    buffer[0] === 0xd0 &&
+    buffer[1] === 0xcf &&
+    buffer[2] === 0x11 &&
+    buffer[3] === 0xe0 &&
+    buffer[4] === 0xa1 &&
+    buffer[5] === 0xb1 &&
+    buffer[6] === 0x1a &&
+    buffer[7] === 0xe1;
+
+  if (isZip || isOle2) {
     if (declaredType !== "XLSX") {
       return {
         ok: false,
-        reason: `File content is XLSX/ZIP but was declared as ${declaredType}`,
+        reason: `File content is a spreadsheet but was declared as ${declaredType}`,
       };
     }
     return { ok: true, detectedType: "XLSX" };

@@ -2,10 +2,11 @@
 
 import * as React from "react";
 import { useState } from "react";
-import { Loader2, Sparkles, Wand2 } from "lucide-react";
+import { Loader2, Sparkles, Wand2, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { runCleaningOperation } from "@/features/data-cleaning/actions";
+import { cn } from "@/lib/utils";
+import { runCleaningOperation, type CleaningSuggestion } from "@/features/data-cleaning/actions";
 import type { ColumnInfo } from "@/features/datasets/components/schema-viewer";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -42,6 +43,22 @@ const FILL_OPS: { op: Operation; label: string }[] = [
   { op: "fill_missing_mode", label: "mode" },
 ];
 
+const SUGGESTION_LABELS: Record<string, string> = {
+  fill_missing: "Fill missing values",
+  remove_duplicates: "Remove duplicate rows",
+  normalize_text: "Normalize text casing",
+  trim_whitespace: "Trim whitespace",
+  fix_dates: "Fix date formats",
+  cast_type: "Cast column type",
+  rename_column: "Rename column",
+};
+
+const PRIORITY_STYLES: Record<CleaningSuggestion["priority"], string> = {
+  high: "bg-destructive/10 text-destructive-on-surface border-destructive/20",
+  medium: "bg-warning/10 text-warning-on-surface border-warning/20",
+  low: "bg-success/10 text-success-on-surface border-success/20",
+};
+
 interface CleaningPanelProps {
   datasetId: string;
   schema: ColumnInfo[];
@@ -51,7 +68,8 @@ interface CleaningPanelProps {
 export function CleaningPanel({ datasetId, schema, canEdit }: CleaningPanelProps) {
   const router = useRouter();
   const [running, setRunning] = useState<string | null>(null);
-  const [suggestions, setSuggestions] = useState("");
+  const [suggestions, setSuggestions] = useState<CleaningSuggestion[]>([]);
+  const [suggestionTried, setSuggestionTried] = useState(false);
   const [column, setColumn] = useState(
     schema.find((c) => c.inferredType === "number")?.name ?? ""
   );
@@ -68,6 +86,7 @@ export function CleaningPanel({ datasetId, schema, canEdit }: CleaningPanelProps
       }
       if (result.data.suggestions) {
         setSuggestions(result.data.suggestions);
+        setSuggestionTried(true);
       } else {
         toast.success(result.data.description);
         router.refresh();
@@ -174,8 +193,41 @@ export function CleaningPanel({ datasetId, schema, canEdit }: CleaningPanelProps
               Suggest
             </Button>
           </div>
-          {suggestions && (
-            <p className="whitespace-pre-wrap text-sm leading-relaxed">{suggestions}</p>
+          {suggestions.length > 0 ? (
+            <ul className="space-y-2">
+              {suggestions.map((s, i) => (
+                <li key={`${s.operation}-${s.column ?? "table"}-${i}`} className="rounded-lg border bg-card p-3">
+                  <div className="flex items-center justify-between gap-2">
+                    <p className="text-sm font-medium">
+                      {SUGGESTION_LABELS[s.operation] ?? s.operation}
+                      {s.column ? <span className="text-muted-foreground"> — {s.column}</span> : null}
+                    </p>
+                    <span
+                      className={cn(
+                        "shrink-0 rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide",
+                        PRIORITY_STYLES[s.priority]
+                      )}
+                    >
+                      {s.priority}
+                    </span>
+                  </div>
+                  <p className="mt-1 text-xs text-muted-foreground">{s.reason}</p>
+                  {s.estimatedImpact && (
+                    <p className="mt-1 text-xs font-medium">{s.estimatedImpact}</p>
+                  )}
+                </li>
+              ))}
+            </ul>
+          ) : suggestionTried ? (
+            <p className="flex items-center gap-2 text-sm text-muted-foreground">
+              <CheckCircle2 className="size-4" />
+              No issues found — the dataset looks clean.
+            </p>
+          ) : (
+            <p className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Sparkles className="size-4" />
+              Run the AI review to get cleaning recommendations.
+            </p>
           )}
         </CardContent>
       </Card>

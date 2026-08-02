@@ -1,11 +1,11 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import { useCallback, useState } from "react";
 import { useDropzone, type FileRejection } from "react-dropzone";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  CloudUpload,
   FileSpreadsheet,
   FileJson,
   FileText,
@@ -14,11 +14,12 @@ import {
   AlertCircle,
   Loader2,
   ListPlus,
+  FileUp,
+  FileSearch,
+  Ban,
 } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
 import { formatBytes } from "@/lib/utils";
 import {
   ACCEPTED_FILE_TYPES,
@@ -27,13 +28,26 @@ import {
   type AcceptedFileType,
 } from "@/features/datasets/schemas";
 
+type SheetStatus = {
+  name: string;
+  state: "pending" | "importing" | "done" | "skipped";
+  detail?: string;
+};
+
+type CreatedDataset = {
+  id: string;
+  name: string;
+  rowCount: number;
+  columnCount: number;
+  sheetName: string | null;
+};
+
 type UploadState =
   | { status: "idle" }
   | { status: "selected"; file: File; fileType: AcceptedFileType }
-  | { status: "sheets_selection"; file: File; sheets: string[] }
-  | { status: "uploading"; file: File; progress: number; currentSheet?: string; totalSheets?: number; uploadedCount?: number }
-  | { status: "success"; datasetId: string; name: string; rowCount: number; multiple?: boolean; uploadedCount?: number; skipped?: string[] }
-  | { status: "error"; message: string; duplicateId?: string };
+  | { status: "uploading"; file: File; phase: string; sheetStatuses: SheetStatus[] }
+  | { status: "success"; datasets: CreatedDataset[]; skipped: string[] }
+  | { status: "error"; message: string };
 
 const FILE_ICONS: Record<AcceptedFileType, React.ElementType> = {
   CSV: FileText,
@@ -57,7 +71,6 @@ export function UploadDropzone({ projectId, onSuccess, className }: UploadDropzo
   const [state, setState] = useState<UploadState>({ status: "idle" });
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [selectedSheets, setSelectedSheets] = useState<string[]>([]);
 
   const onDrop = useCallback((accepted: File[], rejected: FileRejection[]) => {
     if (rejected.length > 0) {
@@ -93,11 +106,82 @@ export function UploadDropzone({ projectId, onSuccess, className }: UploadDropzo
     multiple: false,
   });
 
+  function patchSheet(name: string, patch: Partial<SheetStatus>) {
+    setState((prev) => {
+      if (prev.status !== "uploading") return prev;
+      return {
+        ...prev,
+        sheetStatuses: prev.sheetStatuses.map((s) =>
+          s.name === name ? { ...s, ...patch } : s
+        ),
+      };
+    });
+  }
+
+  function handleProgressEvent(event: Record<string, unknown>) {
+    switch (event.type) {
+      case "reading":
+        setState((prev) =>
+          prev.status === "uploading"
+            ? { ...prev, phase: "Reading workbook…" }
+            : prev
+        );
+        break;
+      case "sheets": {
+        const sheets = Array.isArray(event.sheets)
+          ? (event.sheets as string[]).map((s) => String(s))
+          : [];
+        setState((prev) =>
+          prev.status === "uploading"
+            ? {
+                ...prev,
+                phase: `Found ${sheets.length} worksheets`,
+                sheetStatuses: sheets.map((s) => ({ name: s, state: "pending" })),
+              }
+            : prev
+        );
+        break;
+      }
+      case "sheet": {
+        const sheet = String(event.name ?? "");
+        patchSheet(sheet, { state: "importing" });
+        setState((prev) =>
+          prev.status === "uploading" ? { ...prev, phase: `Importing ${sheet}…` } : prev
+        );
+        break;
+      }
+      case "sheet-done": {
+        const sheet = String(event.name ?? "");
+        patchSheet(sheet, { state: "done" });
+        break;
+      }
+      case "sheet-skipped": {
+        const sheet = String(event.name ?? "");
+        patchSheet(sheet, { state: "skipped", detail: String(event.reason ?? "") });
+        break;
+      }
+      case "done": {
+        const datasets = Array.isArray(event.datasets)
+          ? (event.datasets as CreatedDataset[])
+          : [];
+        const skipped = Array.isArray(event.skipped)
+          ? (event.skipped as string[]).map(String)
+          : [];
+        setState({ status: "success", datasets, skipped });
+        onSuccess?.(datasets[0]?.id);
+        break;
+      }
+      case "error":
+        setState({ status: "error", message: String(event.message ?? "Upload failed.") });
+        break;
+    }
+  }
+
   async function handleUpload() {
     if (state.status !== "selected") return;
     const { file } = state;
 
-    setState({ status: "uploading", file, progress: 10 });
+    setState({ status: "uploading", file, phase: "Uploading workbook…", sheetStatuses: [] });
 
     const formData = new FormData();
     formData.append("file", file);
@@ -105,103 +189,46 @@ export function UploadDropzone({ projectId, onSuccess, className }: UploadDropzo
     formData.append("name", name.trim() || file.name);
     formData.append("description", description.trim());
 
-    // Simulate progress increments during upload
-    const progressInterval = setInterval(() => {
-      setState((prev) =>
-        prev.status === "uploading" && prev.progress < 85
-          ? { ...prev, progress: prev.progress + 15 }
-          : prev
-      );
-    }, 400);
-
     try {
       const res = await fetch("/api/upload", { method: "POST", body: formData });
-      clearInterval(progressInterval);
 
       if (!res.ok) {
         const body = await res.json().catch(() => ({}));
-        // Surface the status when the body is empty or not JSON — a bare
-        // "Upload failed" gives the user nothing to act on.
         const message =
           body.error ?? `Upload failed (HTTP ${res.status} ${res.statusText}).`;
-        if (res.status === 409) {
-          setState({ status: "error", message, duplicateId: body.duplicateId });
-        } else {
-          setState({ status: "error", message });
+        setState({ status: "error", message });
+        return;
+      }
+
+      // NDJSON progress stream: parse line by line as it arrives.
+      if (!res.body || !(res.headers.get("content-type") ?? "").includes("ndjson")) {
+        setState({ status: "error", message: "Upload failed: unexpected server response." });
+        return;
+      }
+
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+
+      for (;;) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+
+        const lines = buffer.split("\n");
+        buffer = lines.pop() ?? "";
+        for (const line of lines) {
+          const trimmed = line.trim();
+          if (!trimmed) continue;
+          try {
+            handleProgressEvent(JSON.parse(trimmed) as Record<string, unknown>);
+          } catch {
+            // Ignore malformed lines; the next valid event still applies.
+          }
         }
-        return;
       }
-
-      const data = await res.json();
-      
-      if (data.requireSelection) {
-        setState({ status: "sheets_selection", file, sheets: data.sheets });
-        setSelectedSheets(data.sheets);
-        return;
-      }
-
-      setState({ status: "success", datasetId: data.id, name: data.name, rowCount: data.rowCount });
-      onSuccess?.(data.id);
     } catch {
-      clearInterval(progressInterval);
       setState({ status: "error", message: "Network error. Please try again." });
-    }
-  }
-
-  async function handleUploadSheets() {
-    if (state.status !== "sheets_selection") return;
-    const { file } = state;
-    if (selectedSheets.length === 0) return;
-
-    setState({ status: "uploading", file, progress: 10, totalSheets: selectedSheets.length, uploadedCount: 0 });
-
-    let successCount = 0;
-    let lastDatasetId = "";
-    const failures: string[] = [];
-
-    for (let i = 0; i < selectedSheets.length; i++) {
-      const sheetName = selectedSheets[i];
-      setState({ status: "uploading", file, progress: 10 + (i / selectedSheets.length) * 80, currentSheet: sheetName, totalSheets: selectedSheets.length, uploadedCount: successCount });
-
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("projectId", projectId);
-      formData.append("name", name.trim() || file.name);
-      formData.append("description", description.trim());
-      formData.append("sheetName", sheetName);
-
-      try {
-        const res = await fetch("/api/upload", { method: "POST", body: formData });
-        const data = await res.json().catch(() => ({}));
-        if (res.ok) {
-          successCount++;
-          lastDatasetId = data.id;
-        } else {
-          failures.push(`${sheetName}: ${data.error ?? `HTTP ${res.status}`}`);
-        }
-      } catch {
-        failures.push(`${sheetName}: network error`);
-      }
-    }
-
-    if (successCount === 0) {
-      setState({
-        status: "error",
-        message: failures.length
-          ? `No sheets imported. ${failures[0]}`
-          : "Failed to upload any sheets. Please try again.",
-      });
-    } else {
-      setState({
-        status: "success",
-        datasetId: lastDatasetId,
-        name: `${name} (${successCount} sheet${successCount === 1 ? "" : "s"})`,
-        rowCount: 0,
-        multiple: true,
-        uploadedCount: successCount,
-        skipped: failures,
-      });
-      onSuccess?.(lastDatasetId);
     }
   }
 
@@ -209,7 +236,6 @@ export function UploadDropzone({ projectId, onSuccess, className }: UploadDropzo
     setState({ status: "idle" });
     setName("");
     setDescription("");
-    setSelectedSheets([]);
   }
 
   return (
@@ -234,7 +260,14 @@ export function UploadDropzone({ projectId, onSuccess, className }: UploadDropzo
             >
               <input {...getInputProps()} />
               <div className="flex size-14 items-center justify-center rounded-xl gradient-brand shadow-lg">
-                <CloudUpload className="size-7 text-white" />
+                <Image
+                  src="/logo-mark.png"
+                  alt="Logo"
+                  width={40}
+                  height={40}
+                  className="size-10 object-contain"
+                  priority
+                />
               </div>
               <div>
                 <p className="text-base font-semibold">
@@ -265,17 +298,7 @@ export function UploadDropzone({ projectId, onSuccess, className }: UploadDropzo
                 className="mt-3 flex items-start gap-2 rounded-lg bg-destructive/10 p-3 text-sm text-destructive-on-surface"
               >
                 <AlertCircle className="mt-0.5 size-4 shrink-0" />
-                <div>
-                  <p>{state.message}</p>
-                  {state.duplicateId && (
-                    <a
-                      href={`/dashboard/datasets/${state.duplicateId}`}
-                      className="mt-1 underline underline-offset-2"
-                    >
-                      View existing dataset →
-                    </a>
-                  )}
-                </div>
+                <p>{state.message}</p>
               </motion.div>
             )}
           </motion.div>
@@ -339,66 +362,13 @@ export function UploadDropzone({ projectId, onSuccess, className }: UploadDropzo
               variant="gradient"
               className="w-full"
             >
-              <CloudUpload className="size-4" />
+              <ListPlus className="size-4" />
               Upload dataset
             </Button>
           </motion.div>
         )}
 
-        {/* ── Sheets Selection ───────────────────────────────── */}
-        {state.status === "sheets_selection" && (
-          <motion.div
-            key="sheets_selection"
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            className="space-y-4"
-          >
-            <div className="flex items-center gap-3 rounded-xl border border-border bg-card p-4">
-              <FileSpreadsheet className="size-8 shrink-0 text-info-on-surface" />
-              <div className="min-w-0 flex-1">
-                <p className="truncate text-sm font-medium">Multiple Sheets Found</p>
-                <p className="text-xs text-muted-foreground">Select which sheets to import</p>
-              </div>
-              <Button variant="ghost" size="icon" onClick={reset} className="shrink-0">
-                <X className="size-4" />
-              </Button>
-            </div>
-
-            <div className="rounded-xl border border-border bg-card p-2 space-y-1 max-h-60 overflow-y-auto">
-              {state.sheets.map((sheetName) => (
-                <label
-                  key={sheetName}
-                  className="flex cursor-pointer items-center gap-3 rounded-lg p-2 hover:bg-accent/50 transition-colors"
-                >
-                  <Checkbox
-                    checked={selectedSheets.includes(sheetName)}
-                    onCheckedChange={(checked) => {
-                      if (checked) {
-                        setSelectedSheets((prev) => [...prev, sheetName]);
-                      } else {
-                        setSelectedSheets((prev) => prev.filter((s) => s !== sheetName));
-                      }
-                    }}
-                  />
-                  <span className="text-sm font-medium">{sheetName}</span>
-                </label>
-              ))}
-            </div>
-
-            <Button
-              onClick={handleUploadSheets}
-              disabled={selectedSheets.length === 0}
-              variant="gradient"
-              className="w-full"
-            >
-              <ListPlus className="size-4" />
-              Import {selectedSheets.length} sheet{selectedSheets.length === 1 ? "" : "s"}
-            </Button>
-          </motion.div>
-        )}
-
-        {/* ── Uploading ─────────────────────────────────────── */}
+        {/* ── Uploading / importing ─────────────────────────── */}
         {state.status === "uploading" && (
           <motion.div
             key="uploading"
@@ -408,17 +378,52 @@ export function UploadDropzone({ projectId, onSuccess, className }: UploadDropzo
           >
             <div className="flex items-center gap-3">
               <Loader2 className="size-5 animate-spin text-primary" />
-              <div>
-                <p className="text-sm font-medium">
-                  {state.totalSheets && state.totalSheets > 1 
-                    ? `Uploading sheet ${state.uploadedCount! + 1} of ${state.totalSheets}…` 
-                    : "Uploading & analyzing…"}
-                </p>
-                <p className="text-xs text-muted-foreground">{state.currentSheet ? `${state.file.name} - ${state.currentSheet}` : state.file.name}</p>
+              <div className="min-w-0">
+                <p className="truncate text-sm font-medium">{state.phase}</p>
+                <p className="text-xs text-muted-foreground">{state.file.name}</p>
               </div>
             </div>
-            <Progress value={state.progress} className="h-2" />
-            <p className="text-center text-xs text-muted-foreground">
+
+            {state.sheetStatuses.length > 0 && (
+              <ul className="space-y-1.5">
+                {state.sheetStatuses.map((sheet) => (
+                  <li
+                    key={sheet.name}
+                    className="flex items-center gap-2 text-sm"
+                  >
+                    {sheet.state === "pending" && (
+                      <Loader2 className="size-3.5 shrink-0 animate-spin text-muted-foreground" />
+                    )}
+                    {sheet.state === "importing" && (
+                      <Loader2 className="size-3.5 shrink-0 animate-spin text-primary" />
+                    )}
+                    {sheet.state === "done" && (
+                      <CheckCircle2 className="size-3.5 shrink-0 text-success-on-surface" />
+                    )}
+                    {sheet.state === "skipped" && (
+                      <Ban className="size-3.5 shrink-0 text-warning-on-surface" />
+                    )}
+                    <span
+                      className={cn(
+                        "truncate",
+                        sheet.state === "skipped" && "text-warning-on-surface",
+                        sheet.state === "done" && "text-muted-foreground"
+                      )}
+                    >
+                      {sheet.name}
+                    </span>
+                    {sheet.detail && (
+                      <span className="ml-auto shrink-0 text-xs text-muted-foreground">
+                        {sheet.detail}
+                      </span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            <p className="flex items-center gap-1 text-center text-xs text-muted-foreground">
+              <FileSearch className="size-3" />
               Parsing rows, inferring column types, checking for duplicates…
             </p>
           </motion.div>
@@ -434,14 +439,33 @@ export function UploadDropzone({ projectId, onSuccess, className }: UploadDropzo
           >
             <CheckCircle2 className="size-10 text-success-on-surface" />
             <div>
-              <p className="text-base font-semibold">{state.name}</p>
+              <p className="text-base font-semibold">
+                {state.datasets.length === 1
+                  ? state.datasets[0].name
+                  : `${state.datasets.length} datasets imported`}
+              </p>
               <p className="text-sm text-muted-foreground">
-                {state.multiple
-                  ? `${state.uploadedCount} sheets imported successfully`
-                  : `${state.rowCount.toLocaleString()} rows imported successfully`}
+                {state.datasets.length === 1
+                  ? `${state.datasets[0].rowCount.toLocaleString()} rows imported successfully`
+                  : `Each worksheet is now its own dataset`}
               </p>
             </div>
-            {state.skipped && state.skipped.length > 0 && (
+
+            {state.datasets.length > 1 && (
+              <ul className="w-full space-y-1 rounded-lg bg-background/60 p-3 text-left text-xs">
+                {state.datasets.map((ds) => (
+                  <li key={ds.id} className="flex items-center gap-2">
+                    <FileUp className="size-3 shrink-0 text-primary" />
+                    <span className="truncate font-medium">{ds.name}</span>
+                    <span className="ml-auto shrink-0 text-muted-foreground">
+                      {ds.rowCount.toLocaleString()} rows · {ds.columnCount} cols
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            {state.skipped.length > 0 && (
               <div className="w-full rounded-lg bg-warning/10 p-3 text-left text-xs text-warning-on-surface">
                 <p className="font-medium">
                   {state.skipped.length} sheet{state.skipped.length === 1 ? "" : "s"} skipped
@@ -453,12 +477,11 @@ export function UploadDropzone({ projectId, onSuccess, className }: UploadDropzo
                 </ul>
               </div>
             )}
+
             <div className="flex gap-2">
-              {!state.multiple && (
-                <Button asChild variant="gradient" size="sm">
-                  <a href={`/dashboard/datasets/${state.datasetId}`}>View dataset</a>
-                </Button>
-              )}
+              <Button asChild variant="gradient" size="sm">
+                <a href={`/dashboard/datasets/${state.datasets[0].id}`}>View dataset</a>
+              </Button>
               <Button variant="outline" size="sm" onClick={reset}>
                 Upload another
               </Button>

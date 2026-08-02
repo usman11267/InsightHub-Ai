@@ -124,6 +124,7 @@ export const updateDatasetSchema = z.object({
   id: z.string().min(1),
   name: sanitizedText(120).pipe(z.string().min(1, "Name is required")).optional(),
   description: sanitizedText(500).optional(),
+  projectId: z.string().min(1).optional(),
 });
 
 export const datasetIdSchema = z.object({ id: z.string().min(1) });

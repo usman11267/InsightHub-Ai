@@ -7,8 +7,8 @@ import { getCurrentDbUser } from "@/lib/auth";
 import { listDatasets, getDatasetStats } from "@/features/datasets/queries";
 import { getProjectOptions } from "@/features/projects/queries";
 import { datasetFiltersSchema } from "@/features/datasets/schemas";
-import { DatasetCard } from "@/features/datasets/components/dataset-card";
 import { DatasetFilters } from "@/features/datasets/components/dataset-filters";
+import { DatasetGrid } from "@/features/datasets/components/dataset-grid";
 import { UploadPanel } from "@/features/datasets/components/upload-panel";
 import { PageHeader } from "@/components/shared/page-header";
 import { StatCard } from "@/components/shared/stat-card";
@@ -110,11 +110,7 @@ export default async function DatasetsPage({ searchParams }: PageProps) {
           }
         />
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          {items.map((dataset) => (
-            <DatasetCard key={dataset.id} dataset={dataset} />
-          ))}
-        </div>
+        <DatasetGrid datasets={items} projects={projects} />
       )}
 
       {/* Pagination */}

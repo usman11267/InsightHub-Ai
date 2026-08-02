@@ -6,18 +6,13 @@ import {
   Bot,
   CheckCircle2,
   Database,
-  FileSpreadsheet,
   FileText,
-  Globe2,
   Layers,
-  LineChart,
-  Lock,
   Play,
   ShieldCheck,
   Sparkles,
   Table2,
   TrendingUp,
-  Users,
   Zap,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";

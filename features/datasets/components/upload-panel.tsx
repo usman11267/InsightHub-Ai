@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useRouter } from "next/navigation";
 import { UploadDropzone } from "@/features/datasets/components/upload-dropzone";
 
 /**
@@ -13,6 +14,7 @@ export function UploadPanel({
 }: {
   projects: { id: string; name: string }[];
 }) {
+  const router = useRouter();
   const [projectId, setProjectId] = React.useState(projects[0]?.id ?? "");
 
   return (
@@ -40,7 +42,11 @@ export function UploadPanel({
 
       {/* Remount on project change so a part-completed upload can't be
           submitted against the newly selected project. */}
-      <UploadDropzone key={projectId} projectId={projectId} />
+      <UploadDropzone
+        key={projectId}
+        projectId={projectId}
+        onSuccess={() => router.refresh()}
+      />
     </div>
   );
 }

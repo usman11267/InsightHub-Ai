@@ -29,6 +29,29 @@ type ColumnSchema = {
   uniqueCount: number;
 };
 
+/**
+ * Progress events streamed back to the client as NDJSON (one JSON object per
+ * line). The client renders each event as it arrives, so the user sees the
+ * workbook being read and every sheet imported in real time instead of one
+ * opaque spinner.
+ */
+type ProgressEvent =
+  | { type: "reading" }
+  | { type: "sheets"; sheets: string[] }
+  | { type: "sheet"; name: string }
+  | { type: "sheet-done"; name: string; id: string; rows: number; columns: number }
+  | { type: "sheet-skipped"; name: string; reason: string }
+  | { type: "done"; datasets: CreatedDataset[]; created: number; skipped: string[] }
+  | { type: "error"; message: string };
+
+type CreatedDataset = {
+  id: string;
+  name: string;
+  rowCount: number;
+  columnCount: number;
+  sheetName: string | null;
+};
+
 /** Infer the type of a column from its values. */
 function inferColumnType(values: (string | number | boolean | null)[]): ColumnSchema["inferredType"] {
   const nonNull = values.filter((v) => v !== null && v !== "");
@@ -87,30 +110,20 @@ function parseCSV(buffer: Buffer): { rows: ParsedRow[]; errors: string[] } {
   };
 }
 
-/** Parse XLSX buffer into rows. */
-function parseXLSX(buffer: Buffer, targetSheetName?: string): { rows: ParsedRow[]; errors: string[]; sheets: string[]; requireSelection: boolean } {
-  try {
-    const wb = XLSX.read(buffer, { type: "buffer", cellDates: true });
-    
-    if (wb.SheetNames.length === 0) return { rows: [], errors: ["No sheets found in workbook"], sheets: [], requireSelection: false };
-    
-    if (wb.SheetNames.length > 1 && !targetSheetName) {
-      return { rows: [], errors: [], sheets: wb.SheetNames, requireSelection: true };
-    }
+/** Extract rows from a worksheet of an already-parsed workbook. */
+function rowsFromWorkbookSheet(
+  wb: XLSX.WorkBook,
+  sheetName: string
+): { rows: ParsedRow[]; errors: string[] } {
+  const sheet = wb.Sheets[sheetName];
+  if (!sheet) return { rows: [], errors: [`Sheet "${sheetName}" not found`] };
 
-    const sheetName = targetSheetName || wb.SheetNames[0];
-    if (!sheetName || !wb.Sheets[sheetName]) return { rows: [], errors: [`Sheet "${sheetName}" not found`], sheets: wb.SheetNames, requireSelection: false };
+  const rows = XLSX.utils.sheet_to_json<ParsedRow>(sheet, {
+    defval: null,
+    raw: false,
+  });
 
-    const sheet = wb.Sheets[sheetName];
-    const rows = XLSX.utils.sheet_to_json<ParsedRow>(sheet, {
-      defval: null,
-      raw: false,
-    });
-
-    return { rows: rows.slice(0, MAX_PARSED_ROWS) as ParsedRow[], errors: [], sheets: wb.SheetNames, requireSelection: false };
-  } catch (err) {
-    return { rows: [], errors: [`Failed to parse XLSX: ${err instanceof Error ? err.message : "Unknown error"}`], sheets: [], requireSelection: false };
-  }
+  return { rows: rows.slice(0, MAX_PARSED_ROWS) as ParsedRow[], errors: [] };
 }
 
 /** Parse JSON buffer into rows. */
@@ -197,57 +210,34 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: sniff.reason }, { status: 415 });
   }
 
-  // ── Checksum & duplicate detection ───────────────────────────────────
-  // Scoped by sheet: every sheet of a workbook shares one file buffer, so an
-  // unscoped digest would flag sheets 2..n as duplicates of sheet 1. Mixing
-  // the sheet name in keeps re-uploads of the *same* sheet detectable.
-  const checksum = createHash("sha256")
-    .update(buffer)
-    .update(sheetName ? ` sheet:${sheetName}` : "")
-    .digest("hex");
-  const duplicate = await findDuplicateByChecksum(projectId, checksum);
-  if (duplicate) {
-    return NextResponse.json(
-      {
-        error: `Duplicate detected. An identical file "${duplicate.name}" was already uploaded.`,
-        duplicateId: duplicate.id,
-      },
-      { status: 409 }
-    );
-  }
+  // ── All pre-flight checks passed → stream progress back to the client ─
+  const description = formData.get("description")?.toString()?.trim().slice(0, 500) || null;
+  const cleanName = name.trim().slice(0, 120) || safeFilename;
 
-  // ── Parse ─────────────────────────────────────────────────────────────
-  let rows: ParsedRow[] = [];
-  let parseErrors: string[] = [];
-
-  if (fileType === "CSV") {
-    ({ rows, errors: parseErrors } = parseCSV(buffer));
-  } else if (fileType === "XLSX") {
-    const result = parseXLSX(buffer, sheetName);
-    if (result.requireSelection) {
-      return NextResponse.json({ requireSelection: true, sheets: result.sheets }, { status: 200 });
+  // Resolve the parse targets. An XLSX workbook without an explicit sheet is
+  // split into one dataset per worksheet; everything else is a single target.
+  // The workbook is parsed exactly once and shared across every sheet.
+  let workbook: XLSX.WorkBook | null = null;
+  if (fileType === "XLSX") {
+    try {
+      workbook = XLSX.read(buffer, { type: "buffer", cellDates: true });
+    } catch {
+      workbook = null;
     }
-    rows = result.rows;
-    parseErrors = result.errors;
-  } else {
-    ({ rows, errors: parseErrors } = parseJSON(buffer));
+  }
+  const targetSheets: string[] | null =
+    fileType === "XLSX" && !sheetName ? workbook?.SheetNames ?? [] : null;
+
+  if (fileType === "XLSX" && !sheetName && targetSheets && targetSheets.length === 0) {
+    return NextResponse.json({ error: "Could not read workbook. No sheets found." }, { status: 422 });
   }
 
-  if (rows.length === 0) {
-    return NextResponse.json(
-      { error: `Could not parse file. ${parseErrors[0] ?? "File appears empty."}` },
-      { status: 422 }
-    );
-  }
+  const parseTargets: (string | null)[] = targetSheets ?? [sheetName ?? null];
 
-  const columnCount = Math.min(Object.keys(rows[0] ?? {}).length, MAX_PARSED_COLUMNS);
-  const schema = buildSchema(rows);
-  const previewRows = rows.slice(0, PREVIEW_ROW_COUNT);
-
-  // ── Upload to storage ─────────────────────────────────────────────────
+  // Upload the original file once and share the path across every sheet's
+  // dataset — they all derive from the same bytes.
   const storagePath = `${user.id}/${projectId}/${Date.now()}_${safeFilename}`;
   let finalStoragePath: string | null = null;
-
   try {
     finalStoragePath = await uploadToStorage(storagePath, buffer, file.type || "application/octet-stream");
   } catch (err) {
@@ -255,66 +245,149 @@ export async function POST(req: NextRequest) {
     // Continue without storage path — preview data is still useful in dev
   }
 
-  // ── Persist to DB ──────────────────────────────────────────────────────
-  const cleanName = name.trim().slice(0, 120) || safeFilename;
-  const finalName = sheetName ? `${cleanName} - ${sheetName}` : cleanName;
-  const description = formData.get("description")?.toString()?.trim().slice(0, 500) || null;
+  const encoder = new TextEncoder();
+  const stream = new ReadableStream<Uint8Array>({
+    async start(controller) {
+      const emit = (event: ProgressEvent) => {
+        controller.enqueue(encoder.encode(`${JSON.stringify(event)}\n`));
+      };
 
-  const dataset = await prisma.$transaction(async (tx) => {
-    const ds = await tx.dataset.create({
-      data: {
-        name: finalName,
-        description,
-        fileType,
-        fileSize: buffer.length,
-        rowCount: rows.length,
-        columnCount,
-        schemaJson: schema,
-        previewJson: previewRows,
-        storagePath: finalStoragePath,
-        checksum,
-        status: "READY",
-        projectId,
-        uploadedById: user.id,
-      },
-      select: { id: true, name: true },
-    });
+      try {
+        emit({ type: "reading" });
+        if (targetSheets) emit({ type: "sheets", sheets: targetSheets });
 
-    await tx.datasetVersion.create({
-      data: {
-        datasetId: ds.id,
-        version: 1,
-        label: "Initial upload",
-        storagePath: finalStoragePath,
-        rowCount: rows.length,
-        checksum,
-      },
-    });
+        const created: CreatedDataset[] = [];
+        const skipped: string[] = [];
 
-    return ds;
-  });
+        for (const target of parseTargets) {
+          const targetName = target ?? "file";
+          emit({ type: "sheet", name: targetName });
 
-  await logActivity({
-    actorId: user.id,
-    action: "DATASET_UPLOADED",
-    projectId,
-    metadata: {
-      entityName: dataset.name,
-      datasetId: dataset.id,
-      fileType,
-      fileSize: buffer.length,
-      rowCount: rows.length,
+          // Checksum scoped by sheet: every sheet of a workbook shares one
+          // buffer, so an unscoped digest would flag sheets 2..n as duplicates
+          // of sheet 1. Mixing the sheet name in keeps re-uploads of the
+          // *same* sheet detectable.
+          const checksum = createHash("sha256")
+            .update(buffer)
+            .update(target ? `sheet:${target}` : "")
+            .digest("hex");
+          const duplicate = await findDuplicateByChecksum(projectId, checksum);
+          if (duplicate) {
+            const reason = `Duplicate detected — an identical file "${duplicate.name}" was already uploaded.`;
+            skipped.push(`${targetName}: ${reason}`);
+            emit({ type: "sheet-skipped", name: targetName, reason });
+            continue;
+          }
+
+          // Parse this target. The workbook was read once up front; only the
+          // sheet extraction happens per target.
+          let rows: ParsedRow[] = [];
+          let parseErrors: string[] = [];
+
+          if (fileType === "CSV") {
+            ({ rows, errors: parseErrors } = parseCSV(buffer));
+          } else if (fileType === "XLSX" && workbook) {
+            ({ rows, errors: parseErrors } = rowsFromWorkbookSheet(workbook, target!));
+          } else {
+            ({ rows, errors: parseErrors } = parseJSON(buffer));
+          }
+
+          if (rows.length === 0) {
+            const reason = parseErrors[0] ?? "File appears empty.";
+            skipped.push(`${targetName}: ${reason}`);
+            emit({ type: "sheet-skipped", name: targetName, reason });
+            continue;
+          }
+
+          const columnCount = Math.min(Object.keys(rows[0] ?? {}).length, MAX_PARSED_COLUMNS);
+          const schema = buildSchema(rows);
+          const previewRows = rows.slice(0, PREVIEW_ROW_COUNT);
+          const finalName = target ? `${cleanName} - ${target}` : cleanName;
+
+          // Persist dataset + initial version atomically.
+          const dataset = await prisma.$transaction(async (tx) => {
+            const ds = await tx.dataset.create({
+              data: {
+                name: finalName,
+                description,
+                fileType,
+                fileSize: buffer.length,
+                rowCount: rows.length,
+                columnCount,
+                schemaJson: schema,
+                previewJson: previewRows,
+                storagePath: finalStoragePath,
+                checksum,
+                status: "READY",
+                projectId,
+                uploadedById: user.id,
+              },
+              select: { id: true, name: true },
+            });
+
+            await tx.datasetVersion.create({
+              data: {
+                datasetId: ds.id,
+                version: 1,
+                label: "Initial upload",
+                storagePath: finalStoragePath,
+                rowCount: rows.length,
+                checksum,
+              },
+            });
+
+            return ds;
+          });
+
+          await logActivity({
+            actorId: user.id,
+            action: "DATASET_UPLOADED",
+            projectId,
+            metadata: {
+              entityName: dataset.name,
+              datasetId: dataset.id,
+              fileType,
+              fileSize: buffer.length,
+              rowCount: rows.length,
+            },
+          });
+
+          const entry: CreatedDataset = {
+            id: dataset.id,
+            name: dataset.name,
+            rowCount: rows.length,
+            columnCount,
+            sheetName: target,
+          };
+          created.push(entry);
+          emit({ type: "sheet-done", name: targetName, id: entry.id, rows: entry.rowCount, columns: entry.columnCount });
+        }
+
+        if (created.length === 0) {
+          emit({
+            type: "error",
+            message: `Could not parse file. ${skipped[0]?.split(": ")[1] ?? "File appears empty."}`,
+          });
+        } else {
+          emit({ type: "done", datasets: created, created: created.length, skipped });
+        }
+      } catch (err) {
+        console.error("[upload] Streaming error:", err);
+        emit({
+          type: "error",
+          message: err instanceof Error ? err.message : "Upload failed. Please try again.",
+        });
+      } finally {
+        controller.close();
+      }
     },
   });
 
-  return NextResponse.json(
-    {
-      id: dataset.id,
-      name: dataset.name,
-      rowCount: rows.length,
-      columnCount,
-      parseWarnings: parseErrors,
+  return new Response(stream, {
+    status: 200,
+    headers: {
+      "Content-Type": "application/x-ndjson; charset=utf-8",
+      "Cache-Control": "no-store",
     },
-    { status: 201 }
-  );
+  });
 }

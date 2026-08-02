@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { requireUser, ForbiddenError, NotFoundError } from "@/lib/auth";
-import { requireProjectRole } from "@/lib/authorization";
+import { requireProjectRole, getProjectRole } from "@/lib/authorization";
 import { satisfiesRole } from "@/lib/roles";
 import { logActivity } from "@/lib/activity";
 import { assertRateLimited, actionError, type ActionResult } from "@/lib/rate-limit";
@@ -55,9 +55,22 @@ export async function updateDataset(input: unknown): Promise<ActionResult<undefi
     const user = await requireUser();
     assertRateLimited(`dataset:update:${user.id}`, { limit: 40, windowMs: 60_000 });
 
-    const { id, ...changes } = updateDatasetSchema.parse(input);
+    const { id, projectId, ...changes } = updateDatasetSchema.parse(input);
     const dataset = await loadDatasetForAuth(id);
     await requireProjectRole(user, dataset.projectId, "EDITOR");
+
+    // Moving to another project: the target must be visible to this user
+    // (VIEWER or better), so a dataset can never be pushed somewhere its
+    // uploader cannot see.
+    let targetProjectId: string | undefined;
+    if (projectId && projectId !== dataset.projectId) {
+      const targetRole = await getProjectRole(user.id, projectId);
+      if (!targetRole) throw new NotFoundError("Project not found");
+      if (!satisfiesRole(targetRole, "VIEWER")) {
+        throw new ForbiddenError("You don't have access to that project");
+      }
+      targetProjectId = projectId;
+    }
 
     await prisma.dataset.update({
       where: { id },
@@ -66,17 +79,25 @@ export async function updateDataset(input: unknown): Promise<ActionResult<undefi
         ...(changes.description !== undefined
           ? { description: changes.description || null }
           : {}),
+        ...(targetProjectId !== undefined ? { projectId: targetProjectId } : {}),
       },
     });
 
     await logActivity({
       actorId: user.id,
       action: "DATASET_UPDATED",
-      projectId: dataset.projectId,
-      metadata: { entityName: changes.name ?? dataset.name, datasetId: id },
+      projectId: targetProjectId ?? dataset.projectId,
+      metadata: {
+        entityName: changes.name ?? dataset.name,
+        datasetId: id,
+        ...(targetProjectId !== undefined
+          ? { movedFromProjectId: dataset.projectId, movedToProjectId: targetProjectId }
+          : {}),
+      },
     });
 
     revalidateDataset(id, dataset.projectId);
+    if (targetProjectId) revalidateDataset(id, targetProjectId);
     return { success: true, data: undefined };
   } catch (error) {
     return actionError(error);

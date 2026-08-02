@@ -12,6 +12,7 @@ import {
   Pencil,
   RotateCcw,
   Eye,
+  Sparkles,
   AlertCircle,
   Loader2,
   CheckCircle2,
@@ -98,6 +99,13 @@ export function DatasetCard({ dataset, onDelete, onEdit }: DatasetCardProps) {
                 <Eye className="size-3.5" /> View
               </Link>
             </DropdownMenuItem>
+            {dataset.canEdit && (
+              <DropdownMenuItem asChild>
+                <Link href={`/dashboard/datasets/${dataset.id}?tab=clean`}>
+                  <Sparkles className="size-3.5" /> Clean &amp; AI
+                </Link>
+              </DropdownMenuItem>
+            )}
             {dataset.canEdit && (
               <DropdownMenuItem onClick={() => onEdit?.(dataset)}>
                 <Pencil className="size-3.5" /> Edit

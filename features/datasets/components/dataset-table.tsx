@@ -84,6 +84,7 @@ export function DatasetTable({ rows, className }: DatasetTableProps) {
 
   const columns = React.useMemo(() => buildColumns(rows), [rows]);
 
+  // eslint-disable-next-line react-hooks/incompatible-library -- useReactTable returns non-memoizable functions; nothing downstream is memoized.
   const table = useReactTable({
     data: rows,
     columns,

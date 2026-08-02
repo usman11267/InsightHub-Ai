@@ -24,10 +24,59 @@ const cleanSchema = z.object({
   column: z.string().optional(),
 });
 
+export type CleaningSuggestion = {
+  operation: string;
+  column: string | null;
+  reason: string;
+  priority: "high" | "medium" | "low";
+  estimatedImpact?: string;
+};
+
+/**
+ * The model is told to return only a JSON array, but models wrap output in
+ * markdown fences or prose anyway. Extract the array and validate each item,
+ * dropping anything that doesn't look like a suggestion.
+ */
+function parseCleaningSuggestions(raw: string): CleaningSuggestion[] {
+  const withoutFences = raw.trim().replace(/^```(?:json)?\s*/i, "").replace(/```\s*$/, "");
+  const start = withoutFences.indexOf("[");
+  const end = withoutFences.lastIndexOf("]");
+  if (start === -1 || end <= start) return [];
+
+  let arr: unknown;
+  try {
+    arr = JSON.parse(withoutFences.slice(start, end + 1));
+  } catch {
+    return [];
+  }
+  if (!Array.isArray(arr)) return [];
+
+  return arr.flatMap((item): CleaningSuggestion[] => {
+    if (!item || typeof item !== "object") return [];
+    const o = item as Record<string, unknown>;
+    if (typeof o.operation !== "string" || typeof o.reason !== "string") return [];
+    const priority =
+      o.priority === "high" || o.priority === "medium" || o.priority === "low"
+        ? o.priority
+        : "low";
+    return [
+      {
+        operation: o.operation,
+        column: typeof o.column === "string" ? o.column : null,
+        reason: o.reason,
+        priority,
+        ...(typeof o.estimatedImpact === "string"
+          ? { estimatedImpact: o.estimatedImpact }
+          : {}),
+      },
+    ];
+  });
+}
+
 type CleaningResult = {
   rowsAffected: number;
   description: string;
-  suggestions?: string;
+  suggestions?: CleaningSuggestion[];
 };
 
 export async function runCleaningOperation(
@@ -79,15 +128,20 @@ export async function runCleaningOperation(
       }
 
       case "normalize_text": {
-        const target = column;
         newRows = rows.map((row) => {
-          if (!target || !(target in row)) return row;
-          const orig = String(row[target] ?? "");
-          const norm = orig.toLowerCase().trim().replace(/\s+/g, " ");
-          if (norm !== orig) rowsAffected++;
-          return { ...row, [target]: norm };
+          const cleaned: Record<string, unknown> = {};
+          for (const [k, v] of Object.entries(row)) {
+            if (typeof v === "string") {
+              const norm = v.toLowerCase().trim().replace(/\s+/g, " ");
+              if (norm !== v) rowsAffected++;
+              cleaned[k] = norm;
+            } else {
+              cleaned[k] = v;
+            }
+          }
+          return cleaned;
         });
-        description = `Normalized text in "${target}": ${rowsAffected} cells changed`;
+        description = `Normalized text casing in ${rowsAffected} cells`;
         break;
       }
 
@@ -129,10 +183,15 @@ export async function runCleaningOperation(
       case "ai_suggestions": {
         const schema = (dataset.schemaJson as { name: string; inferredType: string; missingCount: number; uniqueCount: number }[]) ?? [];
         const prompt = buildCleaningPrompt({ datasetName: dataset.name, schema, previewRows: rows });
-        const suggestions = await ask(prompt, undefined, undefined, 2048);
+        const raw = await ask(prompt, undefined, undefined, 2048);
+        const suggestions = parseCleaningSuggestions(raw);
         return {
           success: true,
-          data: { rowsAffected: 0, description: "AI cleaning suggestions generated", suggestions },
+          data: {
+            rowsAffected: 0,
+            description: `AI cleaning suggestions generated (${suggestions.length})`,
+            suggestions,
+          },
         };
       }
     }
