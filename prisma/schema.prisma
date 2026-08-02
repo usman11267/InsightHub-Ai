@@ -1,0 +1,313 @@
+// InsightHub AI — Prisma schema
+// PostgreSQL. In Prisma 7 the connection URL lives in prisma.config.ts / env,
+// and the generated client uses the @prisma/adapter-pg driver adapter (no binary engine).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  ADMIN
+  EDITOR
+  VIEWER
+}
+
+enum ProjectStatus {
+  ACTIVE
+  ARCHIVED
+}
+
+enum DatasetStatus {
+  PROCESSING
+  READY
+  ERROR
+}
+
+enum FileType {
+  CSV
+  XLSX
+  JSON
+}
+
+enum ReportStatus {
+  DRAFT
+  GENERATING
+  READY
+  ERROR
+}
+
+enum ChartType {
+  BAR
+  LINE
+  AREA
+  SCATTER
+  PIE
+  DONUT
+  RADAR
+  HEATMAP
+  HISTOGRAM
+  TREEMAP
+  BUBBLE
+}
+
+enum ActivityAction {
+  USER_SIGNED_UP
+  USER_SIGNED_IN
+  PROJECT_CREATED
+  PROJECT_UPDATED
+  PROJECT_DELETED
+  MEMBER_INVITED
+  MEMBER_REMOVED
+  MEMBER_ROLE_CHANGED
+  DATASET_UPLOADED
+  DATASET_UPDATED
+  DATASET_CLEANED
+  DATASET_VERSION_RESTORED
+  DATASET_DELETED
+  DATASET_EXPORTED
+  REPORT_GENERATED
+  REPORT_DELETED
+  CHART_CREATED
+  CHART_DELETED
+  QUERY_SAVED
+  QUERY_EXECUTED
+  API_KEY_CREATED
+  API_KEY_REVOKED
+  SETTINGS_UPDATED
+}
+
+model User {
+  id            String         @id @default(cuid())
+  clerkId       String         @unique
+  email         String         @unique
+  firstName     String?
+  lastName      String?
+  imageUrl      String?
+  onboardingDone Boolean       @default(false)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  projects         Project[]       @relation("ProjectOwner")
+  memberships      TeamMember[]
+  datasets         Dataset[]       @relation("DatasetUploader")
+  reports          Report[]
+  charts           Chart[]
+  savedQueries     SavedQuery[]
+  notifications    Notification[]
+  activityLogs     ActivityLog[]
+  comments         Comment[]
+  apiKeys          ApiKey[]
+  favorites        Project[]       @relation("Favorites")
+
+  @@map("users")
+}
+
+model Project {
+  id          String        @id @default(cuid())
+  name        String
+  description String?
+  status      ProjectStatus @default(ACTIVE)
+  tags        String[]      @default([])
+  color       String        @default("#6d5df6")
+  ownerId     String
+  owner       User          @relation("ProjectOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  datasets   Dataset[]
+  reports    Report[]
+  charts     Chart[]
+  queries    SavedQuery[]
+  members    TeamMember[]
+  activities ActivityLog[]
+  comments   Comment[]
+  favoritedBy User[]        @relation("Favorites")
+
+  @@index([ownerId])
+  @@index([status])
+  @@map("projects")
+}
+
+model TeamMember {
+  id        String   @id @default(cuid())
+  role      Role     @default(VIEWER)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, projectId])
+  @@index([projectId])
+  @@map("team_members")
+}
+
+model Dataset {
+  id            String        @id @default(cuid())
+  name          String
+  description   String?
+  fileType      FileType
+  fileSize      Int // bytes
+  rowCount      Int           @default(0)
+  columnCount   Int           @default(0)
+  // [{ name, inferredType, missingCount, uniqueCount }]
+  schemaJson    Json          @default("[]")
+  // Supabase Storage object path for the raw file
+  storagePath   String?
+  // Cached preview rows (first N rows) for instant rendering
+  previewJson   Json          @default("[]")
+  // AI-computed profile/insights summary (nullable until analyzed)
+  profileJson   Json?
+  status        DatasetStatus @default(PROCESSING)
+  errorMessage  String?
+  checksum      String? // sha256 for duplicate detection
+  projectId     String
+  project       Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  uploadedById  String
+  uploadedBy    User          @relation("DatasetUploader", fields: [uploadedById], references: [id], onDelete: Cascade)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  versions DatasetVersion[]
+  reports  Report[]
+  charts   Chart[]
+
+  @@index([projectId])
+  @@index([checksum])
+  @@map("datasets")
+}
+
+model DatasetVersion {
+  id           String   @id @default(cuid())
+  version      Int
+  // Description of the transformation: "Removed 32 duplicates", "Initial upload"
+  label        String
+  storagePath  String?
+  rowCount     Int      @default(0)
+  checksum     String?
+  datasetId    String
+  dataset      Dataset  @relation(fields: [datasetId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+
+  @@unique([datasetId, version])
+  @@map("dataset_versions")
+}
+
+model Report {
+  id          String       @id @default(cuid())
+  title       String
+  // Full report content (markdown-ish structured JSON generated by AI)
+  contentJson Json         @default("{}")
+  summary     String?
+  status      ReportStatus @default(DRAFT)
+  projectId   String
+  project     Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  datasetId   String?
+  dataset     Dataset?     @relation(fields: [datasetId], references: [id], onDelete: SetNull)
+  authorId    String
+  author      User         @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  // Slug used for public share links (null = private)
+  shareSlug   String?      @unique
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@index([projectId])
+  @@map("reports")
+}
+
+model Chart {
+  id         String    @id @default(cuid())
+  title      String
+  type       ChartType
+  // Recharts-ready config: { xKey, yKeys, colors, legend, stacked, ... }
+  configJson Json      @default("{}")
+  projectId  String
+  project    Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  datasetId  String?
+  dataset    Dataset?  @relation(fields: [datasetId], references: [id], onDelete: SetNull)
+  createdById String
+  createdBy  User      @relation(fields: [createdById], references: [id], onDelete: Cascade)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@index([projectId])
+  @@map("charts")
+}
+
+model SavedQuery {
+  id          String   @id @default(cuid())
+  name        String
+  sql         String
+  description String?
+  projectId   String
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([projectId])
+  @@map("saved_queries")
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  body      String
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@index([projectId])
+  @@map("comments")
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  title     String
+  body      String?
+  href      String?
+  read      Boolean  @default(false)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@index([userId, read])
+  @@map("notifications")
+}
+
+model ActivityLog {
+  id        String         @id @default(cuid())
+  action    ActivityAction
+  // Free-form JSON payload: { entityName, fileSize, queryName, ... }
+  metadata  Json           @default("{}")
+  actorId   String
+  actor     User           @relation(fields: [actorId], references: [id], onDelete: Cascade)
+  projectId String?
+  project   Project?       @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  createdAt DateTime       @default(now())
+
+  @@index([projectId, createdAt])
+  @@index([actorId])
+  @@map("activity_logs")
+}
+
+model ApiKey {
+  id         String    @id @default(cuid())
+  name       String
+  prefix     String // "ihk_live_xxxx…" — display only
+  hashedKey  String    @unique // sha256 of the full key; plaintext is shown once
+  lastUsedAt DateTime?
+  revokedAt  DateTime?
+  userId     String
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt  DateTime  @default(now())
+
+  @@index([userId])
+  @@map("api_keys")
+}

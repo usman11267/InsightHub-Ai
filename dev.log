@@ -1,0 +1,381 @@
+
+> myfirstnextapp@0.1.0 dev
+> next dev
+
+▲ Next.js 16.2.9 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.18.39:3000
+- Environments: .env
+✓ Ready in 1192ms
+
+Attention: Clerk collects telemetry data from its SDKs when connected to development instances.
+The data collected is used to inform Clerk's product roadmap.
+To learn more, including how to opt-out from the telemetry program, visit: https://clerk.com/docs/telemetry.
+
+ GET /dashboard 200 in 4.7s (next.js: 295ms, proxy.ts: 1998ms, application-code: 2.4s)
+ GET / 200 in 413ms (next.js: 85ms, proxy.ts: 26ms, application-code: 301ms)
+ GET /dashboard 307 in 136ms (next.js: 8ms, proxy.ts: 22ms, application-code: 105ms)
+ GET /dashboard/projects 307 in 337ms (next.js: 80ms, proxy.ts: 19ms, application-code: 238ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477:13)
+✓ Compiled in 799ms
+ GET /dashboard/settings 200 in 2.4s (next.js: 1451ms, proxy.ts: 779ms, application-code: 134ms)
+ POST /dashboard/settings 200 in 443ms (next.js: 10ms, proxy.ts: 19ms, application-code: 414ms)
+  └─ ƒ createApiKey({"name":"n8n"}) in 39ms features/settings/actions.ts
+ GET /dashboard/settings 200 in 293ms (next.js: 17ms, proxy.ts: 23ms, application-code: 253ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477:13)
+ POST /dashboard/settings 200 in 127ms (next.js: 10ms, proxy.ts: 22ms, application-code: 94ms)
+  └─ ƒ createApiKey({"name":"nn"}) in 20ms features/settings/actions.ts
+ GET /dashboard/settings 200 in 202ms (next.js: 11ms, proxy.ts: 28ms, application-code: 162ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477:13)
+ GET /dashboard/audit 200 in 1330ms (next.js: 1059ms, proxy.ts: 12ms, application-code: 259ms)
+ GET /dashboard/notifications 200 in 1547ms (next.js: 1459ms, proxy.ts: 24ms, application-code: 64ms)
+ GET /dashboard/reports 200 in 1373ms (next.js: 1122ms, proxy.ts: 10ms, application-code: 240ms)
+ GET /dashboard/sql 200 in 1275ms (next.js: 1179ms, proxy.ts: 25ms, application-code: 70ms)
+ GET /dashboard 200 in 262ms (next.js: 8ms, proxy.ts: 11ms, application-code: 243ms)
+ GET /dashboard/projects?new=1 200 in 128ms (next.js: 9ms, proxy.ts: 26ms, application-code: 92ms)
+ POST /dashboard/projects?new=1 200 in 174ms (next.js: 12ms, proxy.ts: 17ms, application-code: 145ms)
+  └─ ƒ createProject({"color":"#6d5df6","description":"","name":"my project","...":"1 item not stringified"}) in 32ms features/projects/actions.ts
+ GET /dashboard/projects/cmsb70wkt00056cfhaxxabr1z 200 in 2.8s (next.js: 2.4s, proxy.ts: 27ms, application-code: 399ms)
+ GET /dashboard/projects/cmsb70wkt00056cfhaxxabr1z 200 in 361ms (next.js: 29ms, proxy.ts: 63ms, application-code: 269ms)
+ GET /dashboard 200 in 212ms (next.js: 9ms, proxy.ts: 28ms, application-code: 175ms)
+ GET /dashboard/projects/cmsb70wkt00056cfhaxxabr1z 200 in 173ms (next.js: 20ms, proxy.ts: 23ms, application-code: 130ms)
+[browser] Uncaught TypeError: Cannot read properties of undefined (reading 'toLowerCase')
+    at HTMLDocument.onKeyDown (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/_0vks5tb._.js:1670:27)
+ POST /dashboard/projects/cmsb70wkt00056cfhaxxabr1z 200 in 82ms (next.js: 18ms, proxy.ts: 24ms, application-code: 39ms)
+  └─ ƒ inviteMember({"email":"muhammad.usman11267@gmail.com","projectId":"cmsb70wkt00056cfhaxxabr1z","role":"VIEWER"}) in 20ms features/projects/actions.ts
+ POST /dashboard/projects/cmsb70wkt00056cfhaxxabr1z 200 in 84ms (next.js: 19ms, proxy.ts: 27ms, application-code: 38ms)
+  └─ ƒ inviteMember({"email":"muhammad.usman11267@gmail.com","projectId":"cmsb70wkt00056cfhaxxabr1z","role":"VIEWER"}) in 20ms features/projects/actions.ts
+ GET /dashboard/datasets?upload=1&project=cmsb70wkt00056cfhaxxabr1z 200 in 662ms (next.js: 69ms, proxy.ts: 17ms, application-code: 575ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477:13)
+[supabase] Storage not configured — skipping upload
+ POST /api/upload 201 in 8.2s (next.js: 1563ms, proxy.ts: 157ms, application-code: 6.5s)
+ GET /dashboard/projects 200 in 260ms (next.js: 9ms, proxy.ts: 26ms, application-code: 225ms)
+ GET /dashboard/datasets 200 in 145ms (next.js: 8ms, proxy.ts: 9ms, application-code: 129ms)
+ GET /dashboard/datasets/cmsb72qlw00076cfh7r6204c6 200 in 2.6s (next.js: 2.3s, proxy.ts: 18ms, application-code: 251ms)
+ GET /dashboard/analytics 200 in 3.3s (next.js: 2.7s, proxy.ts: 11ms, application-code: 615ms)
+ GET /dashboard/forecasting 200 in 1663ms (next.js: 1572ms, proxy.ts: 14ms, application-code: 77ms)
+ GET /dashboard/projects 200 in 233ms (next.js: 10ms, proxy.ts: 27ms, application-code: 196ms)
+ GET /dashboard/projects/cmsb70wkt00056cfhaxxabr1z 200 in 202ms (next.js: 17ms, proxy.ts: 11ms, application-code: 173ms)
+ GET /dashboard/datasets/cmsb72qlw00076cfh7r6204c6 200 in 224ms (next.js: 20ms, proxy.ts: 26ms, application-code: 178ms)
+ GET /dashboard/projects 200 in 135ms (next.js: 17ms, proxy.ts: 10ms, application-code: 108ms)
+ GET /dashboard/projects/cmsb70wkt00056cfhaxxabr1z 200 in 167ms (next.js: 20ms, proxy.ts: 12ms, application-code: 135ms)
+ GET /dashboard/datasets 200 in 91ms (next.js: 7ms, proxy.ts: 13ms, application-code: 71ms)
+ POST /api/upload 409 in 747ms (next.js: 9ms, proxy.ts: 587ms, application-code: 151ms)
+ GET /dashboard/datasets/cmsb72qlw00076cfh7r6204c6?tab=versions 200 in 278ms (next.js: 24ms, proxy.ts: 22ms, application-code: 232ms)
+ POST /dashboard/datasets/cmsb72qlw00076cfh7r6204c6?tab=versions 200 in 4.2s (next.js: 21ms, proxy.ts: 23ms, application-code: 4.2s)
+  └─ ƒ runCleaningOperation({"datasetId":"cmsb72qlw00076cfh7r6204c6","operation":"ai_suggestions"}) in 4159ms features/data-cleaning/actions.ts
+ POST /dashboard/datasets/cmsb72qlw00076cfh7r6204c6?tab=versions 200 in 444ms (next.js: 19ms, proxy.ts: 23ms, application-code: 401ms)
+  └─ ƒ runCleaningOperation({"datasetId":"cmsb72qlw00076cfh7r6204c6","operation":"normalize_text"}) in 39ms features/data-cleaning/actions.ts
+ GET /dashboard/datasets/cmsb72qlw00076cfh7r6204c6?tab=versions 200 in 256ms (next.js: 14ms, proxy.ts: 18ms, application-code: 223ms)
+ POST /dashboard/datasets/cmsb72qlw00076cfh7r6204c6?tab=versions 200 in 243ms (next.js: 21ms, proxy.ts: 23ms, application-code: 199ms)
+  └─ ƒ runCleaningOperation({"datasetId":"cmsb72qlw00076cfh7r6204c6","operation":"trim_whitespace"}) in 36ms features/data-cleaning/actions.ts
+ GET /dashboard/datasets/cmsb72qlw00076cfh7r6204c6?tab=versions 200 in 268ms (next.js: 19ms, proxy.ts: 15ms, application-code: 234ms)
+ POST /dashboard/datasets/cmsb72qlw00076cfh7r6204c6?tab=versions 200 in 318ms (next.js: 20ms, proxy.ts: 25ms, application-code: 273ms)
+  └─ ƒ runCleaningOperation({"datasetId":"cmsb72qlw00076cfh7r6204c6","operation":"remove_duplicates"}) in 30ms features/data-cleaning/actions.ts
+ GET /dashboard/datasets/cmsb72qlw00076cfh7r6204c6?tab=versions 200 in 185ms (next.js: 19ms, proxy.ts: 15ms, application-code: 151ms)
+ GET /dashboard/forecasting 200 in 90ms (next.js: 11ms, proxy.ts: 25ms, application-code: 54ms)
+ GET /dashboard/assistant 200 in 1496ms (next.js: 1411ms, proxy.ts: 26ms, application-code: 58ms)
+ POST /api/ai/chat 200 in 776ms (next.js: 480ms, proxy.ts: 28ms, application-code: 268ms)
+ POST /api/ai/chat 200 in 447ms (next.js: 6ms, proxy.ts: 16ms, application-code: 424ms)
+ GET /dashboard/assistant?datasetId=cmsb72qlw00076cfh7r6204c6 200 in 93ms (next.js: 10ms, proxy.ts: 25ms, application-code: 58ms)
+ GET /dashboard/assistant 200 in 90ms (next.js: 15ms, proxy.ts: 26ms, application-code: 49ms)
+ GET /dashboard/assistant?datasetId=cmsb72qlw00076cfh7r6204c6 200 in 86ms (next.js: 11ms, proxy.ts: 25ms, application-code: 50ms)
+ GET /dashboard/sql 200 in 263ms (next.js: 15ms, proxy.ts: 8ms, application-code: 240ms)
+ POST /dashboard/sql 200 in 501ms (next.js: 8ms, proxy.ts: 21ms, application-code: 473ms)
+  └─ ƒ explainSQL("-- Example: count rows by category\nSELECT category, COUNT(*) as count\nFROM your_dataset\nGROUP BY category\nORDER BY count DESC\nLIMIT 10;") in 458ms features/sql/actions.ts
+ GET /dashboard/reports 200 in 104ms (next.js: 10ms, proxy.ts: 25ms, application-code: 70ms)
+ POST /dashboard/reports 200 in 2.4s (next.js: 10ms, proxy.ts: 19ms, application-code: 2.4s)
+  └─ ƒ generateReport({"context":"","projectId":"cmsb70wkt00056cfhaxxabr1z","title":"project"}) in 2254ms features/reports/actions.ts
+ GET /dashboard/reports/cmsb7a8tk000g6cfhisoz5fe1 200 in 2.6s (next.js: 2.4s, proxy.ts: 20ms, application-code: 172ms)
+ GET /dashboard/reports/cmsb7a8tk000g6cfhisoz5fe1 200 in 252ms (next.js: 48ms, proxy.ts: 48ms, application-code: 156ms)
+ GET /dashboard/notifications 200 in 93ms (next.js: 13ms, proxy.ts: 25ms, application-code: 54ms)
+ GET /dashboard/reports 200 in 90ms (next.js: 11ms, proxy.ts: 24ms, application-code: 55ms)
+ GET /dashboard/reports/cmsb7a8tk000g6cfhisoz5fe1 200 in 126ms (next.js: 31ms, proxy.ts: 14ms, application-code: 82ms)
+ GET /dashboard/notifications 200 in 82ms (next.js: 9ms, proxy.ts: 25ms, application-code: 48ms)
+ GET /dashboard/datasets 200 in 127ms (next.js: 8ms, proxy.ts: 24ms, application-code: 94ms)
+ GET /dashboard/projects 200 in 82ms (next.js: 8ms, proxy.ts: 8ms, application-code: 65ms)
+ GET /dashboard 200 in 168ms (next.js: 8ms, proxy.ts: 11ms, application-code: 149ms)
+ GET /dashboard/datasets?upload=1 200 in 114ms (next.js: 9ms, proxy.ts: 24ms, application-code: 80ms)
+ GET /dashboard/notifications 200 in 69ms (next.js: 9ms, proxy.ts: 13ms, application-code: 47ms)
+ GET /dashboard/projects 200 in 241ms (next.js: 10ms, proxy.ts: 12ms, application-code: 218ms)
+ GET /dashboard/settings 200 in 81ms (next.js: 16ms, proxy.ts: 14ms, application-code: 51ms)
+✓ Compiled in 251ms
+ GET /dashboard/settings 200 in 1604ms (next.js: 225ms, proxy.ts: 711ms, application-code: 668ms)
+ GET /dashboard/settings 200 in 557ms (next.js: 14ms, proxy.ts: 216ms, application-code: 326ms)
+ GET /dashboard/settings 200 in 272ms (next.js: 20ms, proxy.ts: 54ms, application-code: 198ms)
+ GET /dashboard/settings 200 in 280ms (next.js: 64ms, proxy.ts: 54ms, application-code: 162ms)
+✓ Compiled in 143ms
+ GET /dashboard/settings 200 in 466ms (next.js: 171ms, proxy.ts: 162ms, application-code: 133ms)
+ POST /dashboard/settings 200 in 241ms (next.js: 8ms, proxy.ts: 27ms, application-code: 206ms)
+  └─ ƒ createApiKey({"name":"hhhhhh"}) in 89ms features/settings/actions.ts
+ GET /dashboard/datasets 200 in 430ms (next.js: 50ms, proxy.ts: 31ms, application-code: 349ms)
+ GET /dashboard/datasets/cmsb72qlw00076cfh7r6204c6 200 in 322ms (next.js: 73ms, proxy.ts: 20ms, application-code: 230ms)
+ GET /dashboard/forecasting 200 in 187ms (next.js: 35ms, proxy.ts: 26ms, application-code: 127ms)
+ GET /dashboard/analytics 200 in 475ms (next.js: 33ms, proxy.ts: 25ms, application-code: 417ms)
+ GET /dashboard/forecasting 200 in 86ms (next.js: 10ms, proxy.ts: 28ms, application-code: 49ms)
+ POST /api/ai/forecast 200 in 1434ms (next.js: 439ms, proxy.ts: 13ms, application-code: 982ms)
+ GET /dashboard/analytics 200 in 419ms (next.js: 8ms, proxy.ts: 26ms, application-code: 385ms)
+ GET /dashboard/datasets 200 in 268ms (next.js: 8ms, proxy.ts: 11ms, application-code: 249ms)
+ GET /dashboard/datasets/cmsb72qlw00076cfh7r6204c6 200 in 343ms (next.js: 36ms, proxy.ts: 29ms, application-code: 279ms)
+ GET /dashboard/analytics?datasetId=cmsb72qlw00076cfh7r6204c6 200 in 441ms (next.js: 11ms, proxy.ts: 28ms, application-code: 402ms)
+ GET /dashboard/assistant?datasetId=cmsb72qlw00076cfh7r6204c6 200 in 100ms (next.js: 32ms, proxy.ts: 10ms, application-code: 59ms)
+ GET /dashboard/assistant?datasetId=cmsb72qlw00076cfh7r6204c6 200 in 92ms (next.js: 10ms, proxy.ts: 26ms, application-code: 55ms)
+ GET /dashboard/assistant?datasetId=cmsb72qlw00076cfh7r6204c6 200 in 72ms (next.js: 10ms, proxy.ts: 13ms, application-code: 49ms)
+ GET /dashboard/assistant?datasetId=cmsb72qlw00076cfh7r6204c6 200 in 77ms (next.js: 9ms, proxy.ts: 16ms, application-code: 53ms)
+ GET /dashboard/assistant 200 in 28ms (next.js: 7ms, proxy.ts: 10ms, application-code: 11ms)
+ GET /dashboard/assistant 200 in 80ms (next.js: 10ms, proxy.ts: 28ms, application-code: 42ms)
+ GET /dashboard/assistant?datasetId=cmsb72qlw00076cfh7r6204c6 200 in 75ms (next.js: 10ms, proxy.ts: 11ms, application-code: 55ms)
+ GET /dashboard/assistant?datasetId=cmsb72qlw00076cfh7r6204c6 200 in 73ms (next.js: 8ms, proxy.ts: 12ms, application-code: 53ms)
+ GET /dashboard/assistant?datasetId=cmsb72qlw00076cfh7r6204c6 200 in 77ms (next.js: 11ms, proxy.ts: 17ms, application-code: 49ms)
+ GET /dashboard/assistant?datasetId=cmsb72qlw00076cfh7r6204c6 200 in 72ms (next.js: 9ms, proxy.ts: 16ms, application-code: 48ms)
+ GET /dashboard/sql 200 in 857ms (next.js: 72ms, proxy.ts: 722ms, application-code: 64ms)
+ GET /dashboard/reports 200 in 143ms (next.js: 62ms, proxy.ts: 12ms, application-code: 70ms)
+ GET /dashboard/datasets 200 in 204ms (next.js: 11ms, proxy.ts: 27ms, application-code: 166ms)
+Clerk: Refreshing the session token resulted in an infinite redirect loop. This usually means that your Clerk instance keys do not match - make sure to copy the correct publishable and secret keys from the Clerk dashboard.
+ GET / 200 in 659ms (next.js: 52ms, proxy.ts: 27ms, application-code: 580ms)
+⚠ Blocked cross-origin request to Next.js dev resource /_next/webpack-hmr from "192.168.18.39".
+Cross-origin access to Next.js dev resources is blocked by default for safety.
+
+To allow this host in development, add it to "allowedDevOrigins" in next.config.js and restart the dev server:
+
+// next.config.js
+module.exports = {
+  allowedDevOrigins: ['192.168.18.39'],
+}
+
+Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+ GET /dashboard/datasets 200 in 763ms (next.js: 13ms, proxy.ts: 20ms, application-code: 729ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477:13)
+ GET /dashboard/notifications 200 in 158ms (next.js: 60ms, proxy.ts: 23ms, application-code: 74ms)
+ GET /dashboard 200 in 202ms (next.js: 34ms, proxy.ts: 24ms, application-code: 144ms)
+ GET /dashboard 200 in 130ms (next.js: 8ms, proxy.ts: 27ms, application-code: 96ms)
+ GET /dashboard 200 in 131ms (next.js: 8ms, proxy.ts: 27ms, application-code: 96ms)
+ GET /dashboard/sql 200 in 90ms (next.js: 8ms, proxy.ts: 26ms, application-code: 56ms)
+ GET /dashboard/analytics 200 in 466ms (next.js: 10ms, proxy.ts: 26ms, application-code: 430ms)
+ GET /dashboard/forecasting 200 in 75ms (next.js: 10ms, proxy.ts: 12ms, application-code: 53ms)
+ GET /dashboard/analytics 200 in 417ms (next.js: 9ms, proxy.ts: 21ms, application-code: 387ms)
+ GET /dashboard/assistant 200 in 85ms (next.js: 13ms, proxy.ts: 24ms, application-code: 49ms)
+ GET /dashboard/forecasting 200 in 82ms (next.js: 9ms, proxy.ts: 25ms, application-code: 48ms)
+ POST /api/ai/forecast 200 in 1158ms (next.js: 7ms, proxy.ts: 13ms, application-code: 1138ms)
+ GET /dashboard/analytics 200 in 414ms (next.js: 9ms, proxy.ts: 26ms, application-code: 379ms)
+ GET /dashboard/datasets 200 in 258ms (next.js: 8ms, proxy.ts: 10ms, application-code: 240ms)
+⨯ Failed to generate static paths for /dashboard/datasets/[datasetId]:
+Error: Jest worker encountered 2 child process exceptions, exceeding retry limit
+    at ignore-listed frames {
+  type: 'WorkerError'
+}
+ GET /dashboard/datasets/cmsb72qlw00076cfh7r6204c6 200 in 290ms (next.js: 23ms, proxy.ts: 20ms, application-code: 246ms)
+ GET /dashboard/analytics 200 in 396ms (next.js: 9ms, proxy.ts: 25ms, application-code: 363ms)
+ GET /dashboard/forecasting 200 in 79ms (next.js: 9ms, proxy.ts: 25ms, application-code: 46ms)
+ GET /dashboard/projects 200 in 135ms (next.js: 56ms, proxy.ts: 11ms, application-code: 68ms)
+ GET /dashboard/projects 200 in 497ms (next.js: 9ms, proxy.ts: 17ms, application-code: 472ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477:13)
+ GET /dashboard/projects 200 in 407ms (next.js: 11ms, proxy.ts: 24ms, application-code: 372ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477:13)
+⨯ Failed to generate static paths for /dashboard/projects/[projectId]:
+Error: Jest worker encountered 2 child process exceptions, exceeding retry limit
+    at ignore-listed frames {
+  type: 'WorkerError'
+}
+ GET /dashboard/projects/cmsb70wkt00056cfhaxxabr1z 200 in 1060ms (next.js: 74ms, proxy.ts: 574ms, application-code: 412ms)
+⨯ Error: Jest worker encountered 2 child process exceptions, exceeding retry limit
+    at ignore-listed frames {
+  type: 'WorkerError',
+  page: '/dashboard/datasets/cmsb72qlw00076cfh7r6204c6'
+}
+ GET /dashboard/datasets/cmsb72qlw00076cfh7r6204c6 500 in 2.4s (next.js: 2.0s, proxy.ts: 29ms, application-code: 335ms)
+⨯ Error: Jest worker encountered 2 child process exceptions, exceeding retry limit
+    at ignore-listed frames {
+  type: 'WorkerError',
+  page: '/dashboard/datasets/cmsb72qlw00076cfh7r6204c6'
+}
+ GET /dashboard/datasets/cmsb72qlw00076cfh7r6204c6 500 in 185ms (next.js: 118ms, proxy.ts: 44ms, application-code: 23ms)
+[browser] Uncaught Error: Jest worker encountered 2 child process exceptions, exceeding retry limit
+⨯ Error: Jest worker encountered 2 child process exceptions, exceeding retry limit
+    at ignore-listed frames {
+  type: 'WorkerError',
+  page: '/dashboard/projects/cmsb70wkt00056cfhaxxabr1z'
+}
+ GET /dashboard/projects/cmsb70wkt00056cfhaxxabr1z 500 in 107ms (next.js: 70ms, proxy.ts: 17ms, application-code: 20ms)
+[browser] Uncaught Error: Jest worker encountered 2 child process exceptions, exceeding retry limit
+ GET /dashboard/projects 200 in 442ms (next.js: 20ms, proxy.ts: 28ms, application-code: 394ms)
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477:13)
+ GET /dashboard/forecasting 200 in 88ms (next.js: 11ms, proxy.ts: 26ms, application-code: 51ms)
+ GET /dashboard/analytics 200 in 424ms (next.js: 9ms, proxy.ts: 25ms, application-code: 391ms)
+ GET /dashboard/forecasting 200 in 93ms (next.js: 11ms, proxy.ts: 27ms, application-code: 56ms)
+ GET /dashboard/datasets 200 in 124ms (next.js: 9ms, proxy.ts: 26ms, application-code: 89ms)
+⨯ Error: Jest worker encountered 2 child process exceptions, exceeding retry limit
+    at ignore-listed frames {
+  type: 'WorkerError',
+  page: '/dashboard/datasets/cmsb72qlw00076cfh7r6204c6'
+}
+ GET /dashboard/datasets/cmsb72qlw00076cfh7r6204c6 500 in 95ms (next.js: 67ms, proxy.ts: 10ms, application-code: 18ms)
+⨯ Error: Jest worker encountered 2 child process exceptions, exceeding retry limit
+    at ignore-listed frames {
+  type: 'WorkerError',
+  page: '/dashboard/datasets/cmsb72qlw00076cfh7r6204c6'
+}
+ GET /dashboard/datasets/cmsb72qlw00076cfh7r6204c6 500 in 127ms (next.js: 85ms, proxy.ts: 19ms, application-code: 23ms)
+[browser] Uncaught Error: Jest worker encountered 2 child process exceptions, exceeding retry limit
+[browser] Uncaught Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <Suspense name="datasets/" fallback={<Fragment>}>
+      <HTTPAccessFallbackBoundary notFound={undefined} forbidden={undefined} unauthorized={undefined}>
+        <RedirectBoundary>
+          <RedirectErrorBoundary router={{...}}>
+            <InnerLayoutRouter url="/dashboard..." tree={[...]} params={{}} cacheNode={{rsc:<Fragment>, ...}} ...>
+              <SegmentViewNode type="page" pagePath="(dashboard...">
+                <SegmentTrieNode>
+                <DatasetsPage>
+                  <div className="space-y-6">
+                    <div>
+                    <div>
+                    <Suspense>
+                    <div className="grid gap-4...">
+                      <DatasetCard dataset={{id:"cmsb72...", ...}}>
+                        <_c interactive={true} className="group rela...">
+                          <div ref={null} className="rounded-xl...">
+                            <div>
+                            <div>
+                            <div className="flex items...">
+                              <div>
+                              <span title="8/2/2026, 7:42:08 AM">
++                               26 minutes ago
+-                               17 minutes ago
+                            ...
+              ...
+            ...
+
+    at <unknown> (https://react.dev/link/hydration-mismatch)
+    at throwOnHydrationMismatch (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:3318:56)
+    at prepareToHydrateHostInstance (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:3372:23)
+    at completeWork (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:6922:60)
+    at runWithFiberInDEV (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:965:74)
+    at completeUnitOfWork (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9622:23)
+    at performUnitOfWork (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9557:28)
+    at workLoopConcurrentByScheduler (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9551:58)
+    at renderRootConcurrent (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9534:71)
+    at performWorkOnRoot (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:9061:150)
+    at performWorkOnRootViaSchedulerTask (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_compiled_react-dom_096_9a-._.js:10255:9)
+    at MessagePort.performWorkUntilDeadline (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_compiled_1amofcm._.js:2647:64)
+    at span (<anonymous>)
+    at DatasetCard (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/_1pt1lrf._.js:448:223)
+    at <anonymous> (app\(dashboard)\dashboard\datasets\page.tsx:134:13)
+    at Array.map (<anonymous>:1:18)
+    at DatasetsPage (app\(dashboard)\dashboard\datasets\page.tsx:133:18)
+  132 |         <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+  133 |           {items.map((dataset) => (
+> 134 |             <DatasetCard key={dataset.id} dataset={dataset} />
+      |             ^
+  135 |           ))}
+  136 |         </div>
+  137 |       )}
+[browser] Clerk: Clerk has been loaded with development keys. Development instances have strict usage limits and should not be used when deploying your application to production. Learn more: https://clerk.com/docs/deployments/overview (file://C:/Users/My Computer/Desktop/next/myfirstnextapp/.next/dev/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477:13)
+ GET /dashboard/assistant 200 in 96ms (next.js: 8ms, proxy.ts: 21ms, application-code: 66ms)
+ POST /api/ai/chat 200 in 258ms (next.js: 49ms, proxy.ts: 21ms, application-code: 188ms)
+ POST /api/ai/chat 200 in 201ms (next.js: 13ms, proxy.ts: 21ms, application-code: 167ms)
+ POST /api/ai/chat 200 in 273ms (next.js: 8ms, proxy.ts: 37ms, application-code: 228ms)
+ GET /dashboard/projects 200 in 257ms (next.js: 8ms, proxy.ts: 27ms, application-code: 221ms)
+ GET /dashboard/settings 200 in 139ms (next.js: 9ms, proxy.ts: 27ms, application-code: 103ms)
+ GET /dashboard/reports 200 in 122ms (next.js: 9ms, proxy.ts: 25ms, application-code: 88ms)
+⨯ Failed to generate static paths for /dashboard/reports/[reportId]:
+Error: Jest worker encountered 2 child process exceptions, exceeding retry limit
+    at ignore-listed frames {
+  type: 'WorkerError'
+}
+ GET /dashboard/reports/cmsb7a8tk000g6cfhisoz5fe1 200 in 239ms (next.js: 94ms, proxy.ts: 23ms, application-code: 121ms)
+Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException: Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+⨯ uncaughtException:  Error: write EPIPE
+    at ignore-listed frames {
+  errno: -4047,
+  code: 'EPIPE',
+  syscall: 'write'
+}
+Clerk: Refreshing the session token resulted in an infinite redirect loop. This usually means that your Clerk instance keys do not match - make sure to copy the correct publishable and secret keys from the Clerk dashboard.
+ GET / 200 in 198ms (next.js: 16ms, proxy.ts: 16ms, application-code: 166ms)
+Clerk: Refreshing the session token resulted in an infinite redirect loop. This usually means that your Clerk instance keys do not match - make sure to copy the correct publishable and secret keys from the Clerk dashboard.
+ GET / 200 in 276ms (next.js: 9ms, proxy.ts: 22ms, application-code: 246ms)
+Clerk: Refreshing the session token resulted in an infinite redirect loop. This usually means that your Clerk instance keys do not match - make sure to copy the correct publishable and secret keys from the Clerk dashboard.
+ GET / 200 in 187ms (next.js: 20ms, proxy.ts: 26ms, application-code: 141ms)
+  Reload env: .env
+⨯ Error: Jest worker encountered 2 child process exceptions, exceeding retry limit
+    at ignore-listed frames {
+  type: 'WorkerError',
+  page: '/dashboard/reports/cmsb7a8tk000g6cfhisoz5fe1'
+}
+ GET /dashboard/reports/cmsb7a8tk000g6cfhisoz5fe1 500 in 7.1s (next.js: 462ms, proxy.ts: 6.5s, application-code: 56ms)
+⨯ Error: Jest worker encountered 2 child process exceptions, exceeding retry limit
+    at ignore-listed frames {
+  type: 'WorkerError',
+  page: '/dashboard/reports/cmsb7a8tk000g6cfhisoz5fe1'
+}
+⨯ Error: Jest worker encountered 2 child process exceptions, exceeding retry limit
+    at ignore-listed frames {
+  type: 'WorkerError',
+  page: '/dashboard/reports/cmsb7a8tk000g6cfhisoz5fe1'
+}
+ GET /dashboard/reports/cmsb7a8tk000g6cfhisoz5fe1 500 in 566ms (next.js: 351ms, proxy.ts: 99ms, application-code: 117ms)
+ GET /dashboard/reports/cmsb7a8tk000g6cfhisoz5fe1 500 in 562ms (next.js: 371ms, proxy.ts: 105ms, application-code: 86ms)
+[browser] Uncaught Error: Jest worker encountered 2 child process exceptions, exceeding retry limit
+Clerk: Refreshing the session token resulted in an infinite redirect loop. This usually means that your Clerk instance keys do not match - make sure to copy the correct publishable and secret keys from the Clerk dashboard.
+⨯ Error: Jest worker encountered 2 child process exceptions, exceeding retry limit
+    at ignore-listed frames {
+  type: 'WorkerError',
+  page: '/sign-in'
+}
+ GET /sign-in 500 in 400ms (next.js: 264ms, proxy.ts: 61ms, application-code: 75ms)
+⚠ Blocked cross-origin request to Next.js dev resource /__nextjs_original-stack-frames from "192.168.18.39".
+Cross-origin access to Next.js dev resources is blocked by default for safety.
+
+To allow this host in development, add it to "allowedDevOrigins" in next.config.js and restart the dev server:
+
+// next.config.js
+module.exports = {
+  allowedDevOrigins: ['192.168.18.39'],
+}
+
+Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+⨯ Error: Jest worker encountered 2 child process exceptions, exceeding retry limit
+    at ignore-listed frames {
+  type: 'WorkerError',
+  page: '/dashboard/reports/cmsb7a8tk000g6cfhisoz5fe1'
+}
+ GET /dashboard/reports/cmsb7a8tk000g6cfhisoz5fe1 500 in 1226ms (next.js: 633ms, proxy.ts: 516ms, application-code: 76ms)
+Clerk: Refreshing the session token resulted in an infinite redirect loop. This usually means that your Clerk instance keys do not match - make sure to copy the correct publishable and secret keys from the Clerk dashboard.
+⨯ Error: Jest worker encountered 2 child process exceptions, exceeding retry limit
+    at ignore-listed frames {
+  type: 'WorkerError',
+  page: '/sign-in'
+}
+ GET /sign-in 500 in 527ms (next.js: 431ms, proxy.ts: 34ms, application-code: 61ms)
+[browser] Uncaught Error: Jest worker encountered 2 child process exceptions, exceeding retry limit
+⨯ Error: Jest worker encountered 2 child process exceptions, exceeding retry limit
+    at ignore-listed frames {
+  type: 'WorkerError',
+  page: '/dashboard/reports/cmsb7a8tk000g6cfhisoz5fe1'
+}
+ GET /dashboard/reports/cmsb7a8tk000g6cfhisoz5fe1 500 in 1403ms (next.js: 714ms, proxy.ts: 586ms, application-code: 104ms)
+[browser] Uncaught Error: Jest worker encountered 2 child process exceptions, exceeding retry limit
+✓ Compiled in 495ms
