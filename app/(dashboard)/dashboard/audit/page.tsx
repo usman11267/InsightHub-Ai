@@ -54,7 +54,7 @@ export default async function AuditLogPage({ searchParams }: PageProps) {
     },
     select: { id: true },
   });
-  const projectIds = myProjects.map((p) => p.id);
+  const projectIds = myProjects.map((p: { id: string }) => p.id);
 
   const where = {
     OR: [
