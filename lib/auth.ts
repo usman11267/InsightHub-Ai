@@ -49,22 +49,39 @@ export const getCurrentDbUser = cache(async () => {
     clerkUser.emailAddresses[0]?.emailAddress ??
     `${clerkId}@unknown.local`;
 
-  return prisma.user.upsert({
-    where: { clerkId },
-    update: {
-      email,
-      firstName: clerkUser.firstName ?? undefined,
-      lastName: clerkUser.lastName ?? undefined,
-      imageUrl: clerkUser.imageUrl ?? undefined,
-    },
-    create: {
-      clerkId,
-      email,
-      firstName: clerkUser.firstName,
-      lastName: clerkUser.lastName,
-      imageUrl: clerkUser.imageUrl,
-    },
-  });
+  try {
+    return await prisma.user.upsert({
+      where: { clerkId },
+      update: {
+        email,
+        firstName: clerkUser.firstName ?? undefined,
+        lastName: clerkUser.lastName ?? undefined,
+        imageUrl: clerkUser.imageUrl ?? undefined,
+      },
+      create: {
+        clerkId,
+        email,
+        firstName: clerkUser.firstName,
+        lastName: clerkUser.lastName,
+        imageUrl: clerkUser.imageUrl,
+      },
+    });
+  } catch {
+    // If unique email constraint fails (e.g. email exists with old clerkId), fallback to finding by email and updating clerkId
+    const existingByEmail = await prisma.user.findUnique({ where: { email } });
+    if (existingByEmail) {
+      return prisma.user.update({
+        where: { id: existingByEmail.id },
+        data: {
+          clerkId,
+          firstName: clerkUser.firstName ?? undefined,
+          lastName: clerkUser.lastName ?? undefined,
+          imageUrl: clerkUser.imageUrl ?? undefined,
+        },
+      });
+    }
+    return null;
+  }
 });
 
 /** Like getCurrentDbUser but throws when unauthenticated — for Server Actions. */
